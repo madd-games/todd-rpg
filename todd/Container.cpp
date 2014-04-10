@@ -5,6 +5,11 @@
 
 #include "Container.h"
 #include "GameState.h"
+#include "SpriteSheet.h"
+#include <sstream>
+#include "Text.h"
+
+using namespace std;
 
 Container::Container(string name, int size) : name(name), size(size)
 {
@@ -25,4 +30,21 @@ void Container::set(int index, ItemStack stack)
 int Container::getSize()
 {
 	return size;
+};
+
+void Container::drawSlot(int x, int y, int index, bool sel)
+{
+	int si = 0;
+	if (sel) si = 1;
+	ssSlot->draw(x, y, si, false);
+	ItemStack stack = get(index);
+	ssItems->draw(x+1, y+1, stack.id, false);
+
+	if (stack.amount > 1)
+	{
+		stringstream ss;
+		ss << stack.amount;
+		Text text(ss.str(), 255, 255, 255);
+		text.draw(x+17, y+33);
+	};
 };

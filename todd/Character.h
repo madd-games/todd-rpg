@@ -10,6 +10,7 @@
 #include "Element.h"
 #include <string>
 #include "SpriteSheet.h"
+#include "Container.h"
 
 using namespace std;
 
@@ -53,9 +54,10 @@ class Character
 private:
 	string name;
 	CharInfo *charInfo;
+	Container inv;
 
 public:
-	Character(string name, CharInfo *info);
+	Character(string name, CharInfo *info, string invName);
 	int getHP();
 	int getMaxHP();
 	void setHP(int hp, int maxhp = 0);
@@ -77,6 +79,18 @@ public:
 	SpriteSheet *getSpriteSheet();
 
 	string getName();
+
+	/**
+	 * \brief Returns a container with this character's items.
+	 *
+	 * Index 0 = the weapon,
+	 * Index 1 = the shield,
+	 * Index 2 = the helmet,
+	 * Index 3-5 = the accessories,
+	 * Index 6-10 = reserved
+	 * Index 11+ = a 9x4 area to store items.
+	 */
+	Container *getInventory();
 };
 
 Character *GetChar(string name);

@@ -14,6 +14,8 @@ SpriteSheet *ssElements;
 SpriteSheet *ssGameMenuRight;
 SpriteSheet *ssGameMenuLeft;
 SpriteSheet *ssBars;
+SpriteSheet *ssSlot;
+SpriteSheet *ssItems;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

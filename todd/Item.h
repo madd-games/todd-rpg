@@ -17,6 +17,14 @@ using namespace std;
 class Item
 {
 public:
+	enum
+	{
+		NONE = 0,
+		POTION = 1,
+	};
+
+	Item(int id);
+
 	/**
 	 * Return the element associated with the item.
 	 */
@@ -38,5 +46,8 @@ struct ItemStack
 	int id;
 	int amount;
 };
+
+void RegisterItem(int id, Item *item);
+Item *GetItem(int id);
 
 #endif

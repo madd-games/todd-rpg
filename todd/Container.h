@@ -41,6 +41,11 @@ public:
 	 * Return the size of the container.
 	 */
 	int getSize();
+
+	/**
+	 * Draw a container slot.
+	 */
+	void drawSlot(int x, int y, int index, bool sel = false);
 };
 
 #endif

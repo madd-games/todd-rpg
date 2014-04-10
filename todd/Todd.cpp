@@ -104,6 +104,8 @@ int main()
 	ssGameMenuRight = new SpriteSheet("gamemenu_right.png", 300, 480);
 	ssGameMenuLeft = new SpriteSheet("gamemenu_left.png", 660, 480);
 	ssBars = new SpriteSheet("bars.png", 150, 20);
+	ssSlot = new SpriteSheet("slot.png", 50, 50);
+	ssItems = new SpriteSheet("items.png");
 
 	InitMobs();
 	Text::Init();

@@ -13,6 +13,7 @@
 #include "Todd.h"
 #include "Scene.h"
 #include "Character.h"
+#include "Item.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -57,6 +58,8 @@ void NewGame()
 	charTodd->setMP(100, 100);
 	charTodd->setXP(0, 100);
 	charTodd->setLevel(1);
+	ItemStack stackPotion = {Item::POTION, 10};
+	charTodd->getInventory()->set(10, stackPotion);
 
 	SetPartyMember(1, "CHRCASPAR");
 	Character *charCaspar = GetChar("CHRCASPAR");

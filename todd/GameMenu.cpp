@@ -19,7 +19,7 @@ const char *gameMenuLabels[] = {
 	NULL
 };
 
-GameMenu::GameMenu() : rightX(SCREEN_WIDTH*48), leftX(-660), dying(false), selection(0)
+GameMenu::GameMenu() : rightX(SCREEN_WIDTH*48), leftX(-660), dying(false), selection(0), xsel(0)
 {
 	timer = Timer::Read();
 };
@@ -37,12 +37,39 @@ void GameMenu::handleEvent(SDL_Event *ev)
 			}
 			else if (ev->key.keysym.sym == SDLK_UP)
 			{
-				if (selection != 0) selection--;
+				if (selection != 0)
+				{
+					selection--;
+					xsel = 0;
+				};
 			}
 			else if (ev->key.keysym.sym == SDLK_DOWN)
 			{
 				selection++;
 				if (gameMenuLabels[selection] == NULL) selection--;
+				else xsel = 0;
+			}
+			else if (ev->key.keysym.sym == SDLK_LEFT)
+			{
+				if (xsel != 0) xsel--;
+			}
+			else if (ev->key.keysym.sym == SDLK_RIGHT)
+			{
+				int limit = 0;
+				if (selection == 1)		// Inventory
+				{
+					int i;
+					for (i=0; i<4; i++)
+					{
+						if (GetPartyMember(i) == "")
+						{
+							limit = i;
+							break;
+						};
+					};
+				};
+
+				if (xsel < (limit-1)) xsel++;
 			};
 		};
 	};
@@ -105,6 +132,7 @@ void GameMenu::render()
 	};
 
 	if (selection == 0) drawPartyPanel();
+	if (selection == 1) drawInventoryPanel();
 };
 
 bool GameMenu::isLiving()
@@ -151,4 +179,46 @@ void GameMenu::drawPartyPanel()
 		drawPartyMember(i, leftX+3, plotY);
 		plotY += 100;
 	};
+};
+
+void GameMenu::drawInventoryPanel()
+{
+	int i;
+	int plotX = leftX + 209;
+
+	for (i=0; i<4; i++)
+	{
+		string name = GetPartyMember(i);
+		if (name != "")
+		{
+			Character *chr = GetChar(name);
+			chr->getSpriteSheet()->draw(plotX, 100, 0, false);
+
+			if (i == xsel)
+			{
+				int mx, my;
+				SDL_GetMouseState(&mx, &my);
+				mx -= (leftX+209);
+				my -= 150;
+				mx /= 50;
+				my /= 50;
+
+				int px, py;
+				Container *cont = chr->getInventory();
+				for (px=0; px<9; px++)
+				{
+					for (py=0; py<4; py++)
+					{
+						bool sel = (mx == px) && (my == py);
+						cont->drawSlot(leftX+209+50*px, 150+50*py, py * 9 + px + 10, sel);
+					};
+				};
+			};
+		};
+		plotX += 48;
+	};
+
+	int plotY = 80;
+	if ((Timer::Read() % 1000) < 500) plotY += 2;
+	ssCursor->draw(leftX+221+(xsel*48), plotY, 1, false);
 };

@@ -13,7 +13,7 @@ using namespace std;
 
 map<string, Character*> charMap;
 
-Character::Character(string name, CharInfo *info) : name(name), charInfo(info)
+Character::Character(string name, CharInfo *info, string invName) : name(name), charInfo(info), inv(invName, 46)
 {
 	charMap[name] = this;
 };
@@ -100,6 +100,11 @@ string Character::getName()
 	return info.name;
 };
 
+Container *Character::getInventory()
+{
+	return &inv;
+};
+
 Character *GetChar(string name)
 {
 	return charMap[name];
@@ -129,7 +134,7 @@ CharInfo charInfoTodd = {
 	{5, 5, 5, 5, 20, -20, 0, 0},
 	{3, 1, 1, 1},
 };
-Character charTodd("CHRTODD", &charInfoTodd);
+Character charTodd("CHRTODD", &charInfoTodd, "INVTODD");
 
 // Caspar
 CharInfo charInfoCaspar = {
@@ -137,4 +142,4 @@ CharInfo charInfoCaspar = {
 	{20, -30, 3, 3, 0, 0, 0, 0},
 	{2, 2, 2, 2},
 };
-Character charCaspar("CHRCASPAR", &charInfoCaspar);
+Character charCaspar("CHRCASPAR", &charInfoCaspar, "INVCASPAR");

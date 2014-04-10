@@ -19,9 +19,11 @@ private:
 
 	// The menu
 	int selection;
+	int xsel;
 
 	void drawPartyMember(int index, int x, int y);
 	void drawPartyPanel();
+	void drawInventoryPanel();
 
 public:
 	GameMenu();

@@ -34,5 +34,7 @@ extern SpriteSheet *ssElements;
 extern SpriteSheet *ssGameMenuRight;
 extern SpriteSheet *ssGameMenuLeft;
 extern SpriteSheet *ssBars;
+extern SpriteSheet *ssSlot;
+extern SpriteSheet *ssItems;
 
 #endif

@@ -29,7 +29,9 @@ public:
 		 * Special elements - neutral is not good or bad against anything, "divine" beats itself only.
 		 */
 		NEUTRAL = 6,
-		DIVINE = 7
+		DIVINE = 7,
+
+		NUM_ELEMENTS = 8
 	};
 };
 

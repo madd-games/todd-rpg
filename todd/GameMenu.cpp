@@ -8,6 +8,8 @@
 #include "Todd.h"
 #include "SpriteSheet.h"
 #include "Text.h"
+#include <sstream>
+#include "Character.h"
 
 #define	ANIM_TIME		1000
 
@@ -102,10 +104,38 @@ void GameMenu::render()
 		scan++;
 		i++;
 	};
+
+	if (selection == 0) drawPartyPanel();
 };
 
 bool GameMenu::isLiving()
 {
 	bool dead = dying && (leftX == -660) && (rightX == SCREEN_WIDTH*48);
 	return !dead;
+};
+
+void GameMenu::drawPartyMember(int index, int x, int y)
+{
+	stringstream ss;
+	ss << index;
+	Text text(ss.str(), 255, 255, 255, 255);
+	text.draw(x, y);
+
+	string name = GetPartyMember(index);
+	if (name != "")
+	{
+		Character *chr = GetChar(name);
+		DrawBar(x+64, y+2, chr->getHP(), chr->getMaxHP(), 0);
+	};
+};
+
+void GameMenu::drawPartyPanel()
+{
+	int i;
+	int plotY = 3;
+	for (i=0; i<4; i++)
+	{
+		drawPartyMember(i, leftX+3, plotY);
+		plotY += 64;
+	};
 };

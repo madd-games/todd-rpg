@@ -13,6 +13,7 @@ SpriteSheet *ssCursor;
 SpriteSheet *ssElements;
 SpriteSheet *ssGameMenuRight;
 SpriteSheet *ssGameMenuLeft;
+SpriteSheet *ssBars;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {
@@ -41,8 +42,10 @@ SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), 
 	spritesPerLine = w / sprWidth;
 };
 
-void SpriteSheet::draw(int x, int y, int index, bool rel)
+void SpriteSheet::draw(int x, int y, int index, bool rel, int width)
 {
+	if (width == 0) width = sprWidth;
+
 	if (rel)
 	{
 		x -= cameraX;
@@ -55,12 +58,12 @@ void SpriteSheet::draw(int x, int y, int index, bool rel)
 
 	src.x = (index % spritesPerLine) * sprWidth;
 	src.y = (index / spritesPerLine) * sprHeight;
-	src.w = sprWidth;
+	src.w = width;
 	src.h = sprHeight;
 
 	dst.x = x;
 	dst.y = y;
-	dst.w = sprWidth;
+	dst.w = width;
 	dst.h = sprHeight;
 
 	SDL_RenderCopy(sdlRender, tex, &src, &dst);

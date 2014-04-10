@@ -12,6 +12,7 @@
 #include <fstream>
 #include "Todd.h"
 #include "Scene.h"
+#include "Character.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -50,6 +51,10 @@ map<string, GameStateSegment> gameState;
 
 void NewGame()
 {
+	SetPartyMember(0, "CHRTODD");
+	Character *charTodd = GetChar("CHRTODD");
+	charTodd->setHP(100, 100);
+	
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
 	state->x = 1;
 	state->y = 1;

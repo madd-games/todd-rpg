@@ -25,4 +25,6 @@ extern int cameraX, cameraY;
 extern View *currentView;
 extern bool toddQuit;
 
+void DrawBar(int x, int y, int value, int max, int index);
+
 #endif

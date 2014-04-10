@@ -8,6 +8,9 @@
 #define CHARACTER_H
 
 #include "Element.h"
+#include <string>
+
+using namespace std;
 
 struct CharStats
 {
@@ -29,11 +32,13 @@ struct CharState
 
 struct CharInfo
 {
+	string mob;
+
 	/**
 	 * Specifies the resistances of this character to all elements;
 	 * This is given in %, and may be negative.
 	 */
-	int resist[NUM_ELEMENTS];
+	int resist[Element::NUM_ELEMENTS];
 
 	/**
 	 * Stats gained per-level.
@@ -50,4 +55,13 @@ private:
 
 public:
 	Character(string name, CharInfo *info);
-	
+	int getHP();
+	int getMaxHP();
+	void setHP(int hp, int maxhp = 0);
+};
+
+Character *GetChar(string name);
+string GetPartyMember(int index);
+void SetPartyMember(int index, string name);
+
+#endif

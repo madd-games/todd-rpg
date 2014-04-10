@@ -103,6 +103,7 @@ int main()
 	ssElements = new SpriteSheet("elements.png");
 	ssGameMenuRight = new SpriteSheet("gamemenu_right.png", 300, 480);
 	ssGameMenuLeft = new SpriteSheet("gamemenu_left.png", 660, 480);
+	ssBars = new SpriteSheet("bars.png", 150, 20);
 
 	InitMobs();
 	Text::Init();
@@ -136,4 +137,15 @@ int main()
 
 	SDL_Quit();
 	return 0;
+};
+
+void DrawBar(int x, int y, int value, int max, int index)
+{
+	int width = value * 150 / max;
+	ssBars->draw(x, y, index, false, width);
+
+	stringstream ss;
+	ss << value << "/" << max;
+	Text text(ss.str());
+	text.draw(x+3, y+2);
 };

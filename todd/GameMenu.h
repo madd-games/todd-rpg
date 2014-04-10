@@ -20,6 +20,9 @@ private:
 	// The menu
 	int selection;
 
+	void drawPartyMember(int index, int x, int y);
+	void drawPartyPanel();
+
 public:
 	GameMenu();
 	virtual void handleEvent(SDL_Event *ev);

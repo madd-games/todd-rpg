@@ -142,10 +142,11 @@ int main()
 void DrawBar(int x, int y, int value, int max, int index)
 {
 	int width = value * 150 / max;
-	ssBars->draw(x, y, index, false, width);
+	ssBars->draw(x, y, 3, false);
+	if (width != 0) ssBars->draw(x, y, index, false, width);
 
 	stringstream ss;
 	ss << value << "/" << max;
-	Text text(ss.str());
+	Text text(ss.str(), 255, 255, 255);
 	text.draw(x+3, y+2);
 };

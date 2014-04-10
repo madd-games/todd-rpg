@@ -7,6 +7,7 @@
 #include <map>
 #include "GameState.h"
 #include <string.h>
+#include "Mob.h"
 
 using namespace std;
 
@@ -36,6 +37,69 @@ void Character::setHP(int hp, int maxhp)
 	if (maxhp != 0) state->maxhp = maxhp;
 };
 
+int Character::getMP()
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	return state->mp;
+};
+
+int Character::getMaxMP()
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	return state->maxmp;
+};
+
+void Character::setMP(int mp, int maxmp)
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	state->mp = mp;
+	if (maxmp != 0) state->maxmp = maxmp;
+};
+
+int Character::getXP()
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	return state->xp;
+};
+
+int Character::getMaxXP()
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	return state->maxxp;
+};
+
+void Character::setXP(int xp, int maxxp)
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	state->xp = xp;
+	if (maxxp != 0) state->maxxp = maxxp;
+};
+
+int Character::getLevel()
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	return state->level;
+};
+
+void Character::setLevel(int level)
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	state->level = level;
+};
+
+SpriteSheet *Character::getSpriteSheet()
+{
+	string mob = charInfo->mob;
+	MobInfo info = GetMobInfo(mob);
+	return info.mobSprite;
+};
+
+string Character::getName()
+{
+	MobInfo info = GetMobInfo(charInfo->mob);
+	return info.name;
+};
+
 Character *GetChar(string name)
 {
 	return charMap[name];
@@ -63,6 +127,14 @@ void SetPartyMember(int index, string name)
 CharInfo charInfoTodd = {
 	"MOBTODD",
 	{5, 5, 5, 5, 20, -20, 0, 0},
-	{3, 1, 1, 1}
+	{3, 1, 1, 1},
 };
 Character charTodd("CHRTODD", &charInfoTodd);
+
+// Caspar
+CharInfo charInfoCaspar = {
+	"MOBCASPAR",
+	{20, -30, 3, 3, 0, 0, 0, 0},
+	{2, 2, 2, 2},
+};
+Character charCaspar("CHRCASPAR", &charInfoCaspar);

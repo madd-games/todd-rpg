@@ -15,7 +15,6 @@
 
 const char *gameMenuLabels[] = {
 	"Status",
-	"Party",
 	"Inventory",
 	NULL
 };
@@ -116,16 +115,30 @@ bool GameMenu::isLiving()
 
 void GameMenu::drawPartyMember(int index, int x, int y)
 {
-	stringstream ss;
-	ss << index;
-	Text text(ss.str(), 255, 255, 255, 255);
-	text.draw(x, y);
-
 	string name = GetPartyMember(index);
 	if (name != "")
 	{
 		Character *chr = GetChar(name);
-		DrawBar(x+64, y+2, chr->getHP(), chr->getMaxHP(), 0);
+		stringstream ss;
+		ss << "Level " << chr->getLevel();
+
+		Text txt1("HP", 0, 255, 0);
+		Text txt2("MP", 0, 255, 0);
+		Text txt3("XP", 0, 255, 0);
+		Text txt4(chr->getName(), 255, 255, 255);
+		Text txt5(ss.str(), 0, 0, 255);
+
+		txt1.draw(x+75, y+12);
+		txt2.draw(x+75, y+32);
+		txt3.draw(x+75, y+52);
+		txt4.draw(x+15, y+50);
+		txt5.draw(x+15, y+65);
+
+		DrawBar(x+100, y+10, chr->getHP(), chr->getMaxHP(), 0);
+		DrawBar(x+100, y+30, chr->getMP(), chr->getMaxMP(), 1);
+		DrawBar(x+100, y+50, chr->getXP(), chr->getMaxXP(), 2);
+
+		chr->getSpriteSheet()->draw(x+10, y+5, 0, false);
 	};
 };
 
@@ -136,6 +149,6 @@ void GameMenu::drawPartyPanel()
 	for (i=0; i<4; i++)
 	{
 		drawPartyMember(i, leftX+3, plotY);
-		plotY += 64;
+		plotY += 100;
 	};
 };

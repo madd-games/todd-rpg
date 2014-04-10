@@ -9,6 +9,7 @@
 
 #include "Element.h"
 #include <string>
+#include "SpriteSheet.h"
 
 using namespace std;
 
@@ -58,6 +59,24 @@ public:
 	int getHP();
 	int getMaxHP();
 	void setHP(int hp, int maxhp = 0);
+
+	int getMP();
+	int getMaxMP();
+	void setMP(int mp, int maxmp = 0);
+
+	int getXP();
+	int getMaxXP();
+	void setXP(int xp, int maxxp = 0);
+
+	int getLevel();
+	void setLevel(int level);
+
+	/**
+	 * \brief Return the SpriteSheet with this character's sprite.
+	 */
+	SpriteSheet *getSpriteSheet();
+
+	string getName();
 };
 
 Character *GetChar(string name);

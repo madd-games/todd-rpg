@@ -54,12 +54,25 @@ void NewGame()
 	SetPartyMember(0, "CHRTODD");
 	Character *charTodd = GetChar("CHRTODD");
 	charTodd->setHP(100, 100);
-	
+	charTodd->setMP(100, 100);
+	charTodd->setXP(0, 100);
+	charTodd->setLevel(1);
+
+	SetPartyMember(1, "CHRCASPAR");
+	Character *charCaspar = GetChar("CHRCASPAR");
+	charCaspar->setHP(120, 120);
+	charCaspar->setMP(80, 80);
+	charCaspar->setXP(0, 100);
+	charCaspar->setLevel(1);
+
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
 	state->x = 1;
 	state->y = 1;
 	state->sceneID = Scene::Test;
 	state->orient = Mob::DOWN;
+
+	MobState *mobCaspar = (MobState*) GetGameData("MOBCASPAR", sizeof(MobState));
+	mobCaspar->sceneID = -1;
 
 	MobState *mobFeminist = (MobState*) GetGameData("MOBFEMINIST", sizeof(MobState));
 	mobFeminist->x = 13;

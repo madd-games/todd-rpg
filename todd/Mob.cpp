@@ -95,14 +95,17 @@ void InitMobs()
 	/* sprites */
 	mobSprites["MOBTODD"] =			new SpriteSheet("todd.png");
 	mobSprites["MOBFEMINIST"] =		new SpriteSheet("feminist.png");
+	mobSprites["MOBCASPAR"] =		new SpriteSheet("caspar.png");
 
 	/* names */
 	mobRealNames["MOBTODD"] =		"Todd";
 	mobRealNames["MOBFEMINIST"] =		"Feminist";
+	mobRealNames["MOBCASPAR"] =		"Caspar";
 
 	/* elements */
 	mobElements["MOBTODD"] =		Element::LIGHT;
 	mobElements["MOBFEMINIST"] =		Element::FIRE;
+	mobElements["MOBCASPAR"] =		Element::FIRE;
 };
 
 void UpdateMobs()

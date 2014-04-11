@@ -7,6 +7,7 @@
 #define GAME_MENU_H
 
 #include "GUI.h"
+#include "Item.h"
 
 class GameMenu : public GUI
 {
@@ -24,6 +25,8 @@ private:
 	void drawPartyMember(int index, int x, int y);
 	void drawPartyPanel();
 	void drawInventoryPanel();
+
+	ItemStack handleStack;
 
 public:
 	GameMenu();

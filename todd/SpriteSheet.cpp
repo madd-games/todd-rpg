@@ -16,6 +16,7 @@ SpriteSheet *ssGameMenuLeft;
 SpriteSheet *ssBars;
 SpriteSheet *ssSlot;
 SpriteSheet *ssItems;
+SpriteSheet *ssInfoPanel;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {
@@ -44,9 +45,13 @@ SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), 
 	spritesPerLine = w / sprWidth;
 };
 
-void SpriteSheet::draw(int x, int y, int index, bool rel, int width)
+void SpriteSheet::draw(int x, int y, int index, bool rel, int width, int dstwidth, int height, int dstheight)
 {
 	if (width == 0) width = sprWidth;
+	if (height == 0) height = sprHeight;
+
+	if (dstwidth == 0) dstwidth = width;
+	if (dstheight == 0) dstheight = height;
 
 	if (rel)
 	{
@@ -61,12 +66,12 @@ void SpriteSheet::draw(int x, int y, int index, bool rel, int width)
 	src.x = (index % spritesPerLine) * sprWidth;
 	src.y = (index / spritesPerLine) * sprHeight;
 	src.w = width;
-	src.h = sprHeight;
+	src.h = height;
 
 	dst.x = x;
 	dst.y = y;
-	dst.w = width;
-	dst.h = sprHeight;
+	dst.w = dstwidth;
+	dst.h = dstheight;
 
 	SDL_RenderCopy(sdlRender, tex, &src, &dst);
 };

@@ -44,7 +44,7 @@ void Container::drawSlot(int x, int y, int index, bool sel)
 	{
 		stringstream ss;
 		ss << stack.amount;
-		Text text(ss.str(), 255, 255, 255);
-		text.draw(x+17, y+33);
+		Text text(ss.str(), 255, 255, 255, 255, fntItemCount);
+		text.draw(x+12, y+16);
 	};
 };

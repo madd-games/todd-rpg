@@ -12,7 +12,7 @@ using namespace std;
 
 map<int, Item*> itemMap;
 
-Item::Item(int id)
+Item::Item(int id) : id(id)
 {
 	RegisterItem(id, this);
 };

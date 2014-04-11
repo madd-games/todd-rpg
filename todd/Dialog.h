@@ -12,6 +12,13 @@
 
 using namespace std;
 
+struct DialogEntry;
+struct DialogOption
+{
+	const char *text;
+	DialogEntry *effect;
+};
+
 /**
  * An array of these defines a dialog.
  */
@@ -23,7 +30,7 @@ struct DialogEntry
 	const char *speaker;
 
 	/**
-	 * What they're saying
+	 * What they're saying - NULL will cause the option mode to be applied.
 	 */
 	const char *text;
 
@@ -32,6 +39,13 @@ struct DialogEntry
 	 * to dismiss this part of the dialog.
 	 */
 	void (*callback)(void);
+
+	/**
+	 * If this is option mode (text == NULL), then these are the options the player
+	 * can choose from, and what dialog they lead to.
+	 */
+	int numOptions;
+	DialogOption options[4];
 };
 
 class Dialog : public GUI
@@ -41,6 +55,7 @@ private:
 	string with;
 	unsigned long timer;
 	int letters;
+	int choice;
 
 public:
 	Dialog(DialogEntry *entry, string with);

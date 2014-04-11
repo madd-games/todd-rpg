@@ -27,4 +27,12 @@ extern bool toddQuit;
 
 void DrawBar(int x, int y, int value, int max, int index);
 
+template<class T>
+void Swap(T &a, T &b)
+{
+	T temp = a;
+	a = b;
+	b = temp;
+};
+
 #endif

@@ -22,6 +22,8 @@ const char *gameMenuLabels[] = {
 GameMenu::GameMenu() : rightX(SCREEN_WIDTH*48), leftX(-660), dying(false), selection(0), xsel(0)
 {
 	timer = Timer::Read();
+	handleStack.id = 0;
+	handleStack.amount = 0;
 };
 
 void GameMenu::handleEvent(SDL_Event *ev)
@@ -30,24 +32,30 @@ void GameMenu::handleEvent(SDL_Event *ev)
 	{
 		if (ev->type == SDL_KEYDOWN)
 		{
-			if (ev->key.keysym.sym == SDLK_ESCAPE)
+			if ((ev->key.keysym.sym == SDLK_ESCAPE) || (ev->key.keysym.sym == SDLK_z))
 			{
 				timer = Timer::Read();
 				dying = true;
 			}
 			else if (ev->key.keysym.sym == SDLK_UP)
 			{
-				if (selection != 0)
+				if (handleStack.id == 0)
 				{
-					selection--;
-					xsel = 0;
+					if (selection != 0)
+					{
+						selection--;
+						xsel = 0;
+					};
 				};
 			}
 			else if (ev->key.keysym.sym == SDLK_DOWN)
 			{
-				selection++;
-				if (gameMenuLabels[selection] == NULL) selection--;
-				else xsel = 0;
+				if (handleStack.id == 0)
+				{
+					selection++;
+					if (gameMenuLabels[selection] == NULL) selection--;
+					else xsel = 0;
+				};
 			}
 			else if (ev->key.keysym.sym == SDLK_LEFT)
 			{
@@ -70,6 +78,37 @@ void GameMenu::handleEvent(SDL_Event *ev)
 				};
 
 				if (xsel < (limit-1)) xsel++;
+			};
+		}
+		else if (ev->type == SDL_MOUSEBUTTONDOWN)
+		{
+			if (ev->button.button == SDL_BUTTON_LEFT)
+			{
+				int mx, my;
+				SDL_GetMouseState(&mx, &my);
+				mx -= (leftX+309);
+				my -= 150;
+				mx /= 26;
+				my /= 26;
+
+				if ((mx < 9) && (my < 4) && (mx >= 0) && (my >= 0) && (selection == 1))
+				{
+					string name = GetPartyMember(xsel);
+					Character *chr = GetChar(name);
+					ItemStack stack = chr->getInventory()->get(10 + my * 9 + mx);
+					Swap<ItemStack>(stack, handleStack);
+					chr->getInventory()->set(10 + my * 9 + mx, stack);
+
+					if (handleStack.id != 0)
+					{
+						// TODO: if we add a cursor...
+						SDL_ShowCursor(SDL_DISABLE);
+					}
+					else
+					{
+						SDL_ShowCursor(SDL_ENABLE);
+					};
+				};
 			};
 		};
 	};
@@ -120,7 +159,7 @@ void GameMenu::render()
 
 			int plotX = rightX+7;
 			if ((Timer::Read() % 1000) < 500) plotX += 2;
-			ssCursor->draw(plotX, plotY+3, 0, false);
+			if (handleStack.id == 0) ssCursor->draw(plotX, plotY+3, 0, false);
 		};
 
 		Text text(*scan, red, green, blue, 255, fntMainMenu);
@@ -184,7 +223,8 @@ void GameMenu::drawPartyPanel()
 void GameMenu::drawInventoryPanel()
 {
 	int i;
-	int plotX = leftX + 209;
+	int plotX = leftX + 309;
+	Item *itemSel = NULL;
 
 	for (i=0; i<4; i++)
 	{
@@ -198,19 +238,28 @@ void GameMenu::drawInventoryPanel()
 			{
 				int mx, my;
 				SDL_GetMouseState(&mx, &my);
-				mx -= (leftX+209);
+				mx -= (leftX+309);
 				my -= 150;
-				mx /= 50;
-				my /= 50;
+				mx /= 26;
+				my /= 26;
 
+				int itemSelIndex = my * 9 + mx + 10;
 				int px, py;
 				Container *cont = chr->getInventory();
+				if ((mx < 9) && (my < 4) && (mx >= 0) && (my >= 0))
+				{
+					ItemStack stackSel = cont->get(itemSelIndex);
+					if (stackSel.id != 0)
+					{
+						itemSel = GetItem(stackSel.id);
+					};
+				};
 				for (px=0; px<9; px++)
 				{
 					for (py=0; py<4; py++)
 					{
 						bool sel = (mx == px) && (my == py);
-						cont->drawSlot(leftX+209+50*px, 150+50*py, py * 9 + px + 10, sel);
+						cont->drawSlot(leftX+309+26*px, 150+26*py, py * 9 + px + 10, sel);
 					};
 				};
 			};
@@ -220,5 +269,30 @@ void GameMenu::drawInventoryPanel()
 
 	int plotY = 80;
 	if ((Timer::Read() % 1000) < 500) plotY += 2;
-	ssCursor->draw(leftX+221+(xsel*48), plotY, 1, false);
+	ssCursor->draw(leftX+321+(xsel*48), plotY, 1, false);
+
+	ssInfoPanel->draw(leftX, 0, 0, false);
+	if (itemSel != NULL)
+	{
+		ssElements->draw(leftX+2, 5, itemSel->getElement(), false);
+		ssItems->draw(leftX+28, 5, itemSel->id, false);
+		Text txtName(itemSel->getName(), 255, 255, 255, 255, fntItemName);
+		txtName.draw(leftX+54, 5);
+		Text txtDesc(itemSel->getDesc(), 255, 255, 255, 255, fntText, 300);
+		txtDesc.draw(leftX+2, 34);
+	};
+
+	if (handleStack.id != 0)
+	{
+		int x, y;
+		SDL_GetMouseState(&x, &y);
+		ssItems->draw(x-13, y-13, handleStack.id, false, 24, 26, 24, 26);
+		if (handleStack.amount > 1)
+		{
+			stringstream ss;
+			ss << handleStack.amount;
+			Text text(ss.str(), 255, 255, 255, 255, fntItemCount);
+			text.draw(x-1, y+3);
+		};
+	};
 };

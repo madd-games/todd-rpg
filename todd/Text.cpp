@@ -9,6 +9,8 @@
 TTF_Font *fntCaption;
 TTF_Font *fntText;
 TTF_Font *fntMainMenu;
+TTF_Font *fntItemName;
+TTF_Font *fntItemCount;
 
 TTF_Font *LoadFont(string name, int size)
 {
@@ -25,6 +27,8 @@ void Text::Init()
 	fntCaption = LoadFont("bold.ttf", 32);
 	fntText = LoadFont("reg.ttf", 16);
 	fntMainMenu = LoadFont("bold.ttf", 24);
+	fntItemName = LoadFont("bold.ttf", 24);
+	fntItemCount = LoadFont("reg.ttf", 8);
 };
 
 Text::Text(string text, int red, int green, int blue, int alpha, TTF_Font *fnt, int wrap)

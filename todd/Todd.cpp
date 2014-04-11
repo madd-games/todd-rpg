@@ -100,12 +100,13 @@ int main()
 	ssDialog = new SpriteSheet("dialog.png", 960, 200);
 	ssMainMenu = new SpriteSheet("mainmenu.png", 960, 480);
 	ssCursor = new SpriteSheet("cursor.png", 24, 24);
-	ssElements = new SpriteSheet("elements.png");
+	ssElements = new SpriteSheet("elements.png", 24, 24);
 	ssGameMenuRight = new SpriteSheet("gamemenu_right.png", 300, 480);
 	ssGameMenuLeft = new SpriteSheet("gamemenu_left.png", 660, 480);
 	ssBars = new SpriteSheet("bars.png", 150, 20);
-	ssSlot = new SpriteSheet("slot.png", 50, 50);
-	ssItems = new SpriteSheet("items.png");
+	ssSlot = new SpriteSheet("slot.png", 26, 26);
+	ssItems = new SpriteSheet("items.png", 24, 24);
+	ssInfoPanel = new SpriteSheet("infopanel.png", 300, 480);
 
 	InitMobs();
 	Text::Init();

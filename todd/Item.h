@@ -23,6 +23,7 @@ public:
 		POTION = 1,
 	};
 
+	int id;
 	Item(int id);
 
 	/**

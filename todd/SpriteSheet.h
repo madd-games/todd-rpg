@@ -23,7 +23,7 @@ private:
 
 public:
 	SpriteSheet(string name, int width = 48, int height = 48);
-	void draw(int x, int y, int index, bool rel = true, int width = 0);
+	void draw(int x, int y, int index, bool rel = true, int width = 0, int dstwidth = 0, int height = 0, int dstheight = 0);
 };
 
 extern SpriteSheet *ssTiles;
@@ -36,5 +36,6 @@ extern SpriteSheet *ssGameMenuLeft;
 extern SpriteSheet *ssBars;
 extern SpriteSheet *ssSlot;
 extern SpriteSheet *ssItems;
+extern SpriteSheet *ssInfoPanel;
 
 #endif

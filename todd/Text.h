@@ -15,6 +15,8 @@ using namespace std;
 extern TTF_Font *fntCaption;
 extern TTF_Font *fntText;
 extern TTF_Font *fntMainMenu;
+extern TTF_Font *fntItemName;
+extern TTF_Font *fntItemCount;
 
 class Text
 {

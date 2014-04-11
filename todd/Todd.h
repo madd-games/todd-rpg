@@ -24,6 +24,7 @@ extern SDL_Renderer *sdlRender;
 extern int cameraX, cameraY;
 extern View *currentView;
 extern bool toddQuit;
+extern bool showCursor;
 
 void DrawBar(int x, int y, int value, int max, int index);
 

@@ -17,6 +17,7 @@
 #include "Timer.h"
 #include "Text.h"
 #include "MainMenu.h"
+#include "Item.h"
 
 using namespace std;
 
@@ -65,6 +66,7 @@ string GetResourcePath(string name)
 };
 
 bool toddQuit = false;
+bool showCursor = true;
 int main()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -96,6 +98,7 @@ int main()
 		return 1;
 	};
 
+	SpriteSheet *ssMouseCursor = new SpriteSheet("mcursor.png", 24, 24);
 	ssTiles = new SpriteSheet("tiles.png");
 	ssDialog = new SpriteSheet("dialog.png", 960, 200);
 	ssMainMenu = new SpriteSheet("mainmenu.png", 960, 480);
@@ -109,6 +112,7 @@ int main()
 	ssInfoPanel = new SpriteSheet("infopanel.png", 300, 480);
 
 	InitMobs();
+	InitItems();
 	Text::Init();
 
 	Scene::LoadScenes();
@@ -116,6 +120,7 @@ int main()
 	sceneView.setScene(Scene::Test);
 
 	NewGame();
+	SDL_ShowCursor(SDL_DISABLE);
 
 	SDL_Event e;
 	while (!toddQuit)
@@ -135,6 +140,12 @@ int main()
 
 		SDL_RenderClear(ren);
 		currentView->render();
+		if (showCursor)
+		{
+			int mx, my;
+			SDL_GetMouseState(&mx, &my);
+			ssMouseCursor->draw(mx, my, 0, false);
+		};
 		SDL_RenderPresent(ren);
 	};
 

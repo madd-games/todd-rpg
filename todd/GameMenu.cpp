@@ -101,12 +101,11 @@ void GameMenu::handleEvent(SDL_Event *ev)
 
 					if (handleStack.id != 0)
 					{
-						// TODO: if we add a cursor...
-						SDL_ShowCursor(SDL_DISABLE);
+						showCursor = false;
 					}
 					else
 					{
-						SDL_ShowCursor(SDL_ENABLE);
+						showCursor = true;
 					};
 				};
 			};

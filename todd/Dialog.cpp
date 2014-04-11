@@ -80,14 +80,20 @@ void Dialog::render()
 		};
 	};
 
-	int y = (SCREEN_HEIGHT*48)-200;
-	ssDialog->draw(0, y, 0, false);
-
 	MobInfo info = GetMobInfo(currentEntry->speaker);
-	Text cap(info.name, 0, 0, 0, 255, fntCaption);
-	cap.draw(241, y+14);
+	int y = (SCREEN_HEIGHT*48)-200;
+	ssDialog->draw(0, y, info.element, false);
 
-	ssElements->draw(191, y+6, info.element, false);
+	int red=0, green=0, blue=0;
+	if ((info.element == Element::WATER) || (info.element == Element::DARKNESS)
+		|| (info.element == Element::NEUTRAL))
+	{
+		red = 255;
+		green = 255;
+		blue = 255;
+	};
+	Text cap(info.name, red, green, blue, 255, fntCaption);
+	cap.draw(191, y+14);
 
 	if (info.mobSprite != NULL)
 	{
@@ -97,7 +103,7 @@ void Dialog::render()
 	if (currentEntry->text != NULL)
 	{
 		fxText = fxText.substr(0, letters);
-		Text txt(fxText, 0, 0, 0, 255, fntText, 767);
+		Text txt(fxText, red, green, blue, 255, fntText, 767);
 		txt.draw(191, y+62);
 	}
 	else
@@ -107,7 +113,7 @@ void Dialog::render()
 		for (i=0; i<currentEntry->numOptions; i++)
 		{
 			DialogOption option = currentEntry->options[i];
-			Text txt(option.text, 0, 0, 0, 255, fntText, 767);
+			Text txt(option.text, red, green, blue, 255, fntText, 767);
 			txt.draw(217, plotY+2);
 
 			if (i == choice)

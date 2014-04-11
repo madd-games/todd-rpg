@@ -48,6 +48,7 @@ struct ItemStack
 	int amount;
 };
 
+void InitItems();
 void RegisterItem(int id, Item *item);
 Item *GetItem(int id);
 

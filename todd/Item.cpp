@@ -7,6 +7,8 @@
 #include "Todd.h"
 #include <map>
 #include <sstream>
+#include <iostream>
+#include "ItemPotion.h"
 
 using namespace std;
 
@@ -32,4 +34,10 @@ void RegisterItem(int id, Item *item)
 Item *GetItem(int id)
 {
 	return itemMap[id];
+};
+
+void InitItems()
+{
+	itemMap.clear();
+	new ItemPotion(Item::POTION);
 };

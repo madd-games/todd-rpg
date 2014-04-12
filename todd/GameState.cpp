@@ -14,6 +14,7 @@
 #include "Scene.h"
 #include "Character.h"
 #include "Item.h"
+#include "ActiveTile.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -50,6 +51,13 @@ struct GameStateSegment
 
 map<string, GameStateSegment> gameState;
 
+void InitChest(int scene, int x, int y, int id, int amount = 1)
+{
+	ChestState *state = (ChestState*) GetTileState(scene, x, y, GetActiveTile(4));
+	state->id = id;
+	state->amount = amount;
+};
+
 void NewGame()
 {
 	SetPartyMember(0, "CHRTODD");
@@ -82,6 +90,9 @@ void NewGame()
 	mobFeminist->y = 4;
 	mobFeminist->orient = Mob::LEFT;
 	mobFeminist->sceneID = 0;
+
+	// Chests
+	InitChest(0, 8, 1, 1, 10);
 };
 
 string GetPathToSaveSlot(int slot)

@@ -18,6 +18,7 @@
 #include "Text.h"
 #include "MainMenu.h"
 #include "Item.h"
+#include "ActiveTile.h"
 
 using namespace std;
 
@@ -113,6 +114,7 @@ int main()
 
 	InitMobs();
 	InitItems();
+	InitActiveTiles();
 	Text::Init();
 
 	Scene::LoadScenes();

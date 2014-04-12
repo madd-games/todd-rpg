@@ -48,3 +48,37 @@ void Container::drawSlot(int x, int y, int index, bool sel)
 		text.draw(x+12, y+16);
 	};
 };
+
+void Container::pushStack(ItemStack stack, int min)
+{
+	Item *item = GetItem(stack.id);
+	if (!item->isStackable())
+	{
+		int i;
+		for (i=min; i<getSize(); i++)
+		{
+			ItemStack stk = get(i);
+			if (stk.id == 0)
+			{
+				set(i, stack);
+			};
+		};
+	}
+	else
+	{
+		while (stack.amount != 0)
+		{
+			int i;
+			for (i=min; i<getSize(); i++)
+			{
+				ItemStack stk = get(i);
+				if ((stk.id == stack.id) && (stk.amount < 64) && (stack.amount > 0))
+				{
+					stk.amount++;
+					stack.amount--;
+					set(i, stk);
+				};
+			};
+		};
+	};
+};

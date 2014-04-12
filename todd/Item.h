@@ -40,6 +40,11 @@ public:
 	 * Return a description of the item.
 	 */
 	virtual string getDesc() = 0;
+
+	/**
+	 * Return true if this item is stackable.
+	 */
+	virtual bool isStackable() = 0;
 };
 
 struct ItemStack

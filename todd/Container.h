@@ -46,6 +46,11 @@ public:
 	 * Draw a container slot.
 	 */
 	void drawSlot(int x, int y, int index, bool sel = false);
+
+	/**
+	 * Pushes an itemstack into the best-fitting places in this container.
+	 */
+	void pushStack(ItemStack stack, int min = 10);
 };
 
 #endif

@@ -26,4 +26,9 @@ public:
 	{
 		return "A simple remedy, which restores 100HP.";
 	};
+
+	virtual bool isStackable()
+	{
+		return true;
+	};
 };

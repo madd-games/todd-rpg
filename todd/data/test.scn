@@ -2,6 +2,7 @@
 .tile %1
 .tile F2
 .tile T3
+.tile C4
 
 .bg
 FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -19,7 +20,7 @@ FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
 .hard
 TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-T****************************************T
+T*******C********************************T
 T*********%%%%%**************************T
 T*********%***%**TTT*********************T
 T*************%**************************T

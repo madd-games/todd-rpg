@@ -10,6 +10,7 @@
 #include <iostream>
 #include "GameState.h"
 #include "GameMenu.h"
+#include "ActiveTile.h"
 
 using namespace std;
 
@@ -19,18 +20,13 @@ struct TileMapping
 {
 	int id;
 	int spriteIndex;
-
-	/**
-	 * The "second" sprite index, if the tile is animated.
-	 */
-	int secondSpriteIndex;
 };
 
 TileMapping tileMappings[] = {
-	{1, 1, 1},			// Grass
-	{2, 2, 2},			// ??? (don't know yet)
-	{3, 3, 3},			// Tree (use in hard layer)
-
+	{1, 1},				// Grass
+	{2, 2},				// ??? (don't know yet)
+	{3, 3},				// Tree (use in hard layer)
+	{4, 0},				// Chest (active tile)
 	// END
 	{0, 0}
 };
@@ -51,15 +47,25 @@ void SceneView::renderLayer(Scene::Tile *layer)
 			if (tile.id == 0) continue;
 			int spriteIndex = 0;
 
-			while (scan->id != 0)
+			ActiveTile *atile = GetActiveTile(tile.id);
+			if (atile != NULL)
 			{
-				if (scan->id == tile.id)
-				{
-					spriteIndex = scan->spriteIndex;
-					break;
-				};
+				void *state = GetTileState(sceneID, x, y, atile);
+				spriteIndex = atile->getTileIndex(state);
+			};
 
-				scan++;
+			if (spriteIndex == 0)
+			{
+				while (scan->id != 0)
+				{
+					if (scan->id == tile.id)
+					{
+						spriteIndex = scan->spriteIndex;
+						break;
+					};
+
+					scan++;
+				};
 			};
 
 			ssTiles->draw(x*48, y*48, spriteIndex);
@@ -125,6 +131,16 @@ void SceneView::handleEvent(SDL_Event *ev)
 				MobState *mob = (MobState*) GetGameData(name, sizeof(MobState));
 				mob->orient = opposite;
 				InteractWithMob(name);
+			}
+			else
+			{
+				int id = scene->hardLayer[(state->y+relY) * scene->width + (state->x+relX)].id;
+				ActiveTile *tile = GetActiveTile(id);
+				if (tile != NULL)
+				{
+					void *tstate = GetTileState(sceneID, state->x+relX, state->y+relY, tile);
+					tile->interact(tstate);
+				};
 			};
 		}
 		else if (ev->key.keysym.sym == SDLK_ESCAPE)

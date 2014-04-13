@@ -1,14 +1,14 @@
 /**
- * ItemPotion.h
+ * ItemBasicSword.h
  */
 
 #include "Item.h"
 #include "Element.h"
 
-class ItemPotion : public Item
+class ItemBasicSword : public Item
 {
 public:
-	ItemPotion(int id) : Item(id)
+	ItemBasicSword(int id) : Item(id)
 	{
 	};
 
@@ -19,26 +19,26 @@ public:
 
 	virtual string getName()
 	{
-		return "Potion";
+		return "Basic Sword";
 	};
 
 	virtual string getDesc()
 	{
-		return "A simple remedy, which restores 100HP.";
+		return "A very basic sword, with a force of 10.";
 	};
 
 	virtual bool isStackable()
 	{
-		return true;
+		return false;
 	};
 
 	virtual int getType()
 	{
-		return Item::EXPENDABLE;
+		return Item::WEAPON;
 	};
 
 	virtual int getDamage()
 	{
-		return -100;
+		return 10;
 	};
 };

@@ -21,6 +21,14 @@ public:
 	{
 		NONE = 0,
 		POTION = 1,
+		BASIC_SWORD = 2,
+	};
+
+	enum
+	{
+		PLOT = 0,
+		EXPENDABLE = 1,
+		WEAPON = 2,
 	};
 
 	int id;
@@ -45,6 +53,17 @@ public:
 	 * Return true if this item is stackable.
 	 */
 	virtual bool isStackable() = 0;
+
+	/**
+	 * Returns the type of item (default = Item::PLOT).
+	 */
+	virtual int getType();
+
+	/**
+	 * Returns the amount of damage dealt by this item, if it is expendable.
+	 * NOTE: Damage (or healing) of items is unaffected by defence etc.
+	 */
+	virtual int getDamage();
 };
 
 struct ItemStack

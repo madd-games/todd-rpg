@@ -87,6 +87,14 @@ void Character::setLevel(int level)
 	state->level = level;
 };
 
+void Character::dealDirectDamage(int dmg)
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	state->hp -= dmg;
+	if (state->hp < 0) state->hp = 0;
+	if (state->hp > state->maxhp) state->hp = state->maxhp;
+};
+
 SpriteSheet *Character::getSpriteSheet()
 {
 	string mob = charInfo->mob;

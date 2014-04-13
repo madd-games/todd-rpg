@@ -74,6 +74,11 @@ public:
 	void setLevel(int level);
 
 	/**
+	 * \brief Deals damage without checking resistances etc.
+	 */
+	void dealDirectDamage(int dmg);
+
+	/**
 	 * \brief Return the SpriteSheet with this character's sprite.
 	 */
 	SpriteSheet *getSpriteSheet();
@@ -86,8 +91,9 @@ public:
 	 * Index 0 = the weapon,
 	 * Index 1 = the shield,
 	 * Index 2 = the helmet,
-	 * Index 3-5 = the accessories,
-	 * Index 6-10 = reserved
+	 * Index 3 = the armor
+	 * Index 4-6 = the accessories,
+	 * Index 7-10 = reserved
 	 * Index 11+ = a 9x4 area to store items.
 	 */
 	Container *getInventory();

@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iostream>
 #include "ItemPotion.h"
+#include "ItemBasicSword.h"
 
 using namespace std;
 
@@ -17,6 +18,16 @@ map<int, Item*> itemMap;
 Item::Item(int id) : id(id)
 {
 	RegisterItem(id, this);
+};
+
+int Item::getType()
+{
+	return Item::PLOT;
+};
+
+int Item::getDamage()
+{
+	return 0;
 };
 
 void RegisterItem(int id, Item *item)
@@ -40,4 +51,5 @@ void InitItems()
 {
 	itemMap.clear();
 	new ItemPotion(Item::POTION);
+	new ItemBasicSword(Item::BASIC_SWORD);
 };

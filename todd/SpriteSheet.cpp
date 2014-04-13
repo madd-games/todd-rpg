@@ -17,6 +17,7 @@ SpriteSheet *ssBars;
 SpriteSheet *ssSlot;
 SpriteSheet *ssItems;
 SpriteSheet *ssInfoPanel;
+SpriteSheet *ssChestGUI;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

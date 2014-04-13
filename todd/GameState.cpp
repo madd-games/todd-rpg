@@ -60,14 +60,16 @@ void InitChest(int scene, int x, int y, int id, int amount = 1)
 
 void NewGame()
 {
+	gameState.clear();
+
 	SetPartyMember(0, "CHRTODD");
 	Character *charTodd = GetChar("CHRTODD");
 	charTodd->setHP(100, 100);
 	charTodd->setMP(100, 100);
 	charTodd->setXP(0, 100);
 	charTodd->setLevel(1);
-	ItemStack stackPotion = {Item::POTION, 10};
-	charTodd->getInventory()->set(10, stackPotion);
+	ItemStack stackBasicSword = {2, 1};
+	charTodd->getInventory()->set(0, stackBasicSword);
 
 	SetPartyMember(1, "CHRCASPAR");
 	Character *charCaspar = GetChar("CHRCASPAR");
@@ -75,6 +77,7 @@ void NewGame()
 	charCaspar->setMP(80, 80);
 	charCaspar->setXP(0, 100);
 	charCaspar->setLevel(1);
+	charCaspar->getInventory()->set(0, stackBasicSword);
 
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
 	state->x = 1;

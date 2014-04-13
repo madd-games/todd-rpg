@@ -40,6 +40,11 @@ public:
 	 * \brief Opens a conversation.
 	 */
 	void openDialog(DialogEntry *entry, string with = "");
+
+	/**
+	 * \brief Opens a GUI.
+	 */
+	void openGUI(GUI *gui);
 };
 
 extern SceneView sceneView;

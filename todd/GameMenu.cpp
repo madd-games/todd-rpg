@@ -85,7 +85,10 @@ void GameMenu::handleEvent(SDL_Event *ev)
 			if (ev->button.button == SDL_BUTTON_LEFT)
 			{
 				int mx, my;
-				SDL_GetMouseState(&mx, &my);
+				int rmx, rmy;
+				SDL_GetMouseState(&rmx, &rmy);
+				mx = rmx;
+				my = rmy;
 				mx -= (leftX+309);
 				my -= 150;
 				mx /= 26;
@@ -96,8 +99,25 @@ void GameMenu::handleEvent(SDL_Event *ev)
 					string name = GetPartyMember(xsel);
 					Character *chr = GetChar(name);
 					ItemStack stack = chr->getInventory()->get(10 + my * 9 + mx);
-					Swap<ItemStack>(stack, handleStack);
-					chr->getInventory()->set(10 + my * 9 + mx, stack);
+					if ((stack.id == handleStack.id) && (stack.id != 0))
+					{
+						Item *itm = GetItem(stack.id);
+						if (itm->isStackable())
+						{
+							if (stack.amount < 64)
+							{
+								stack.amount++;
+								handleStack.amount--;
+								if (handleStack.amount == 0) handleStack.id = 0;
+								chr->getInventory()->set(10 + my * 9 + mx, stack);
+							};
+						};
+					}
+					else
+					{
+						Swap<ItemStack>(stack, handleStack);
+						chr->getInventory()->set(10 + my * 9 + mx, stack);
+					};
 
 					if (handleStack.id != 0)
 					{
@@ -107,6 +127,67 @@ void GameMenu::handleEvent(SDL_Event *ev)
 					{
 						showCursor = true;
 					};
+				}
+				else if ((rmx > (leftX+309)) && (rmx < (leftX+357)) && (rmy > 256) && (rmy < 304))
+				{
+					if (handleStack.id != 0)
+					{
+						Item *item = GetItem(handleStack.id);
+						if (item->getType() == Item::EXPENDABLE)
+						{
+							Character *chr = GetChar(GetPartyMember(xsel));
+							chr->dealDirectDamage(item->getDamage());
+
+							handleStack.amount--;
+							if (handleStack.amount == 0) handleStack.id = 0;
+							if (handleStack.id == 0) showCursor = true;
+						};
+					};
+				};
+			}
+			else if (ev->button.button == SDL_BUTTON_RIGHT)
+			{
+				int mx, my;
+				SDL_GetMouseState(&mx, &my);
+				mx -= (leftX+309);
+				my -= 150;
+				mx /= 26;
+				my /= 26;
+
+				if ((mx < 9) && (my < 4) && (mx >= 0) && (my >= 0) && (selection == 1))
+				{
+					int index = 10 + my * 9 + mx;
+					string name = GetPartyMember(xsel);
+					Character *chr = GetChar(name);
+					ItemStack stack = chr->getInventory()->get(index);
+					if ((stack.id == handleStack.id) && (stack.id != 0))
+					{
+						Item *item = GetItem(stack.id);
+						if (item->isStackable())
+						{
+							if (handleStack.amount < 64)
+							{
+								handleStack.amount++;
+								stack.amount--;
+							};
+						};
+					}
+					else if ((handleStack.id == 0) && (stack.id != 0))
+					{
+						handleStack.id = stack.id;
+						handleStack.amount = 1;
+						stack.amount--;
+					}
+					else if ((handleStack.id != 0) && (stack.id == 0))
+					{
+						stack.id = handleStack.id;
+						stack.amount = 1;
+						handleStack.amount--;
+					};
+
+					if (stack.amount == 0) stack.id = 0;
+					if (handleStack.amount == 0) handleStack.id = 0;
+					chr->getInventory()->set(index, stack);
 				};
 			};
 		};
@@ -261,10 +342,32 @@ void GameMenu::drawInventoryPanel()
 						cont->drawSlot(leftX+309+26*px, 150+26*py, py * 9 + px + 10, sel);
 					};
 				};
+
+				SDL_GetMouseState(&mx, &my);
+				int rmx = mx;
+				mx -= 390;
+				mx /= 26;
+				int j;
+				for (j=0; j<7; j++)
+				{
+					bool sel = (mx == j) && (my > 330) && (my < 356) && (rmx > 390);
+					cont->drawSlot(leftX+390+(26*j), 330, j, sel);
+
+					if (sel)
+					{
+						ItemStack stk = cont->get(j);
+						if (stk.id != 0)
+						{
+							itemSel = GetItem(stk.id);
+						};
+					};
+				};
 			};
 		};
 		plotX += 48;
 	};
+
+	drawPartyMember(xsel, leftX+309, 256);
 
 	int plotY = 80;
 	if ((Timer::Read() % 1000) < 500) plotY += 2;

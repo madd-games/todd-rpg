@@ -69,6 +69,7 @@ void Container::pushStack(ItemStack stack, int min)
 		while (stack.amount != 0)
 		{
 			int i;
+			bool found = false;
 			for (i=min; i<getSize(); i++)
 			{
 				ItemStack stk = get(i);
@@ -77,8 +78,40 @@ void Container::pushStack(ItemStack stack, int min)
 					stk.amount++;
 					stack.amount--;
 					set(i, stk);
+					found = true;
+				};
+			};
+
+			if (!found)
+			{
+				break;
+			};
+		};
+
+		if (stack.amount != 0)
+		{
+			int i;
+			for (i=min; i<getSize(); i++)
+			{
+				ItemStack stk = get(i);
+				if (stk.id == 0)
+				{
+					set(i, stack);
+					break;
 				};
 			};
 		};
 	};
+};
+
+int Container::count(int id)
+{
+	int result = 0;
+	int i;
+	for (i=0; i<getSize(); i++)
+	{
+		ItemStack stack = get(i);
+		if (stack.id == id) result += stack.amount;
+	};
+	return result;
 };

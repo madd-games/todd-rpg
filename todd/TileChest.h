@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include "Character.h"
+#include "SceneView.h"
+#include "ChestGUI.h"
 
 using namespace std;
 
@@ -28,11 +30,7 @@ public:
 		ChestState *state = (ChestState*) state_;
 		if (state->id != 0)
 		{
-			ItemStack istack;
-			istack.id = state->id;
-			istack.amount = state->amount;
-			state->id = state->amount = 0;
-			GetChar("CHRTODD")->getInventory()->pushStack(istack);
+			sceneView.openGUI(new ChestGUI(state));
 		};
 	};
 };

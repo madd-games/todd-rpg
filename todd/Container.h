@@ -51,6 +51,11 @@ public:
 	 * Pushes an itemstack into the best-fitting places in this container.
 	 */
 	void pushStack(ItemStack stack, int min = 10);
+
+	/**
+	 * Count the number of items with the given ID in this container.
+	 */
+	int count(int id);
 };
 
 #endif

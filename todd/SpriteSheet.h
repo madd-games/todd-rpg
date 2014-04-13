@@ -37,5 +37,6 @@ extern SpriteSheet *ssBars;
 extern SpriteSheet *ssSlot;
 extern SpriteSheet *ssItems;
 extern SpriteSheet *ssInfoPanel;
+extern SpriteSheet *ssChestGUI;
 
 #endif

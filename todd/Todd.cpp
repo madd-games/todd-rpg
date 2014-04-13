@@ -111,6 +111,7 @@ int main()
 	ssSlot = new SpriteSheet("slot.png", 26, 26);
 	ssItems = new SpriteSheet("items.png", 24, 24);
 	ssInfoPanel = new SpriteSheet("infopanel.png", 300, 480);
+	ssChestGUI = new SpriteSheet("chestgui.png", 300, 316);
 
 	InitMobs();
 	InitItems();

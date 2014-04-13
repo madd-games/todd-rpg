@@ -238,7 +238,17 @@ bool SceneView::canWalk(int x, int y)
 
 void SceneView::openDialog(DialogEntry *entry, string with)
 {
-	gui = new Dialog(entry, with);
+	openGUI(new Dialog(entry, with));
+};
+
+void SceneView::openGUI(GUI *gui)
+{
+	if (this->gui != NULL)
+	{
+		delete this->gui;
+	};
+
+	this->gui = gui;
 };
 
 int SceneView::width()

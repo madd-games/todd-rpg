@@ -11,6 +11,7 @@ TTF_Font *fntText;
 TTF_Font *fntMainMenu;
 TTF_Font *fntItemName;
 TTF_Font *fntItemCount;
+TTF_Font *fntBattleCaption;
 
 TTF_Font *LoadFont(string name, int size)
 {
@@ -29,6 +30,7 @@ void Text::Init()
 	fntMainMenu = LoadFont("bold.ttf", 24);
 	fntItemName = LoadFont("bold.ttf", 24);
 	fntItemCount = LoadFont("reg.ttf", 8);
+	fntBattleCaption = LoadFont("bold.ttf", 24);
 };
 
 Text::Text(string text, int red, int green, int blue, int alpha, TTF_Font *fnt, int wrap)
@@ -70,10 +72,34 @@ Text::~Text()
 	SDL_DestroyTexture(tex);
 };
 
-void Text::draw(int x, int y)
+void Text::draw(int x, int y, int xalign, int yalign)
 {
 	int w, h;
 	SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+
+	switch (xalign)
+	{
+	case LEFT:
+		break;
+	case RIGHT:
+		x -= w;
+		break;
+	case CENTER:
+		x -= w/2;
+		break;
+	};
+
+	switch (yalign)
+	{
+	case TOP:
+		break;
+	case CENTER:
+		y -= h/2;
+		break;
+	case BOTTOM:
+		y -= h;
+		break;
+	};
 
 	SDL_Rect rect;
 	rect.x = x;

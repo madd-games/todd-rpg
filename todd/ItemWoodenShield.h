@@ -1,14 +1,14 @@
 /**
- * ItemBasicSword.h
+ * ItemWoodenShield.h
  */
 
 #include "Item.h"
 #include "Element.h"
 
-class ItemBasicSword : public Item
+class ItemWoodenShield : public Item
 {
 public:
-	ItemBasicSword(int id) : Item(id)
+	ItemWoodenShield(int id) : Item(id)
 	{
 	};
 
@@ -19,12 +19,12 @@ public:
 
 	virtual string getName()
 	{
-		return "Basic Sword";
+		return "Wooden Shield";
 	};
 
 	virtual string getDesc()
 	{
-		return "A very basic sword, with a force of 10.";
+		return "A very basic shield made of wood. Increases your defence by 1 point.";
 	};
 
 	virtual bool isStackable()
@@ -34,11 +34,11 @@ public:
 
 	virtual int getType()
 	{
-		return Item::WEAPON;
+		return Item::SHIELD;
 	};
 
 	virtual void getStat(CharStats &stats)
 	{
-		stats.STR = 10;
+		stats.DEF = 1;
 	};
 };

@@ -1,0 +1,31 @@
+/**
+ * Skillset.cpp
+ * Defines skillsets.
+ */
+
+#include "Skill.h"
+#include "Skillset.h"
+#include <map>
+
+using namespace std;
+
+map<string, Skillset*> skillsets;
+
+Skillset skillsetTodd;
+Skillset skillsetCaspar;
+
+void InitSkillsets()
+{
+	// Todd
+	skillsets["CHRTODD"] = &skillsetTodd;
+	skillsetTodd.name = "Healing Magic";
+
+	// Caspar
+	skillsets["CHRCASPAR"] = &skillsetCaspar;
+	skillsetCaspar.name = "Fire Magic";
+};
+
+Skillset *GetSkillset(string charName)
+{
+	return skillsets[charName];
+};

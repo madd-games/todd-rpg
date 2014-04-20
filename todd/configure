@@ -7,6 +7,7 @@ GEN_CFLAGS="-Wall -Werror"
 GEN_LDFLAGS=
 EXE=
 NEED_FREETYPE="yes"
+DEBUG="no"
 
 if [ "$SRCDIR" = "." ]
 then
@@ -32,6 +33,10 @@ case $i in
 
 	--no-freetype)
 		NEED_FREETYPE="no"
+		;;
+
+	--debug)
+		DEBUG="yes"
 		;;
 
 	*)
@@ -107,6 +112,10 @@ $CXX -c .test.cpp -o .test.o >/dev/null 2>&1 || {
 rm -f .test.cpp .test.o
 
 CFLAGS="$GEN_CFLAGS $SDL_CFLAGS $FT_CFLAGS"
+if [ "$DEBUG" = "yes" ]
+then
+	CFLAGS="$CFLAGS -ggdb"
+fi
 LDFLAGS="$GEN_LDFLAGS -lSDL2_image -lSDL2_ttf $FT_LDFLAGS $SDL_LDFLAGS"
 
 echo "creating config.mk..."

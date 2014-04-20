@@ -26,6 +26,20 @@ private:
 	void drawPartyPanel();
 	void drawInventoryPanel();
 
+	/**
+	 * \brief In character's inventories, slots 0-9 have special use.
+	 *
+	 * This function returns whether item @id can be placed in slot @slot.
+	 */
+	bool isItemGoodForSlot(int id, int slot);
+
+	/**
+	 * \brief Draw the stats part of an item's description.
+	 *
+	 * Returns the height of the drawn text.
+	 */
+	int drawItemStatInfo(string statName, int value, int y);
+
 	ItemStack handleStack;
 
 public:

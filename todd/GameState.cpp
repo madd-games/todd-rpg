@@ -95,7 +95,8 @@ void NewGame()
 	mobFeminist->sceneID = 0;
 
 	// Chests
-	InitChest(0, 8, 1, 1, 10);
+	InitChest(0, 8, 1, Item::POTION, 10);
+	InitChest(0, 9, 1, Item::WOODEN_SHIELD, 1);
 };
 
 string GetPathToSaveSlot(int slot)

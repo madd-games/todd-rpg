@@ -61,6 +61,7 @@ void Container::pushStack(ItemStack stack, int min)
 			if (stk.id == 0)
 			{
 				set(i, stack);
+				break;
 			};
 		};
 	}

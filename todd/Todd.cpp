@@ -19,6 +19,8 @@
 #include "MainMenu.h"
 #include "Item.h"
 #include "ActiveTile.h"
+#include "Enemy.h"
+#include "Skillset.h"
 
 using namespace std;
 
@@ -112,10 +114,12 @@ int main()
 	ssItems = new SpriteSheet("items.png", 24, 24);
 	ssInfoPanel = new SpriteSheet("infopanel.png", 300, 480);
 	ssChestGUI = new SpriteSheet("chestgui.png", 300, 316);
+	ssBattleMenu = new SpriteSheet("battlemenu.png", 150, 200);
 
 	InitMobs();
 	InitItems();
 	InitActiveTiles();
+	InitSkillsets();
 	Text::Init();
 
 	Scene::LoadScenes();

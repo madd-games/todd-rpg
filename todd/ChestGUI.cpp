@@ -83,7 +83,7 @@ void ChestGUI::render()
 			stringstream ss2;
 			ss2 << chr->getInventory()->count(id);
 			Text txtCount(ss2.str(), 255, 255, 255, 255, fntText);
-			txtCount.draw(x+15+(48*i), y+298);
+			txtCount.draw(x+26+(48*i), y+298, Text::CENTER);
 		};
 	};
 

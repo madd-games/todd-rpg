@@ -8,6 +8,7 @@
 
 #include "Element.h"
 #include <string>
+#include "CharStats.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
 		NONE = 0,
 		POTION = 1,
 		BASIC_SWORD = 2,
+		WOODEN_SHIELD = 3,
 	};
 
 	enum
@@ -29,6 +31,10 @@ public:
 		PLOT = 0,
 		EXPENDABLE = 1,
 		WEAPON = 2,
+		SHIELD = 3,
+		HELMET = 4,
+		ARMOR = 5,
+		ACCESSORY = 6,
 	};
 
 	int id;
@@ -64,6 +70,13 @@ public:
 	 * NOTE: Damage (or healing) of items is unaffected by defence etc.
 	 */
 	virtual int getDamage();
+
+	/**
+	 * Fills the CharStats structure to which a reference is passed as the argument,
+	 * and is initialsied to zero, to reflect the effect on a character's statistics
+	 * when this item is equipped.
+	 */
+	virtual void getStat(CharStats &stats);
 };
 
 struct ItemStack

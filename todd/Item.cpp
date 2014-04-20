@@ -8,8 +8,11 @@
 #include <map>
 #include <sstream>
 #include <iostream>
+
+// Include item classes here.
 #include "ItemPotion.h"
 #include "ItemBasicSword.h"
+#include "ItemWoodenShield.h"
 
 using namespace std;
 
@@ -28,6 +31,10 @@ int Item::getType()
 int Item::getDamage()
 {
 	return 0;
+};
+
+void Item::getStat(CharStats &stats)
+{
 };
 
 void RegisterItem(int id, Item *item)
@@ -52,4 +59,5 @@ void InitItems()
 	itemMap.clear();
 	new ItemPotion(Item::POTION);
 	new ItemBasicSword(Item::BASIC_SWORD);
+	new ItemWoodenShield(Item::WOODEN_SHIELD);
 };

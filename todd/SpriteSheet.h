@@ -38,5 +38,6 @@ extern SpriteSheet *ssSlot;
 extern SpriteSheet *ssItems;
 extern SpriteSheet *ssInfoPanel;
 extern SpriteSheet *ssChestGUI;
+extern SpriteSheet *ssBattleMenu;
 
 #endif

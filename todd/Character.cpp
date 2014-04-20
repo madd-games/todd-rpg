@@ -87,6 +87,17 @@ void Character::setLevel(int level)
 	state->level = level;
 };
 
+int Character::getElement()
+{
+	MobInfo info = GetMobInfo(charInfo->mob);
+	return info.element;
+};
+
+CharStats *Character::getStats()
+{
+	return &charInfo->stats;
+};
+
 void Character::dealDirectDamage(int dmg)
 {
 	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
@@ -141,6 +152,7 @@ CharInfo charInfoTodd = {
 	"MOBTODD",
 	{5, 5, 5, 5, 20, -20, 0, 0},
 	{3, 1, 1, 1},
+	{2, 5, 0, 0},
 };
 Character charTodd("CHRTODD", &charInfoTodd, "INVTODD");
 
@@ -149,5 +161,6 @@ CharInfo charInfoCaspar = {
 	"MOBCASPAR",
 	{20, -30, 3, 3, 0, 0, 0, 0},
 	{2, 2, 2, 2},
+	{5, 2, 0, 0},
 };
 Character charCaspar("CHRCASPAR", &charInfoCaspar, "INVCASPAR");

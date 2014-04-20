@@ -17,6 +17,7 @@ extern TTF_Font *fntText;
 extern TTF_Font *fntMainMenu;
 extern TTF_Font *fntItemName;
 extern TTF_Font *fntItemCount;
+extern TTF_Font *fntBattleCaption;
 
 class Text
 {
@@ -24,11 +25,13 @@ private:
 	SDL_Texture *tex;
 
 public:
+	enum {LEFT, CENTER, RIGHT, TOP, BOTTOM};
+
 	static void Init();
 
 	Text(string text, int red = 0, int green = 0, int blue = 0, int alpha = 255, TTF_Font *fnt = fntText, int wrap = 0);
 	~Text();
-	void draw(int x, int y);
+	void draw(int x, int y, int xalign = LEFT, int yalign = TOP);
 };
 
 #endif

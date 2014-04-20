@@ -10,6 +10,9 @@
 #include "Text.h"
 #include <sstream>
 #include "Character.h"
+#include <iostream>
+
+using namespace std;
 
 #define	ANIM_TIME		1000
 
@@ -141,7 +144,21 @@ void GameMenu::handleEvent(SDL_Event *ev)
 							handleStack.amount--;
 							if (handleStack.amount == 0) handleStack.id = 0;
 							if (handleStack.id == 0) showCursor = true;
+							else showCursor = false;
 						};
+					};
+				}
+				else if ((rmx > (leftX+390)) && (rmx < (leftX+546)) && (rmy > 330) && (rmy < 356))
+				{
+					int slot = (rmx-(leftX+390))/26;
+					if (isItemGoodForSlot(handleStack.id, slot))
+					{
+						Character *chr = GetChar(GetPartyMember(xsel));
+						ItemStack stk = chr->getInventory()->get(slot);
+						Swap<int>(stk.id, handleStack.id);
+						chr->getInventory()->set(slot, stk);
+						if (handleStack.id == 0) showCursor = true;
+						else showCursor = false;
 					};
 				};
 			}
@@ -275,17 +292,18 @@ void GameMenu::drawPartyMember(int index, int x, int y)
 		Text txt4(chr->getName(), 255, 255, 255);
 		Text txt5(ss.str(), 0, 0, 255);
 
-		txt1.draw(x+75, y+12);
-		txt2.draw(x+75, y+32);
-		txt3.draw(x+75, y+52);
-		txt4.draw(x+15, y+50);
+		txt1.draw(x+99, y+12);
+		txt2.draw(x+99, y+32);
+		txt3.draw(x+99, y+52);
+		txt4.draw(x+41, y+50);
 		txt5.draw(x+15, y+65);
 
-		DrawBar(x+100, y+10, chr->getHP(), chr->getMaxHP(), 0);
-		DrawBar(x+100, y+30, chr->getMP(), chr->getMaxMP(), 1);
-		DrawBar(x+100, y+50, chr->getXP(), chr->getMaxXP(), 2);
+		DrawBar(x+124, y+10, chr->getHP(), chr->getMaxHP(), 0);
+		DrawBar(x+124, y+30, chr->getMP(), chr->getMaxMP(), 1);
+		DrawBar(x+124, y+50, chr->getXP(), chr->getMaxXP(), 2);
 
 		chr->getSpriteSheet()->draw(x+10, y+5, 0, false);
+		ssElements->draw(x+15, y+50, chr->getElement(), false);
 	};
 };
 
@@ -343,6 +361,7 @@ void GameMenu::drawInventoryPanel()
 					};
 				};
 
+				// Equipment
 				SDL_GetMouseState(&mx, &my);
 				int rmx = mx;
 				mx -= 390;
@@ -382,6 +401,16 @@ void GameMenu::drawInventoryPanel()
 		txtName.draw(leftX+54, 5);
 		Text txtDesc(itemSel->getDesc(), 255, 255, 255, 255, fntText, 300);
 		txtDesc.draw(leftX+2, 34);
+
+		int drawY = 350;
+		CharStats stats;
+		memset(&stats, 0, sizeof(CharStats));
+		itemSel->getStat(stats);
+
+		drawY += drawItemStatInfo("STR", stats.STR, drawY);
+		drawY += drawItemStatInfo("INT", stats.INT, drawY);
+		drawY += drawItemStatInfo("DEF", stats.DEF, drawY);
+		drawY += drawItemStatInfo("MDEF", stats.MDEF, drawY);
 	};
 
 	if (handleStack.id != 0)
@@ -397,4 +426,54 @@ void GameMenu::drawInventoryPanel()
 			text.draw(x-1, y+3);
 		};
 	};
+};
+
+bool GameMenu::isItemGoodForSlot(int id, int slot)
+{
+	if (id == 0)
+	{
+		return slot != 0;
+	}
+	else
+	{
+		Item *item = GetItem(id);
+		if (item->isStackable()) return false;
+
+		int type = item->getType();
+		if ((type == Item::WEAPON)    && (slot == 0)) return true;
+		if ((type == Item::SHIELD)    && (slot == 1)) return true;
+		if ((type == Item::HELMET)    && (slot == 2)) return true;
+		if ((type == Item::ARMOR)     && (slot == 3)) return true;
+		if ((type == Item::ACCESSORY) && (slot >= 4) && (slot <= 6)) return true;
+		return false;
+	};
+};
+
+int GameMenu::drawItemStatInfo(string statName, int value, int y)
+{
+	if (value == 0) return 0;
+
+	Text txtName(statName, 0, 0, 255, 255, fntText);
+	txtName.draw(leftX+5, y);
+
+	int red=0, green=0;
+	if (value < 0)
+	{
+		red = 255;
+		green = 0;
+	}
+	else
+	{
+		red = 0;
+		green = 255;
+	};
+	(void)red;
+	(void)green;
+	stringstream ss;
+	if (value > 0) ss << "+";
+	ss << value;
+	Text txtValue(ss.str(), red, green, 0, 255, fntText);
+	txtValue.draw(leftX+50, y);
+
+	return 18;
 };

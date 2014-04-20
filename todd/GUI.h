@@ -12,6 +12,7 @@
 class GUI
 {
 public:
+	virtual ~GUI();
 	virtual void handleEvent(SDL_Event *ev) = 0;
 	virtual void render() = 0;
 

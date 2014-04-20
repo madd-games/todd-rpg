@@ -10,6 +10,8 @@
 #include "Todd.h"
 #include "Text.h"
 #include "Timer.h"
+#include "BattleView.h"
+#include "EnemyFeminist.h"
 
 Dialog::Dialog(DialogEntry *entry, string with) : currentEntry(entry), with(with), letters(1), choice(0)
 {
@@ -92,7 +94,7 @@ void Dialog::render()
 		green = 255;
 		blue = 255;
 	};
-	Text cap(info.name, red, green, blue, 255, fntCaption);
+	Text cap(currentEntry->caption, red, green, blue, 255, fntCaption);
 	cap.draw(191, y+14);
 
 	if (info.mobSprite != NULL)
@@ -147,22 +149,33 @@ void FemSaveGame()
 	SaveGame(3);
 };
 
+void FemFight()
+{
+	StartBattle(new EnemyFeminist);
+};
+
 DialogEntry dialFeministRapeCulture[] = {
-	{"MOBFEMINIST", "But Rape Culture is very bad :'("},
+	{"MOBFEMINIST", "Feminist", "But Rape Culture is very bad :'("},
+	{NULL, NULL, NULL}
+};
+
+DialogEntry dialFeministFight[] = {
+	{"MOBFEMINIST", "Feminist", "Very well! Let's have it broth!", FemFight},
 	{NULL, NULL, NULL}
 };
 
 DialogEntry dialEmpty = {NULL, NULL, NULL};
 
 DialogEntry dialFeminist[] = {
-	{"MOBFEMINIST", "Stop oppressing me!"},
-	{"MOBTODD", "I'm not."},
-	{"MOBFEMINIST", "You are!"},
-	{"MOBTODD", "Nah."},
-	{"MOBFEMINIST", "I hate you so much I'll save the game!", FemSaveGame},
-	{"MOBTODD", NULL, NULL, 2, {
+	{"MOBFEMINIST", "Feminist", "Stop oppressing me!"},
+	{"MOBTODD", "Todd", "I'm not."},
+	{"MOBFEMINIST", "Feminist", "You are!"},
+	{"MOBTODD", "Todd", "Nah."},
+	{"MOBFEMINIST", "Feminist", "I hate you so much I'll save the game!", FemSaveGame},
+	{"MOBTODD", "Todd", NULL, NULL, 3, {
 		{"K.", &dialEmpty},
-		{"I support Rape Culture", dialFeministRapeCulture}
+		{"I support Rape Culture", dialFeministRapeCulture},
+		{"I want to fight you because I have swag.", dialFeministFight}
 	}},
 	{NULL, NULL, NULL}
 };

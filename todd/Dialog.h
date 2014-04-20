@@ -30,6 +30,11 @@ struct DialogEntry
 	const char *speaker;
 
 	/**
+	 * The caption (usually the display name of the mob)
+	 */
+	const char *caption;
+
+	/**
 	 * What they're saying - NULL will cause the option mode to be applied.
 	 */
 	const char *text;

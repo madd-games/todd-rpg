@@ -11,16 +11,9 @@
 #include <string>
 #include "SpriteSheet.h"
 #include "Container.h"
+#include "CharStats.h"
 
 using namespace std;
-
-struct CharStats
-{
-	int STR;
-	int INT;
-	int DEF;
-	int MDEF;
-};
 
 struct CharState
 {
@@ -47,6 +40,8 @@ struct CharInfo
 	 * When this character levels up, those values will be added to their current stats.
 	 */
 	CharStats levelUpStats;
+
+	CharStats stats;
 };
 
 class Character
@@ -72,6 +67,10 @@ public:
 
 	int getLevel();
 	void setLevel(int level);
+
+	int getElement();
+
+	CharStats *getStats();
 
 	/**
 	 * \brief Deals damage without checking resistances etc.

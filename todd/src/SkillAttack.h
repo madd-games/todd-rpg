@@ -24,7 +24,9 @@ public:
 			stage++;
 			if (stage == 1)
 			{
-				battleView.attack(target, AttackType::PHYSICAL, Element::NEUTRAL, 10);
+				CharStats stats = battleView.getStats(battleView.getTurn());
+				int damage = 2 * (stats.STR + battleView.getLevel(battleView.getTurn()));
+				battleView.attack(target, AttackType::PHYSICAL, Element::NEUTRAL, damage);
 			};
 			time = Timer::Read();
 		};

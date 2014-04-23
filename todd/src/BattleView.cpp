@@ -14,6 +14,7 @@
 #include "Skillset.h"
 #include <stdlib.h>
 #include "SceneView.h"
+#include "LootView.h"
 
 using namespace std;
 
@@ -31,6 +32,12 @@ void BattleView::init(Enemy *a, Enemy *b, Enemy *c, Enemy *d)
 	mode = Mode::MENU;
 	optionSel = 0;
 	canFlee = true;
+
+	loots.clear();
+	if (a != NULL) a->dropItems(loots);
+	if (b != NULL) b->dropItems(loots);
+	if (c != NULL) c->dropItems(loots);
+	if (d != NULL) d->dropItems(loots);
 };
 
 void BattleView::handleEvent(SDL_Event *ev)
@@ -326,6 +333,7 @@ void BattleView::render()
 	if ((!anyAlive) && (mode == Mode::MENU))
 	{
 		mode = Mode::VICTORY;
+		victoryTimer = Timer::Read();
 	};
 
 	// Render the allies.
@@ -460,7 +468,7 @@ void BattleView::render()
 	}
 	else if (mode == Mode::SKILL_SELECT)
 	{
-		ssSkillMenu->draw(660, 0, 0, false);
+		ssSkillMenu->draw(360, 0, 0, false);
 		Skillset *skillset = GetSkillset(GetPartyMember(turn));
 		int i;
 		int plotY = 2;
@@ -483,6 +491,12 @@ void BattleView::render()
 			Text text(skill->getName(), red, green, blue, 255);
 			text.draw(710, plotY);
 
+			if (i == skillSelIndex)
+			{
+				Text desc(skill->getDesc(), 255, 255, 255, 255, fntText, 295);
+				desc.draw(362, 2);
+			};
+
 			plotY += 24;
 		};
 	}
@@ -490,6 +504,12 @@ void BattleView::render()
 	{
 		Text text("VICTORY!", 255, 255, 0, 255, fntCaption);
 		text.draw(480, 240, Text::CENTER, Text::CENTER);
+
+		if ((Timer::Read() - victoryTimer) >= 2000)
+		{
+			lootView.init(loots);
+			currentView = &lootView;
+		};
 	};
 
 	vector<DamageDisplay>::iterator it = dmgDisplays.begin();
@@ -610,6 +630,24 @@ int* BattleView::getResistances(int entity)
 	{
 		return enemies[entity-4]->resist;
 	};
+};
+
+int BattleView::getLevel(int entity)
+{
+	if (entity < 4)
+	{
+		Character *chr = GetChar(GetPartyMember(entity));
+		return chr->getLevel();
+	}
+	else
+	{
+		return enemies[entity-4]->level;
+	};
+};
+
+int BattleView::getTurn()
+{
+	return turn;
 };
 
 void BattleView::attack(int target, int type, int element, int damage)

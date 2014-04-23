@@ -24,7 +24,9 @@ public:
 			stage++;
 			if (stage == 1)
 			{
-				battleView.attack(target, AttackType::MAGIC, Element::LIGHT, -10);
+				CharStats stats = battleView.getStats(battleView.getTurn());
+				int heal = 2 * (stats.INT + battleView.getLevel(battleView.getTurn())/2);
+				battleView.attack(target, AttackType::MAGIC, Element::LIGHT, -heal);
 			};
 			time = Timer::Read();
 		};
@@ -48,6 +50,11 @@ public:
 	virtual string getName()
 	{
 		return "Heal";
+	};
+
+	virtual string getDesc()
+	{
+		return "Restores the target's HP using LIGHT-elemental healing.";
 	};
 };
 

@@ -115,7 +115,7 @@ int main()
 	ssInfoPanel = new SpriteSheet("infopanel.png", 300, 480);
 	ssChestGUI = new SpriteSheet("chestgui.png", 300, 316);
 	ssBattleMenu = new SpriteSheet("battlemenu.png", 150, 200);
-	ssSkillMenu = new SpriteSheet("skillmenu.png", 300, 480);
+	ssSkillMenu = new SpriteSheet("skillmenu.png", 600, 480);
 
 	InitMobs();
 	InitItems();

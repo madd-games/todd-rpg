@@ -21,4 +21,7 @@ void Skill::init(int target)
 	(void)target;
 };
 
-
+string Skill::getDesc()
+{
+	return "";
+};

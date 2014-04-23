@@ -65,6 +65,11 @@ private:
 	bool canMove(int entity);
 	void schedTurn();
 	bool canFlee;
+	unsigned long victoryTimer;
+
+	// This vector gets filled with loots at the start of a battle;
+	// they get given to the player if they win.
+	vector<int> loots;
 
 public:
 	void init(Enemy *a, Enemy *b, Enemy *c, Enemy *d);
@@ -74,6 +79,8 @@ public:
 
 	CharStats getStats(int entity);
 	int *getResistances(int entity);
+	int getLevel(int entity);
+	int getTurn();
 
 	/**
 	 * \brief Inflict damage on a target.

@@ -11,6 +11,7 @@
 #include "Element.h"
 #include "Skill.h"
 #include "CharStats.h"
+#include <vector>
 
 using namespace std;
 
@@ -34,6 +35,15 @@ public:
 	 * and must also initialise it.
 	 */
 	virtual Skill *plan() = 0;
+
+	/**
+	 * \brief Called at the end of a successful battle.
+	 *
+	 * The argument is a reference to a vector of ints, that shall be filled with all the item IDs
+	 * that this enemy drops. The vector may already contain elements! By default, this function does
+	 * nothing.
+	 */
+	virtual void dropItems(vector<int> &drops);
 };
 
 #endif

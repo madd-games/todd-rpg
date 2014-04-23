@@ -50,6 +50,11 @@ public:
 	 * \brief Return the name of this skill.
 	 */
 	virtual string getName() = 0;
+
+	/**
+	 * \brief Return the description for this skill (default is an empty string).
+	 */
+	virtual string getDesc();
 };
 
 extern Skill *skillAttack;

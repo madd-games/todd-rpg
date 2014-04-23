@@ -1,4 +1,4 @@
-SRC := $(wildcard $(SRCDIR)/*.cpp)
+SRC := $(wildcard $(SRCDIR)/src/*.cpp)
 CPP_FILES := $(notdir $(SRC))
 DEP := $(CPP_FILES:.cpp=.d)
 OBJ := $(CPP_FILES:.cpp=.o)
@@ -10,13 +10,13 @@ todd$(EXE): $(OBJ)
 
 -include $(DEP)
 
-%.d: $(SRCDIR)/%.cpp
+%.d: $(SRCDIR)/src/%.cpp
 	set -e; rm -f $@; \
 	$(CXX) -M $(CFLAGS) $< > $@.$$$$; \
 	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
-%.o: $(SRCDIR)/%.cpp
+%.o: $(SRCDIR)/src/%.cpp
 	$(CXX) -c $< -o $@ $(CFLAGS)
 
 install: todd

@@ -92,7 +92,7 @@ int main()
 		return 1;
 	};
 
-	SDL_Renderer *ren = SDL_CreateRenderer(win, -1, /*SDL_RENDERER_ACCELERATED |*/ SDL_RENDERER_PRESENTVSYNC);
+	SDL_Renderer *ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	sdlRender = ren;
 	if (ren == NULL)
 	{
@@ -116,6 +116,7 @@ int main()
 	ssChestGUI = new SpriteSheet("chestgui.png", 300, 316);
 	ssBattleMenu = new SpriteSheet("battlemenu.png", 150, 200);
 	ssSkillMenu = new SpriteSheet("skillmenu.png", 600, 480);
+	ssSpark = new SpriteSheet("spark.png", 16, 16);
 
 	InitMobs();
 	InitItems();

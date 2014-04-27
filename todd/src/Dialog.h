@@ -70,5 +70,6 @@ public:
 };
 
 extern DialogEntry dialFeminist[];
+extern DialogEntry dialCrystal[];
 
 #endif

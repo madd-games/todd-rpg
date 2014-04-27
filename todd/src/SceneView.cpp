@@ -27,6 +27,7 @@ TileMapping tileMappings[] = {
 	{2, 2},				// ??? (don't know yet)
 	{3, 3},				// Tree (use in hard layer)
 	{4, 0},				// Chest (active tile)
+	{5, 0},				// Save crystal (active tile, use in hard layer).
 	// END
 	{0, 0}
 };
@@ -101,6 +102,8 @@ void SceneView::handleEvent(SDL_Event *ev)
 		}
 		else if (ev->key.keysym.sym == SDLK_x)
 		{
+			if (keyLeft || keyRight || keyUp || keyDown) return;
+
 			int relX=0, relY=0, opposite=0;
 			MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
 

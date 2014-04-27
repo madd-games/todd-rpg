@@ -24,9 +24,21 @@ public:
 			stage++;
 			if (stage == 1)
 			{
+				int element;
+				if (battleView.getTurn() < 4)
+				{
+					Character *chr = GetChar(GetPartyMember(battleView.getTurn()));
+					Item *wep = GetItem(chr->getInventory()->get(0).id);
+					element = wep->getElement();
+				}
+				else
+				{
+					element = Element::NEUTRAL;
+				};
+
 				CharStats stats = battleView.getStats(battleView.getTurn());
 				int damage = 2 * (stats.STR + battleView.getLevel(battleView.getTurn()));
-				battleView.attack(target, AttackType::PHYSICAL, Element::NEUTRAL, damage);
+				battleView.attack(target, AttackType::PHYSICAL, element, damage);
 			};
 			time = Timer::Read();
 		};

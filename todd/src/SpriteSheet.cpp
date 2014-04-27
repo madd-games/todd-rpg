@@ -20,6 +20,7 @@ SpriteSheet *ssInfoPanel;
 SpriteSheet *ssChestGUI;
 SpriteSheet *ssBattleMenu;
 SpriteSheet *ssSkillMenu;
+SpriteSheet *ssSpark;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

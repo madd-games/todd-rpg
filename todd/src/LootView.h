@@ -16,9 +16,11 @@ class LootView : public View
 private:
 	vector<int> *lootVector;
 	int lootIndex;
+	int chrSel;
 
 public:
 	void init(vector<int> &lootVector);
+	virtual void handleEvent(SDL_Event *ev);
 	virtual void render();
 };
 

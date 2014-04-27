@@ -78,8 +78,7 @@ void Character::setXP(int xp, int maxxp)
 void Character::train(int xp)
 {
 	setXP(getXP()+xp);
-	// TODO: level up statistics and stuff somewhere...
-	while (getXP() > getMaxXP())
+	while (getXP() >= getMaxXP())
 	{
 		setXP(getXP()-getMaxXP(), getMaxXP() * 1.5);
 		setLevel(getLevel()+1);

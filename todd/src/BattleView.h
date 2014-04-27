@@ -21,6 +21,7 @@ namespace AttackType
 	{
 		PHYSICAL,
 		MAGIC,
+		DIRECT,
 	};
 };
 
@@ -38,6 +39,7 @@ private:
 			ITEMS,
 			VICTORY,
 			SKILL_SELECT,
+			ITEM_SELECT,
 		};
 	};
 
@@ -50,7 +52,17 @@ private:
 		unsigned long start;
 	};
 
+	struct Particle
+	{
+		SpriteSheet *ss;
+		unsigned long timeStart;
+		unsigned long timeStage;		// time taken between each stage
+		int numStages;
+		int x, y;				// of the top-left corner.
+	};
+
 	vector<DamageDisplay> dmgDisplays;
+	vector<Particle> particles;
 
 	vector<Enemy*> enemies;
 	int turn;
@@ -59,6 +71,7 @@ private:
 	int optionSel;
 	int targetSel;
 	int skillSelIndex;
+	int itemSelIndex;
 
 	Skill *skillSel;
 
@@ -94,6 +107,25 @@ public:
 
 	int getRandomAlly(bool allowDead = false);
 	void setFlee(bool flee);
+
+	// Particle types.
+	enum
+	{
+		SPARK,
+	};
+
+	/**
+	 * \brief Emit a new particle.
+	 *
+	 * The coordinates offX and offY specify the position of the CENTER of the particle, relative
+	 * to the entity.
+	 *
+	 * \param entity The entity on which this particle shall be emitted.
+	 * \param offX Offset from the left side of the entity where the particle shall appear.
+	 * \param offY Offset from the top of the entity where the particle shall appear.
+	 * \param type Type of particle (see above enum).
+	 */
+	void emitParticle(int entity, int offX, int offY, int type);
 };
 
 extern BattleView battleView;

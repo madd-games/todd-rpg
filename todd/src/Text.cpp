@@ -35,6 +35,12 @@ void Text::Init()
 
 Text::Text(string text, int red, int green, int blue, int alpha, TTF_Font *fnt, int wrap)
 {
+	if (text.size() == 0)
+	{
+		tex = NULL;
+		return;
+	};
+
 	SDL_Color color;
 	color.r = red;
 	color.g = green;
@@ -69,11 +75,13 @@ Text::Text(string text, int red, int green, int blue, int alpha, TTF_Font *fnt, 
 
 Text::~Text()
 {
-	SDL_DestroyTexture(tex);
+	if (tex != NULL) SDL_DestroyTexture(tex);
 };
 
 void Text::draw(int x, int y, int xalign, int yalign)
 {
+	if (tex == NULL) return;
+
 	int w, h;
 	SDL_QueryTexture(tex, NULL, NULL, &w, &h);
 

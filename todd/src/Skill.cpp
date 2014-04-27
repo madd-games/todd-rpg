@@ -6,10 +6,14 @@
 #include "Skill.h"
 #include "BattleView.h"
 #include "Timer.h"
+#include "Item.h"
+#include "Character.h"
+#include "Todd.h"
 
 // Include skills here.
 #include "SkillAttack.h"
 #include "SkillHeal.h"
+#include "SkillPotion.h"
 
 bool Skill::isUsableAgainstDead()
 {
@@ -24,4 +28,9 @@ void Skill::init(int target)
 string Skill::getDesc()
 {
 	return "";
+};
+
+int Skill::getManaUse()
+{
+	return 0;
 };

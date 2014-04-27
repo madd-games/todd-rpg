@@ -13,6 +13,7 @@ class EnemyFeminist : public Enemy
 public:
 	EnemyFeminist();
 	virtual Skill *plan();
+	virtual void dropItems(vector<int> &drops);
 };
 
 #endif

@@ -55,9 +55,15 @@ public:
 	 * \brief Return the description for this skill (default is an empty string).
 	 */
 	virtual string getDesc();
+
+	/**
+	 * \brief Return the amount of mana used by this skill (default is 0).
+	 */
+	virtual int getManaUse();
 };
 
 extern Skill *skillAttack;
 extern Skill *skillHeal;
+extern Skill *skillPotion;
 
 #endif

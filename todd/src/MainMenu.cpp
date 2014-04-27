@@ -12,6 +12,7 @@
 #include "GameState.h"
 #include "SceneView.h"
 #include "Mob.h"
+#include "LoadView.h"
 
 using namespace std;
 
@@ -35,13 +36,8 @@ void MainMenuNewGame()
 
 void MainMenuLoadGame()
 {
-	// TODO: slot selection
-	NewGame();
-	LoadGame(3);
-
-	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
-	sceneView.setScene(state->sceneID);
-	currentView = &sceneView;
+	loadView.init();
+	currentView = &loadView;
 };
 
 void MainMenuQuitGame()

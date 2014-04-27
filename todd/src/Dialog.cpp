@@ -12,6 +12,8 @@
 #include "Timer.h"
 #include "BattleView.h"
 #include "EnemyFeminist.h"
+#include "SaveView.h"
+#include "Character.h"
 
 Dialog::Dialog(DialogEntry *entry, string with) : currentEntry(entry), with(with), letters(1), choice(0)
 {
@@ -82,13 +84,24 @@ void Dialog::render()
 		};
 	};
 
-	MobInfo info = GetMobInfo(currentEntry->speaker);
+	int element;
+	MobInfo info;
+	info.mobSprite = NULL;
 	int y = (SCREEN_HEIGHT*48)-200;
-	ssDialog->draw(0, y, info.element, false);
+	if (currentEntry->speaker != NULL)
+	{
+		info = GetMobInfo(currentEntry->speaker);
+		element = info.element;
+	}
+	else
+	{
+		element = Element::NEUTRAL;
+	};
+	ssDialog->draw(0, y, element, false);
 
 	int red=0, green=0, blue=0;
-	if ((info.element == Element::WATER) || (info.element == Element::DARKNESS)
-		|| (info.element == Element::NEUTRAL))
+	if ((element == Element::WATER) || (element == Element::DARKNESS)
+		|| (element == Element::NEUTRAL))
 	{
 		red = 255;
 		green = 255;
@@ -132,7 +145,7 @@ void Dialog::render()
 
 bool Dialog::isLiving()
 {
-	bool live = currentEntry->speaker != NULL;
+	bool live = currentEntry->caption != NULL;
 	if (!live)
 	{
 		if (with != "")
@@ -144,11 +157,7 @@ bool Dialog::isLiving()
 	return live;
 };
 
-void FemSaveGame()
-{
-	SaveGame(3);
-};
-
+// FEMINIST
 void FemFight()
 {
 	StartBattle(new EnemyFeminist);
@@ -174,11 +183,47 @@ DialogEntry dialFeminist[] = {
 	{"MOBTODD", "Todd", "I'm not."},
 	{"MOBFEMINIST", "Feminist", "You are!"},
 	{"MOBTODD", "Todd", "Nah."},
-	{"MOBFEMINIST", "Feminist", "I hate you so much I'll save the game!", FemSaveGame},
+	{"MOBFEMINIST", "Feminist", "Could you please leave? :/"},
 	{"MOBTODD", "Todd", NULL, NULL, 3, {
 		{"K.", &dialEmpty},
 		{"I support Rape Culture", dialFeministRapeCulture},
 		{"I want to fight you because I have swag.", dialFeministFight}
+	}},
+	{NULL, NULL, NULL}
+};
+
+// CRYSTAL
+void CrystalHeal()
+{
+	int i;
+	for (i=0; i<4; i++)
+	{
+		string name = GetPartyMember(i);
+		if (name != "")
+		{
+			Character *chr = GetChar(name);
+			chr->setHP(chr->getMaxHP());
+			chr->setMP(chr->getMaxMP());
+		};
+	};
+};
+
+void CrystalSave()
+{
+	saveView.init();
+	currentView = &saveView;
+};
+
+DialogEntry dialCrystalSave[] = {
+	{NULL, "Magic Crystal", "Basically, press X right now. I can't be bothered to put weird messages here ~Mariusz", CrystalSave},
+	{NULL, NULL, NULL}
+};
+
+DialogEntry dialCrystal[] = {
+	{NULL, "Magic Crystal", "You shall be healed!", CrystalHeal},
+	{"MOBTODD", "Todd", NULL, NULL, 2, {
+		{"Save...", dialCrystalSave},
+		{"Leave...", &dialEmpty}
 	}},
 	{NULL, NULL, NULL}
 };

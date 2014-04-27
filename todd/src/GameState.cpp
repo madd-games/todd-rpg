@@ -26,15 +26,6 @@
 using namespace std;
 
 /**
- * This 8-byte header is located at offset 0 in every .sav file.
- */
-struct SaveHeader
-{
-	uint8_t			magic[4];		/* "TODD" */
-	uint32_t		count;			/* number of state segments */
-} __attribute__ ((packed));
-
-/**
  * This 20-byte header is prefixed before every segment in a .sav file.
  */
 struct SegmentHeader
@@ -172,7 +163,7 @@ void LoadGame(int slot)
 	ifs.close();
 };
 
-void SaveGame(int slot)
+void SaveGame(int slot, string name)
 {
 	string path = GetPathToSaveSlot(slot);
 	ofstream ofs(path.c_str(), ios::binary);
@@ -184,6 +175,9 @@ void SaveGame(int slot)
 	SaveHeader savhead;
 	memcpy(savhead.magic, "TODD", 4);
 	savhead.count = gameState.size();
+	char buf[33];
+	strcpy(buf, name.c_str());
+	memcpy(savhead.name, buf, 32);
 	ofs.write((const char*) &savhead, sizeof(SaveHeader));
 
 	map<string, GameStateSegment>::iterator it;

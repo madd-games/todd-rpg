@@ -7,6 +7,8 @@
 #include "SpriteSheet.h"
 #include "Mob.h"
 #include "BattleView.h"
+#include "Item.h"
+#include <time.h>
 
 EnemyFeminist::EnemyFeminist()
 {
@@ -44,4 +46,11 @@ Skill *EnemyFeminist::plan()
 		skillHeal->init(4);
 		return skillHeal;
 	};
+};
+
+void EnemyFeminist::dropItems(vector<int> &drops)
+{
+	drops.push_back(Item::POTION);
+	drops.push_back(Item::POTION);
+	drops.push_back(Item::BASIC_SWORD);
 };

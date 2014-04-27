@@ -15,10 +15,21 @@
 #include <stdlib.h>
 #include "SceneView.h"
 #include "LootView.h"
+#include "Item.h"
+#include <time.h>
 
 using namespace std;
 
 BattleView battleView;
+
+#define	NUM_EXPENDABLE_ITEMS		1
+int expendableItems[NUM_EXPENDABLE_ITEMS] = {
+	Item::POTION
+};
+
+Skill *itemSkills[NUM_EXPENDABLE_ITEMS] = {
+	skillPotion
+};
 
 void BattleView::init(Enemy *a, Enemy *b, Enemy *c, Enemy *d)
 {
@@ -33,6 +44,8 @@ void BattleView::init(Enemy *a, Enemy *b, Enemy *c, Enemy *d)
 	optionSel = 0;
 	canFlee = true;
 
+	dmgDisplays.clear();
+	particles.clear();
 	loots.clear();
 	if (a != NULL) a->dropItems(loots);
 	if (b != NULL) b->dropItems(loots);
@@ -95,6 +108,11 @@ void BattleView::handleEvent(SDL_Event *ev)
 				{
 					skillSelIndex = 0;
 					mode = Mode::SKILL_SELECT;
+				}
+				else if (optionSel == 2) // Items
+				{
+					itemSelIndex = 0;
+					mode = Mode::ITEM_SELECT;
 				}
 				else if (optionSel == 3) // Wait
 				{
@@ -249,6 +267,11 @@ void BattleView::handleEvent(SDL_Event *ev)
 			}
 			else if (ev->key.keysym.sym == SDLK_x)
 			{
+				Character *chr = GetChar(GetPartyMember(turn));
+				int mana = chr->getMP() - skillSel->getManaUse();
+				if (mana < 0) mana = 0;
+				chr->setMP(mana);
+
 				skillSel->init(targetSel);
 				mode = Mode::SKILL;
 			};
@@ -272,11 +295,15 @@ void BattleView::handleEvent(SDL_Event *ev)
 				int limit = (int) skillset->skills.size() - 1;
 				if (skillSelIndex != limit) skillSelIndex++;
 			}
-			else if (ev->key.keysym.sym == SDLK_x)
+			else if ((ev->key.keysym.sym == SDLK_x) || (ev->key.keysym.sym == SDLK_RIGHT))
 			{
 				Skillset *skillset = GetSkillset(GetPartyMember(turn));
 				skillSel = skillset->skills[skillSelIndex];
-				mode = Mode::TARGET;
+				Character *chr = GetChar(GetPartyMember(turn));
+				if (chr->getMP() < skillSel->getManaUse())
+				{
+					return;
+				};
 				mode = Mode::TARGET;
 
 				if (!skillSel->isOffensive())
@@ -308,6 +335,66 @@ void BattleView::handleEvent(SDL_Event *ev)
 
 					targetSel = sel + 4;
 				};
+			};
+		};
+	}
+	else if (mode == Mode::ITEM_SELECT)
+	{
+		if (ev->type == SDL_KEYDOWN)
+		{
+			if (ev->key.keysym.sym == SDLK_z)
+			{
+				mode = Mode::MENU;
+			}
+			else if ((ev->key.keysym.sym == SDLK_x) || (ev->key.keysym.sym == SDLK_RIGHT))
+			{
+				int id = expendableItems[itemSelIndex];
+				Character *chr = GetChar(GetPartyMember(turn));
+				Container *cont = chr->getInventory();
+				if (cont->count(id) == 0)
+				{
+					return;
+				};
+
+				skillSel = itemSkills[itemSelIndex];
+				mode = Mode::TARGET;
+				if (!skillSel->isOffensive())
+				{
+					targetSel = turn;
+				}
+				else
+				{
+					int sel = 0;
+					while (1)
+					{
+						Enemy *enemy = enemies[sel];
+						if (enemy == NULL)
+						{
+							sel++;
+						}
+						else
+						{
+							if ((enemy->hp == 0) && (!skillSel->isUsableAgainstDead()))
+							{
+								sel++;
+							}
+							else
+							{
+								break;
+							};
+						};
+					};
+
+					targetSel = sel + 4;
+				};
+			}
+			else if (ev->key.keysym.sym == SDLK_UP)
+			{
+				if (itemSelIndex != 0) itemSelIndex--;
+			}
+			else if (ev->key.keysym.sym == SDLK_DOWN)
+			{
+				if (itemSelIndex != (NUM_EXPENDABLE_ITEMS-1)) itemSelIndex++;
 			};
 		};
 	};
@@ -489,12 +576,61 @@ void BattleView::render()
 			Skill *skill = skillset->skills[i];
 			ssElements->draw(686, plotY, skill->getElement(), false);
 			Text text(skill->getName(), red, green, blue, 255);
-			text.draw(710, plotY);
+			text.draw(710, plotY+2);
 
 			if (i == skillSelIndex)
 			{
 				Text desc(skill->getDesc(), 255, 255, 255, 255, fntText, 295);
 				desc.draw(362, 2);
+			};
+
+			stringstream ss;
+			ss << skillset->skills[i]->getManaUse();
+			Text txtMana(ss.str(), red, green, blue, 255);
+			txtMana.draw(958, plotY+2, Text::RIGHT);
+
+			plotY += 24;
+		};
+	}
+	else if (mode == Mode::ITEM_SELECT)
+	{
+		ssSkillMenu->draw(360, 0, 0, false);
+		int plotY = 2;
+		int i;
+		for (i=0; i<NUM_EXPENDABLE_ITEMS; i++)
+		{
+			int red=255, green=255, blue=255;
+			if (itemSelIndex == i)
+			{
+				int x = 662;
+				if ((Timer::Read() % 1000) < 500) x += 2;
+				ssCursor->draw(x, plotY, 0, false);
+
+				blue = 255;
+				green = 127;
+				red = 0;
+			};
+
+			Character *chr = GetChar(GetPartyMember(turn));
+			int count = chr->getInventory()->count(expendableItems[i]);
+			if (count > 0)
+			{
+				Item *item = GetItem(expendableItems[i]);
+				ssItems->draw(686, plotY, expendableItems[i], false);
+
+				Text text(item->getName(), red, green, blue, 255);
+				text.draw(710, plotY+2);
+
+				stringstream ss;
+				ss << count;
+				Text txtCount(ss.str(), red, green, blue);
+				txtCount.draw(958, plotY+2, Text::RIGHT);
+
+				if (i == itemSelIndex)
+				{
+					Text desc(item->getDesc(), 255, 255, 255, 255, fntText, 295);
+					desc.draw(362, 2);
+				};
 			};
 
 			plotY += 24;
@@ -512,6 +648,23 @@ void BattleView::render()
 		};
 	};
 
+	// Render particles.
+	vector<Particle>::iterator pit = particles.begin();
+	while (pit != particles.end())
+	{
+		int stage = (int)((Timer::Read() - pit->timeStart) / pit->timeStage);
+		if (stage >= pit->numStages)
+		{
+			pit = particles.erase(pit);
+		}
+		else
+		{
+			pit->ss->draw(pit->x, pit->y, stage, false);
+			pit++;
+		};
+	};
+
+	// Render damage displays.
 	vector<DamageDisplay>::iterator it = dmgDisplays.begin();
 	while (it != dmgDisplays.end())
 	{
@@ -574,6 +727,7 @@ void BattleView::schedTurn()
 
 	if (turn < 4)
 	{
+		optionSel = 0;
 		mode = Mode::MENU;
 	}
 	else
@@ -661,7 +815,7 @@ void BattleView::attack(int target, int type, int element, int damage)
 		damage += damage * ustats.STR / 100;
 		damage -= damage * tstats.DEF / 100;
 	}
-	else
+	else if (type == AttackType::MAGIC)
 	{
 		damage += damage * ustats.INT / 100;
 		damage -= damage * tstats.MDEF / 100;
@@ -691,8 +845,8 @@ void BattleView::attack(int target, int type, int element, int damage)
 			if (name != "")
 			{
 				Character *chr = GetChar(name);
-				int xp = damage * 0.5;
-				if (i == turn) xp = damage * 0.75;
+				int xp = 5 * chr->getLevel();
+				if (i == turn) xp *= 2;
 				if (xp < 0) xp = -xp;
 				chr->train(xp);
 			};
@@ -756,6 +910,39 @@ int BattleView::getRandomAlly(bool allowDead)
 void BattleView::setFlee(bool flee)
 {
 	canFlee = flee;
+};
+
+void BattleView::emitParticle(int entity, int offX, int offY, int type)
+{
+	int x, y;
+	if (entity < 4)
+	{
+		x = 348;
+		y = 100 + 50 * entity;
+	}
+	else
+	{
+		x = 500;
+		y = 100 + 50 * (entity-4);
+	};
+
+	Particle part;
+	part.x = x + offX;
+	part.y = y + offY;
+	part.timeStart = Timer::Read();
+
+	switch (type)
+	{
+	case SPARK:
+		part.ss = ssSpark;
+		part.timeStage = 100;
+		part.numStages = 5;
+		part.x -= 8;
+		part.y -= 8;
+		break;
+	};
+
+	particles.push_back(part);
 };
 
 void StartBattle(Enemy *a, Enemy *b, Enemy *c, Enemy *d)

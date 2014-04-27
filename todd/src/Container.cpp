@@ -116,3 +116,19 @@ int Container::count(int id)
 	};
 	return result;
 };
+
+void Container::decrItem(int id)
+{
+	int i;
+	for (i=0; i<getSize(); i++)
+	{
+		ItemStack stack = get(i);
+		if (stack.id == id)
+		{
+			stack.amount--;
+			if (stack.amount == 0) stack.id = 0;
+			set(i, stack);
+			break;
+		};
+	};
+};

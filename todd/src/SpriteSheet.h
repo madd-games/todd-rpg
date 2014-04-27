@@ -40,5 +40,6 @@ extern SpriteSheet *ssInfoPanel;
 extern SpriteSheet *ssChestGUI;
 extern SpriteSheet *ssBattleMenu;
 extern SpriteSheet *ssSkillMenu;
+extern SpriteSheet *ssSpark;
 
 #endif

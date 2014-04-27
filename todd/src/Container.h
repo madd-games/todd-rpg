@@ -56,6 +56,11 @@ public:
 	 * Count the number of items with the given ID in this container.
 	 */
 	int count(int id);
+
+	/**
+	 * Reduces the number of items with the given ID by 1.
+	 */
+	void decrItem(int id);
 };
 
 #endif

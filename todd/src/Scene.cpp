@@ -8,6 +8,10 @@
 #include <fstream>
 #include <string.h>
 #include <map>
+#include "Mob.h"
+#include "GameState.h"
+#include "SceneView.h"
+#include "OverworldView.h"
 
 using namespace std;
 
@@ -17,6 +21,7 @@ map<int, Scene*> scenes;
 void Scene::LoadScenes()
 {
 	scenes[Test] = new Scene("test.scn");
+	scenes[Forest] = new Scene("forest.scn");
 };
 
 Scene* Scene::GetSceneByID(int id)
@@ -45,6 +50,8 @@ Scene::Scene(string name)
 	{
 		GameAbort(string("Could not open scene file ") + name);
 	};
+
+	warpPoints.clear();
 
 	vector<string> bgLines;
 	vector<string> hardLines;
@@ -90,6 +97,49 @@ Scene::Scene(string name)
 			{
 				ptrLines = &ovLines;
 				ptrWidth = &ovWidth;
+			}
+			else if (cmd == ".warp")
+			{
+				size_t colonPos = param.find(":");
+				if (colonPos == param.npos)
+				{
+					GameAbort(string("Error loading scene ") + name + ": invalid syntax for .warp");
+				};
+
+				string strTarget = param.substr(colonPos+1);
+				string coordParse = param.substr(0, colonPos);
+				size_t commaPos = coordParse.find(",");
+				if (commaPos == coordParse.npos)
+				{
+					GameAbort(string("Error loading scene ") + name + ": invalid syntax for .warp");
+				};
+
+				string strX = coordParse.substr(0, commaPos);
+				string strY = coordParse.substr(commaPos+1);
+
+				WarpPoint point;
+				if (1)
+				{
+					stringstream ss;
+					ss << strX;
+					ss >> point.x;
+				};
+
+				if (1)
+				{
+					stringstream ss;
+					ss << strY;
+					ss >> point.y;
+				};
+
+				if (1)
+				{
+					stringstream ss;
+					ss << strTarget;
+					ss >> point.targetScene;
+				};
+
+				warpPoints.push_back(point);
 			}
 			else if (cmd == ".tile")
 			{
@@ -177,6 +227,35 @@ Scene::Scene(string name)
 			processTile(ovLines, x, y, ovLayer, tileMap);
 		};
 	};
+};
+
+bool Scene::checkWarp(int relX, int relY)
+{
+	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
+	int targetX = state->x + relX;
+	int targetY = state->y + relY;
+
+	vector<WarpPoint>::iterator it;
+	for (it=warpPoints.begin(); it!=warpPoints.end(); ++it)
+	{
+		if ((it->x == targetX) && (it->y == targetY))
+		{
+			if (it->targetScene < 0)
+			{
+				overworldView.setPosition(-it->targetScene);
+				currentView = &overworldView;
+			}
+			else
+			{
+				state->sceneID = it->targetScene;
+				sceneView.setScene(it->targetScene);
+			};
+
+			return true;
+		};
+	};
+
+	return false;
 };
 
 Scene::~Scene()

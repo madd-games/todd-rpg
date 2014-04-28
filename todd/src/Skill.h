@@ -65,5 +65,6 @@ public:
 extern Skill *skillAttack;
 extern Skill *skillHeal;
 extern Skill *skillPotion;
+extern Skill *skillFlame;
 
 #endif

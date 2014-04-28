@@ -41,5 +41,7 @@ extern SpriteSheet *ssChestGUI;
 extern SpriteSheet *ssBattleMenu;
 extern SpriteSheet *ssSkillMenu;
 extern SpriteSheet *ssSpark;
+extern SpriteSheet *ssOverworld;
+extern SpriteSheet *ssMapSpot;
 
 #endif

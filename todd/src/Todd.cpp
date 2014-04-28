@@ -21,6 +21,7 @@
 #include "ActiveTile.h"
 #include "Enemy.h"
 #include "Skillset.h"
+#include "OverworldView.h"
 
 using namespace std;
 
@@ -117,12 +118,15 @@ int main()
 	ssBattleMenu = new SpriteSheet("battlemenu.png", 150, 200);
 	ssSkillMenu = new SpriteSheet("skillmenu.png", 600, 480);
 	ssSpark = new SpriteSheet("spark.png", 16, 16);
+	ssOverworld = new SpriteSheet("overworld.png", 960, 480);
+	ssMapSpot = new SpriteSheet("mapspot.png", 24, 24);
 
 	InitMobs();
 	InitItems();
 	InitActiveTiles();
 	InitSkillsets();
 	Text::Init();
+	overworldView.init();
 
 	Scene::LoadScenes();
 	currentView = &mainMenu;

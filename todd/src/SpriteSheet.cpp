@@ -21,6 +21,8 @@ SpriteSheet *ssChestGUI;
 SpriteSheet *ssBattleMenu;
 SpriteSheet *ssSkillMenu;
 SpriteSheet *ssSpark;
+SpriteSheet *ssOverworld;
+SpriteSheet *ssMapSpot;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

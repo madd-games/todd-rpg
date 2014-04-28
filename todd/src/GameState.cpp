@@ -72,7 +72,7 @@ void NewGame()
 
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
 	state->x = 1;
-	state->y = 1;
+	state->y = 2;
 	state->sceneID = Scene::Test;
 	state->orient = Mob::DOWN;
 

@@ -24,6 +24,7 @@ public:
 	enum
 	{
 		Test = 0,
+		Forest = 1,
 	};
 
 	static void LoadScenes();
@@ -35,6 +36,17 @@ private:
 		int id;
 		int meta;
 	};
+
+	// Describes a warp point.
+	struct WarpPoint
+	{
+		int x;
+		int y;
+		int targetScene;		// negative is overworld map spot indices.
+	};
+
+	// All the warp points in this scene.
+	vector<WarpPoint> warpPoints;
 
 	// Width and height of the board.
 	int width, height;
@@ -56,6 +68,12 @@ private:
 
 	// Processing layers.
 	void processTile(vector<string> &lines, int x, int y, Tile *layer, map<char, Tile> &tileMap);
+
+	// Called when the player moves with the specified relative vector.
+	// If there is a warp at the target position, then the function returns true,
+	// and the player is moved to that position.
+	// Otherwise, the function returns false and no motion occurs.
+	bool checkWarp(int relX, int relY);
 
 public:
 	Scene(string name);

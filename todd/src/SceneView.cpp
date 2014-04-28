@@ -28,6 +28,7 @@ TileMapping tileMappings[] = {
 	{3, 3},				// Tree (use in hard layer)
 	{4, 0},				// Chest (active tile)
 	{5, 0},				// Save crystal (active tile, use in hard layer).
+	{6, 7},				// Warp to overworld
 	// END
 	{0, 0}
 };
@@ -86,19 +87,19 @@ void SceneView::handleEvent(SDL_Event *ev)
 	{
 		if (ev->key.keysym.sym == SDLK_DOWN)
 		{
-			keyDown = true;
+			keyDown = !scene->checkWarp(0, 1);
 		}
 		else if (ev->key.keysym.sym == SDLK_UP)
 		{
-			keyUp = true;
+			keyUp = !scene->checkWarp(0, -1);
 		}
 		else if (ev->key.keysym.sym == SDLK_LEFT)
 		{
-			keyLeft = true;
+			keyLeft = !scene->checkWarp(-1, 0);
 		}
 		else if (ev->key.keysym.sym == SDLK_RIGHT)
 		{
-			keyRight = true;
+			keyRight = !scene->checkWarp(1, 0);
 		}
 		else if (ev->key.keysym.sym == SDLK_x)
 		{

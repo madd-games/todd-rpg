@@ -6,7 +6,7 @@
 .tile S5
 .tile X6
 
-.warp 1,1:-1
+.warp 1,0:-1
 
 .bg
 FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -23,7 +23,7 @@ FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
 .hard
-TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+T*TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 T*T*****CC*******************************T
 T*T*******%%%%%**************************T
 T*T*******%***%**TTT*********************T
@@ -38,7 +38,7 @@ TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 
 .overlay
 ******************************************
-*X****************************************
+******************************************
 ******************************************
 ******************************************
 ******************************************

@@ -15,6 +15,7 @@
 #include "Character.h"
 #include "Item.h"
 #include "ActiveTile.h"
+#include "SceneView.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -73,7 +74,8 @@ void NewGame()
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
 	state->x = 1;
 	state->y = 2;
-	state->sceneID = Scene::Test;
+	state->sceneID = Scene::Castle_ToddRoom;
+	sceneView.setScene(state->sceneID);
 	state->orient = Mob::DOWN;
 
 	MobState *mobCaspar = (MobState*) GetGameData("MOBCASPAR", sizeof(MobState));

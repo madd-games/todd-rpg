@@ -79,6 +79,8 @@ void OverworldView::handleEvent(SDL_Event *ev)
 			state->y = spot.sceneY;
 			state->orient = spot.sceneOrient;
 			state->sceneID = spot.sceneID;
+			state->motX = state->motY = state->offX = state->offY = state->steps = 0;
+			
 			sceneView.setScene(spot.sceneID);
 			currentView = &sceneView;
 		};

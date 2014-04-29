@@ -23,8 +23,8 @@ struct TileMapping
 };
 
 TileMapping tileMappings[] = {
-	{1, 1},				// Grass
-	{2, 2},				// ??? (don't know yet)
+	{1, 1},				// Black square
+	{2, 2},				// Grass
 	{3, 3},				// Tree (use in hard layer)
 	{4, 0},				// Chest (active tile)
 	{5, 0},				// Save crystal (active tile, use in hard layer).

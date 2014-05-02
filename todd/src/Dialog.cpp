@@ -12,6 +12,7 @@
 #include "Timer.h"
 #include "BattleView.h"
 #include "EnemyFeminist.h"
+#include "EnemyGoblin.h"
 #include "SaveView.h"
 #include "Character.h"
 
@@ -160,7 +161,7 @@ bool Dialog::isLiving()
 // FEMINIST
 void FemFight()
 {
-	StartBattle(new EnemyFeminist);
+	StartBattle(new EnemyFeminist, new EnemyGoblin, new EnemyGoblin, new EnemyGoblin);
 	battleView.setFlee(false);
 };
 

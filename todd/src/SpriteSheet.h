@@ -43,5 +43,6 @@ extern SpriteSheet *ssSkillMenu;
 extern SpriteSheet *ssSpark;
 extern SpriteSheet *ssOverworld;
 extern SpriteSheet *ssMapSpot;
+extern SpriteSheet *ssGoblin;
 
 #endif

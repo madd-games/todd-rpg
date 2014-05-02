@@ -29,6 +29,7 @@ TileMapping tileMappings[] = {
 	{4, 0},				// Chest (active tile)
 	{5, 0},				// Save crystal (active tile, use in hard layer).
 	{6, 7},				// Warp to overworld
+	{7, 8},				// Wooden floor
 	// END
 	{0, 0}
 };

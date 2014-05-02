@@ -72,8 +72,8 @@ void NewGame()
 	charCaspar->getInventory()->set(0, stackBasicSword);
 
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
-	state->x = 1;
-	state->y = 2;
+	state->x = 10;
+	state->y = 3;
 	state->sceneID = Scene::Castle_ToddRoom;
 	sceneView.setScene(state->sceneID);
 	state->orient = Mob::DOWN;

@@ -22,6 +22,10 @@ using namespace std;
  */
 #define	MAGIC_BOUND			(48*5)
 
+#define	WALK_SPEED			6
+#define	WALK_STEPS			8	// Steps per tile
+#define	STEP_TIME			65
+
 /**
  * Controls how long we wait before we move auto-mobs around.
  */
@@ -43,31 +47,31 @@ void MobState::beginMove(int orient)
 		if (!sceneView.canWalk(x-1, y)) return;
 		x--;
 		offX = 48;
-		motX = -6;
+		motX = -WALK_SPEED;
 	}
 	else if (orient == Mob::RIGHT)
 	{
 		if (!sceneView.canWalk(x+1, y)) return;
 		x++;
 		offX = -48;
-		motX = 6;
+		motX = WALK_SPEED;
 	}
 	else if (orient == Mob::DOWN)
 	{
 		if (!sceneView.canWalk(x, y+1)) return;
 		y++;
 		offY = -48;
-		motY = 6;
+		motY = WALK_SPEED;
 	}
 	else
 	{
 		if (!sceneView.canWalk(x, y-1)) return;
 		y--;
 		offY = 48;
-		motY = -6;
+		motY = -WALK_SPEED;
 	};
 
-	steps = 8;
+	steps = WALK_STEPS;
 	stepTimer = Timer::Read();
 };
 
@@ -138,9 +142,9 @@ void UpdateMobs()
 		string name(*scan);
 		MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
 
-		if (state->steps != 0)
+		if ((state->steps != 0) && (state->sceneID == sceneView.getScene()))
 		{
-			if ((Timer::Read()-state->stepTimer) >= 75)
+			if ((Timer::Read()-state->stepTimer) >= STEP_TIME)
 			{
 				state->stepTimer = Timer::Read();
 				state->steps--;

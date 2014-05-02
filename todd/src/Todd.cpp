@@ -120,6 +120,7 @@ int main()
 	ssSpark = new SpriteSheet("spark.png", 16, 16);
 	ssOverworld = new SpriteSheet("overworld.png", 960, 480);
 	ssMapSpot = new SpriteSheet("mapspot.png", 24, 24);
+	ssGoblin = new SpriteSheet("goblin.png");
 
 	InitMobs();
 	InitItems();

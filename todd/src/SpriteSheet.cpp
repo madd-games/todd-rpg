@@ -23,6 +23,7 @@ SpriteSheet *ssSkillMenu;
 SpriteSheet *ssSpark;
 SpriteSheet *ssOverworld;
 SpriteSheet *ssMapSpot;
+SpriteSheet *ssGoblin;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

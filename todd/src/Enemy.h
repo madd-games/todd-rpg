@@ -30,6 +30,8 @@ public:
 	CharStats stats;
 	int resist[Element::NUM_ELEMENTS];
 
+	virtual ~Enemy();
+
 	/**
 	 * \brief Called when it's this enemy's turn - must return the skill that's being used,
 	 * and must also initialise it.

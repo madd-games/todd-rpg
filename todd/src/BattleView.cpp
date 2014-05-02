@@ -149,7 +149,7 @@ void BattleView::handleEvent(SDL_Event *ev)
 						if ((chr->getHP() == 0) && (!skillSel->isUsableAgainstDead())) targetSel--;
 					};
 				}
-				else if ((targetSel > 4) && (targetSel < 8))
+				else if ((targetSel >= 4) && (targetSel < 8))
 				{
 					int sel = targetSel - 4;
 					if (sel != 3) sel++;
@@ -186,7 +186,7 @@ void BattleView::handleEvent(SDL_Event *ev)
 						if ((chr->getHP() == 0) && (!skillSel->isUsableAgainstDead())) targetSel++;
 					};
 				}
-				else if ((targetSel > 4) && (targetSel < 8))
+				else if ((targetSel >= 4) && (targetSel < 8))
 				{
 					int sel = targetSel - 4;
 					if (sel != 0) sel--;
@@ -643,6 +643,13 @@ void BattleView::render()
 
 		if ((Timer::Read() - victoryTimer) >= 2000)
 		{
+			int i;
+			for (i=0; i<4; i++)
+			{
+				Enemy *enemy = enemies[i];
+				if (enemy != NULL) delete enemy;
+			};
+
 			lootView.init(loots);
 			currentView = &lootView;
 		};

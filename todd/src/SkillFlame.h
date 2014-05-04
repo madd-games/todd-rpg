@@ -2,6 +2,8 @@
  * SkillFlame.h
  */
 
+// TODO: Properly rename to "Fire Slash"
+
 class SkillFlame : public Skill
 {
 private:
@@ -48,12 +50,12 @@ public:
 
 	virtual string getName()
 	{
-		return "Flame";
+		return "Fire Slash";
 	};
 
 	virtual string getDesc()
 	{
-		return "Deals physical fire damage by setting the target on fire.";
+		return "Deals physical fire damage by slashing the target with a burning sword.";
 	};
 
 	virtual int getManaUse()

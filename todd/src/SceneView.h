@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include "GUI.h"
 #include "Dialog.h"
+#include "RandomBattle.h"
 
 class SceneView : public View
 {
@@ -20,6 +21,10 @@ private:
 
 	bool keyLeft, keyRight, keyUp, keyDown;
 	GUI *gui;
+
+	int stepCount;
+	unsigned long battleTimer;
+	RandomBattle randomBattle;
 
 public:
 	SceneView();
@@ -45,6 +50,8 @@ public:
 	 * \brief Opens a GUI.
 	 */
 	void openGUI(GUI *gui);
+
+	friend class LootView;
 };
 
 extern SceneView sceneView;

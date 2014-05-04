@@ -51,6 +51,7 @@ void LootView::handleEvent(SDL_Event *ev)
 
 			if (lootIndex == (int)lootVector->size())
 			{
+				sceneView.keyLeft = sceneView.keyRight = sceneView.keyUp = sceneView.keyDown = false;
 				currentView = &sceneView;
 			};
 		};
@@ -59,6 +60,13 @@ void LootView::handleEvent(SDL_Event *ev)
 
 void LootView::render()
 {
+	if (lootVector->size() == 0)
+	{
+		sceneView.keyLeft = sceneView.keyRight = sceneView.keyUp = sceneView.keyDown = false;
+		currentView = &sceneView;
+		return;
+	};
+
 	int plotX = 768;
 	int i;
 

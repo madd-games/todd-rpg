@@ -137,34 +137,58 @@ void BattleView::handleEvent(SDL_Event *ev)
 			{
 				if (targetSel < 4)
 				{
-					if (targetSel != 3) targetSel++;
-					string name = GetPartyMember(targetSel);
-					if (name == "")
+					int orgSel = targetSel;
+					while (1)
 					{
-						targetSel--;
-					}
-					else
-					{
-						Character *chr = GetChar(name);
-						if ((chr->getHP() == 0) && (!skillSel->isUsableAgainstDead())) targetSel--;
+						targetSel++;
+						if (targetSel == 4)
+						{
+							targetSel = orgSel;
+							break;
+						};
+
+						string name = GetPartyMember(targetSel);
+						if (name == "")
+						{
+							continue;
+						}
+						else
+						{
+							Character *chr = GetChar(name);
+							if ((chr->getHP() == 0) && (!skillSel->isUsableAgainstDead())) continue;
+						};
+
+						break;
 					};
 				}
 				else if ((targetSel >= 4) && (targetSel < 8))
 				{
 					int sel = targetSel - 4;
-					if (sel != 3) sel++;
+					int orgSel = sel;
 
-					Enemy *enemy = enemies[sel];
-					if (enemy == NULL)
+					while (1)
 					{
-						sel--;
-					}
-					else
-					{
-						if ((enemy->hp == 0) && (!skillSel->isUsableAgainstDead()))
+						sel++;
+						if (sel == 4)
 						{
-							sel--;
+							sel = orgSel;
+							break;
 						};
+
+						Enemy *enemy = enemies[sel];
+						if (enemy == NULL)
+						{
+							continue;
+						}
+						else
+						{
+							if ((enemy->hp == 0) && (!skillSel->isUsableAgainstDead()))
+							{
+								continue;
+							};
+						};
+
+						break;
 					};
 
 					targetSel = sel + 4;
@@ -174,34 +198,58 @@ void BattleView::handleEvent(SDL_Event *ev)
 			{
 				if (targetSel < 4)
 				{
-					if (targetSel != 0) targetSel--;
-					string name = GetPartyMember(targetSel);
-					if (name == "")
+					int orgSel = targetSel;
+					while (1)
 					{
-						targetSel++;
-					}
-					else
-					{
-						Character *chr = GetChar(name);
-						if ((chr->getHP() == 0) && (!skillSel->isUsableAgainstDead())) targetSel++;
+						targetSel--;
+						if (targetSel == -1)
+						{
+							targetSel = orgSel;
+							break;
+						};
+
+						string name = GetPartyMember(targetSel);
+						if (name == "")
+						{
+							continue;
+						}
+						else
+						{
+							Character *chr = GetChar(name);
+							if ((chr->getHP() == 0) && (!skillSel->isUsableAgainstDead())) continue;
+						};
+
+						break;
 					};
 				}
 				else if ((targetSel >= 4) && (targetSel < 8))
 				{
 					int sel = targetSel - 4;
-					if (sel != 0) sel--;
+					int orgSel = sel;
 
-					Enemy *enemy = enemies[sel];
-					if (enemy == NULL)
+					while (1)
 					{
-						sel++;
-					}
-					else
-					{
-						if ((enemy->hp == 0) && (!skillSel->isUsableAgainstDead()))
+						sel--;
+						if (sel == -1)
 						{
-							sel++;
+							sel = orgSel;
+							break;
 						};
+
+						Enemy *enemy = enemies[sel];
+						if (enemy == NULL)
+						{
+							continue;
+						}
+						else
+						{
+							if ((enemy->hp == 0) && (!skillSel->isUsableAgainstDead()))
+							{
+								continue;
+							};
+						};
+
+						break;
 					};
 
 					targetSel = sel + 4;

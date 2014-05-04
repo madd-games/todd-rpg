@@ -11,6 +11,9 @@
 #include "GameState.h"
 #include "GameMenu.h"
 #include "ActiveTile.h"
+#include "RandomBattle.h"
+#include "BattleView.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -34,7 +37,8 @@ TileMapping tileMappings[] = {
 	{0, 0}
 };
 
-SceneView::SceneView() : keyLeft(false), keyRight(false), keyUp(false), keyDown(false), gui(NULL)
+SceneView::SceneView() : keyLeft(false), keyRight(false), keyUp(false), keyDown(false), gui(NULL), stepCount(0),
+				battleTimer(0)
 {
 };
 
@@ -176,6 +180,16 @@ void SceneView::handleEvent(SDL_Event *ev)
 
 void SceneView::render()
 {
+	if (battleTimer != 0)
+	{
+		if ((Timer::Read()-battleTimer) >= 1000)
+		{
+			battleTimer = 0;
+			StartBattle(randomBattle.a, randomBattle.b, randomBattle.c, randomBattle.d);
+			return;
+		};
+	};
+
 	if (gui != NULL)
 	{
 		if (!gui->isLiving())
@@ -186,11 +200,23 @@ void SceneView::render()
 	};
 
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
-	if (state->steps == 0)
+	if ((state->steps == 0) && (battleTimer == 0))
 	{
 		bool move = keyLeft || keyRight || keyUp || keyDown;
 		if (move)
 		{
+			stepCount++;
+			if (stepCount >= 10)
+			{
+				if (GetRandomBattle(sceneID, randomBattle))
+				{
+					stepCount = 0;
+					//StartBattle(bat.a, bat.b, bat.c, bat.d);
+					battleTimer = Timer::Read();
+					return;
+				};
+			};
+
 			if (keyLeft)
 			{
 				state->beginMove(Mob::LEFT);
@@ -215,6 +241,11 @@ void SceneView::render()
 	renderLayer(scene->hardLayer);
 	RenderMobs();
 	renderLayer(scene->ovLayer);
+
+	if (battleTimer != 0)
+	{
+		ssTiles->draw(state->x*48, state->y*48-48, 10);
+	};
 
 	if (gui != NULL)
 	{

@@ -24,6 +24,8 @@ SpriteSheet *ssSpark;
 SpriteSheet *ssOverworld;
 SpriteSheet *ssMapSpot;
 SpriteSheet *ssGoblin;
+SpriteSheet *ssForestBackground;
+SpriteSheet *ssFlame;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

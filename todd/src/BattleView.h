@@ -59,6 +59,7 @@ private:
 		unsigned long timeStage;		// time taken between each stage
 		int numStages;
 		int x, y;				// of the top-left corner.
+		float vx, vy;
 	};
 
 	vector<DamageDisplay> dmgDisplays;
@@ -83,6 +84,9 @@ private:
 	// This vector gets filled with loots at the start of a battle;
 	// they get given to the player if they win.
 	vector<int> loots;
+
+	// Returns the background image for the specified scene, or NULL.
+	SpriteSheet *getBackground(int sceneID);
 
 public:
 	void init(Enemy *a, Enemy *b, Enemy *c, Enemy *d);
@@ -112,6 +116,7 @@ public:
 	enum
 	{
 		SPARK,
+		FLAME,
 	};
 
 	/**

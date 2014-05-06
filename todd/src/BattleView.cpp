@@ -123,6 +123,12 @@ void BattleView::handleEvent(SDL_Event *ev)
 				{
 					if (canFlee)
 					{
+						int i;
+						for (i=0; i<4; i++)
+						{
+							Enemy *enemy = enemies[i];
+							if (enemy != NULL) delete enemy;
+						};
 						currentView = &sceneView;
 					};
 				};
@@ -471,6 +477,13 @@ void BattleView::render()
 		victoryTimer = Timer::Read();
 	};
 
+	// Render the background
+	SpriteSheet *bg = getBackground(sceneView.getScene());
+	if (bg != NULL)
+	{
+		bg->draw(0, 0, 0, false);
+	};
+
 	// Render the allies.
 	int plotY = 100;
 	int plotX = 2;
@@ -708,13 +721,15 @@ void BattleView::render()
 	while (pit != particles.end())
 	{
 		int stage = (int)((Timer::Read() - pit->timeStart) / pit->timeStage);
+		int delta = (int)(Timer::Read() - pit->timeStart);
+
 		if (stage >= pit->numStages)
 		{
 			pit = particles.erase(pit);
 		}
 		else
 		{
-			pit->ss->draw(pit->x, pit->y, stage, false);
+			pit->ss->draw(pit->x+pit->vx*delta, pit->y+pit->vy*delta, stage, false);
 			pit++;
 		};
 	};
@@ -790,6 +805,17 @@ void BattleView::schedTurn()
 		Enemy *enemy = enemies[turn-4];
 		skillSel = enemy->plan();
 		mode = Mode::SKILL;
+	};
+};
+
+SpriteSheet *BattleView::getBackground(int sceneID)
+{
+	switch (sceneID)
+	{
+	case Scene::Forest:
+		return ssForestBackground;
+	default:
+		return NULL;
 	};
 };
 
@@ -985,6 +1011,8 @@ void BattleView::emitParticle(int entity, int offX, int offY, int type)
 	part.x = x + offX;
 	part.y = y + offY;
 	part.timeStart = Timer::Read();
+	part.vx = 0;
+	part.vy = 0;
 
 	switch (type)
 	{
@@ -994,6 +1022,14 @@ void BattleView::emitParticle(int entity, int offX, int offY, int type)
 		part.numStages = 5;
 		part.x -= 8;
 		part.y -= 8;
+		break;
+	case FLAME:
+		part.ss = ssFlame;
+		part.timeStage = 250;
+		part.numStages = 5;
+		part.x -= 8;
+		part.y -= 8;
+		part.vy = -(1.0/20.0);
 		break;
 	};
 

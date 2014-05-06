@@ -21,7 +21,7 @@ public:
 
 	virtual void act()
 	{
-		if ((Timer::Read()-time) >= 50)
+		if ((Timer::Read()-time) >= 10)
 		{
 			stage++;
 			if (stage == 2)
@@ -30,12 +30,14 @@ public:
 				battleView.attack(target, AttackType::PHYSICAL, Element::FIRE, damage);
 			};
 			time = Timer::Read();
+
+			battleView.emitParticle(target, stage, -stage/2+48, BattleView::FLAME); 
 		};
 	};
 
 	virtual bool isActive()
 	{
-		return stage < 10;
+		return stage < 30;
 	};
 
 	virtual bool isOffensive()

@@ -121,6 +121,8 @@ int main()
 	ssOverworld = new SpriteSheet("overworld.png", 960, 480);
 	ssMapSpot = new SpriteSheet("mapspot.png", 24, 24);
 	ssGoblin = new SpriteSheet("goblin.png");
+	ssForestBackground = new SpriteSheet("forest.png", 960, 480);
+	ssFlame = new SpriteSheet("flame.png", 16, 16);
 
 	InitMobs();
 	InitItems();

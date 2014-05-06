@@ -44,5 +44,7 @@ extern SpriteSheet *ssSpark;
 extern SpriteSheet *ssOverworld;
 extern SpriteSheet *ssMapSpot;
 extern SpriteSheet *ssGoblin;
+extern SpriteSheet *ssForestBackground;
+extern SpriteSheet *ssFlame;
 
 #endif

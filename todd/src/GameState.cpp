@@ -50,6 +50,15 @@ void InitChest(int scene, int x, int y, int id, int amount = 1)
 	state->amount = amount;
 };
 
+void InitDoor(int scene, int x, int y, int targetScene, int targetX, int targetY, int orient)
+{
+	DoorState *state = (DoorState*) GetTileState(scene, x, y, GetActiveTile(8));
+	state->targetScene = targetScene;
+	state->x = targetX;
+	state->y = targetY;
+	state->orient = orient;
+};
+
 void NewGame()
 {
 	gameState.clear();
@@ -90,6 +99,9 @@ void NewGame()
 	// Chests
 	InitChest(0, 8, 1, Item::POTION, 10);
 	InitChest(0, 9, 1, Item::WOODEN_SHIELD, 1);
+
+	// Doors
+	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Test, 3, 3, Mob::LEFT);
 };
 
 string GetPathToSaveSlot(int slot)

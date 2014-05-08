@@ -33,7 +33,7 @@ TileMapping tileMappings[] = {
 	{5, 0},				// Save crystal (active tile, use in hard layer).
 	{6, 7},				// Warp to overworld
 	{7, 8},				// Wooden floor
-	{8, 11},			// Door
+	{8, 0},				// Door
 	// END
 	{0, 0}
 };

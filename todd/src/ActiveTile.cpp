@@ -11,6 +11,7 @@
 // Include all the active tile classes here.
 #include "TileChest.h"
 #include "TileCrystal.h"
+#include "TileDoor.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ void InitActiveTiles()
 {
 	activeTileMap[4] = new TileChest;
 	activeTileMap[5] = new TileCrystal;
+	activeTileMap[8] = new TileDoor;
 };
 
 ActiveTile *GetActiveTile(int id)

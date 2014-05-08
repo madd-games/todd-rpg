@@ -17,6 +17,14 @@ struct ChestState
 	int amount;
 };
 
+struct DoorState
+{
+	int targetScene;
+	int x;
+	int y;
+	int orient;
+};
+
 class ActiveTile
 {
 public:

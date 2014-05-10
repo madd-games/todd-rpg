@@ -33,7 +33,7 @@ struct MapSpot
 
 vector<MapSpot> mapSpots;
 
-MapSpot mapSpot0 = {1, 283, 112, 0, 0, 0, 2, Scene::Test, 1, 2, Mob::DOWN};
+MapSpot mapSpot0 = {1, 283, 112, 0, 0, 0, 2, Scene::Castle, 10, 14, Mob::UP};
 MapSpot mapSpot1 = {2, 367, 280, 0, 0, 1, 0, Scene::Forest, 1, 2, Mob::DOWN};
 map<int, int> mapSpotMap;
 

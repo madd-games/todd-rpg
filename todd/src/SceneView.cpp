@@ -34,6 +34,7 @@ TileMapping tileMappings[] = {
 	{6, 7},				// Warp to overworld
 	{7, 8},				// Wooden floor
 	{8, 0},				// Door
+	{9, 0},				// Locked door
 	// END
 	{0, 0}
 };

@@ -71,5 +71,7 @@ public:
 
 extern DialogEntry dialFeminist[];
 extern DialogEntry dialCrystal[];
+extern DialogEntry dialLockedDoor[];
+extern DialogEntry dialCaspar[];
 
 #endif

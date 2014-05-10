@@ -513,7 +513,7 @@ void BattleView::render()
 
 			chr->getSpriteSheet()->draw(plotX+10, y+5, 0, false);
 			ssElements->draw(plotX+15, y+50, chr->getElement(), false);
-			plotX += 276;
+			plotX += 241;
 		};
 	};
 
@@ -542,7 +542,7 @@ void BattleView::render()
 
 			enemy->spriteSheet->draw(plotX+10, y+5, 0, false);
 			ssElements->draw(plotX+15, y+50, enemy->element, false);
-			plotX += 276;
+			plotX += 241;
 		};
 	};
 
@@ -714,6 +714,11 @@ void BattleView::render()
 			lootView.init(loots);
 			currentView = &lootView;
 		};
+	}
+	else if (mode == Mode::GAME_OVER)
+	{
+		Text text("GAME OVER", 255, 0, 0, 255, fntCaption);
+		text.draw(480, 240, Text::CENTER, Text::CENTER);
 	};
 
 	// Render particles.
@@ -789,6 +794,28 @@ bool BattleView::canMove(int entity)
 
 void BattleView::schedTurn()
 {
+	// Check if this is a failure.
+	bool anyAlive = false;
+	int i;
+	for (i=0; i<4; i++)
+	{
+		string name = GetPartyMember(i);
+		if (name != "")
+		{
+			Character *chr = GetChar(name);
+			if (chr->getHP() > 0)
+			{
+				anyAlive = true;
+			};
+		};
+	};
+
+	if (!anyAlive)
+	{
+		mode = Mode::GAME_OVER;
+		return;
+	};
+
 	do
 	{
 		turn++;

@@ -228,3 +228,26 @@ DialogEntry dialCrystal[] = {
 	}},
 	{NULL, NULL, NULL}
 };
+
+// LOCKED DOOR
+DialogEntry dialLockedDoor[] = {
+	{NULL, "Door", "It's locked."},
+	{NULL, NULL, NULL}
+};
+
+// CASPAR
+void CasparJoinParty()
+{
+	SetPartyMember(1, "CHRCASPAR");
+	MobState *state = (MobState*) GetGameData("MOBCASPAR", sizeof(MobState));
+	state->sceneID = -1;
+};
+
+DialogEntry dialCaspar[] = {
+	{"MOBCASPAR", "Caspar", "Good morning, Todd. How are you today?"},
+	{"MOBTODD", "Todd", "I'm good. What's going on lately?"},
+	{"MOBCASPAR", "Caspar", "We have received reports that the Chief of Eastville was kidnapped. We need to go there and intervene."},
+	{"MOBCASPAR", "Caspar", "We can get to there through the forest to the east. We need to be careful since the goblins are getting pretty aggressive recently!"},
+	{"MOBTODD", "Todd", "OK, let's go!", CasparJoinParty},
+	{NULL, NULL, NULL}
+};

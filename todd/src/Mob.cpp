@@ -81,6 +81,7 @@ map<string, string> mobRealNames;
 const char *mobNames[] = {
 	"MOBTODD",
 	"MOBFEMINIST",
+	"MOBCASPAR",
 	NULL
 };
 
@@ -243,6 +244,12 @@ void InteractWithMob(string name)
 		MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
 		state->lock = 1;
 		sceneView.openDialog(dialFeminist, "MOBFEMINIST");
+	}
+	else if (name == "MOBCASPAR")
+	{
+		MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
+		state->lock = 1;
+		sceneView.openDialog(dialCaspar, "MOBCASPAR");
 	};
 };
 

@@ -72,7 +72,7 @@ void NewGame()
 	ItemStack stackBasicSword = {2, 1};
 	charTodd->getInventory()->set(0, stackBasicSword);
 
-	SetPartyMember(1, "CHRCASPAR");
+	//SetPartyMember(1, "CHRCASPAR");
 	Character *charCaspar = GetChar("CHRCASPAR");
 	charCaspar->setHP(120, 120);
 	charCaspar->setMP(80, 80);
@@ -88,7 +88,10 @@ void NewGame()
 	state->orient = Mob::DOWN;
 
 	MobState *mobCaspar = (MobState*) GetGameData("MOBCASPAR", sizeof(MobState));
-	mobCaspar->sceneID = -1;
+	mobCaspar->sceneID = Scene::Castle;
+	mobCaspar->x = 10;
+	mobCaspar->y = 5;
+	mobCaspar->orient = Mob::DOWN;
 
 	MobState *mobFeminist = (MobState*) GetGameData("MOBFEMINIST", sizeof(MobState));
 	mobFeminist->x = 13;
@@ -101,7 +104,8 @@ void NewGame()
 	InitChest(0, 9, 1, Item::WOODEN_SHIELD, 1);
 
 	// Doors
-	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Test, 3, 3, Mob::LEFT);
+	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);
+	InitDoor(Scene::Castle, 18, 6, Scene::Castle_ToddRoom, 13, 1, Mob::DOWN);
 };
 
 string GetPathToSaveSlot(int slot)

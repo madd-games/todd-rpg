@@ -12,6 +12,7 @@
 #include "TileChest.h"
 #include "TileCrystal.h"
 #include "TileDoor.h"
+#include "TileLockedDoor.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ void InitActiveTiles()
 	activeTileMap[4] = new TileChest;
 	activeTileMap[5] = new TileCrystal;
 	activeTileMap[8] = new TileDoor;
+	activeTileMap[9] = new TileLockedDoor;
 };
 
 ActiveTile *GetActiveTile(int id)

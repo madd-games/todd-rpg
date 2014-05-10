@@ -40,6 +40,7 @@ private:
 			VICTORY,
 			SKILL_SELECT,
 			ITEM_SELECT,
+			GAME_OVER,
 		};
 	};
 

@@ -2,6 +2,7 @@
 PREFIX=/usr
 EXEC_PREFIX=
 CXX=g++
+WINDRES=windres
 SRCDIR="`dirname $0`"
 GEN_CFLAGS="-Wall -Werror"
 GEN_LDFLAGS=
@@ -25,6 +26,7 @@ case $i in
 	--host=*)
 		HOST=`echo $i | sed 's/[-a-zA-Z0-9]*=//'`
 		CXX=$HOST-g++
+		WINDRES=$HOST-windres
 		;;
 
 	--exec-prefix*)
@@ -104,10 +106,12 @@ echo "checking if this is Windows..."
 echo "#ifdef _WIN32" >.test.cpp
 echo "#error error" >>.test.cpp
 echo "#endif" >>.test.cpp
+WIN="no"
 $CXX -c .test.cpp -o .test.o >/dev/null 2>&1 || {
 	echo "Yes, this is Windows."
 	EXE=.exe
 	CXX="$CXX -static"
+	WIN="yes"
 }
 rm -f .test.cpp .test.o
 
@@ -128,9 +132,15 @@ echo "CFLAGS=$CFLAGS">>config.mk
 echo "LDFLAGS=$LDFLAGS">>config.mk
 echo "SRCDIR=$SRCDIR">>config.mk
 echo "EXE=$EXE">>config.mk
+echo "WINDRES=$WINDRES">>config.mk
 
 echo "creating Makefile..."
 echo "include config.mk">Makefile
+if [ "$WIN" = "yes" ]
+then
+	mkdir winrc
+	echo "EXTRA_OBJ := winrc/todd.o">>Makefile
+fi
 echo "include \$(SRCDIR)/build.mk">>Makefile
 
 echo "creating Doxyfile..."
@@ -139,6 +149,7 @@ sed -e "s,SRCDIR,$SRCDIR,g" $SRCDIR/dox > Doxyfile
 echo "===================================="
 echo "Configuration summary:"
 echo "C++ compiler: $CXX"
+echo "Windows Resource compiler: $WINDRES"
 echo "Source directory: $SRCDIR"
 echo "Output file name: todd$EXE"
 echo "Data files will be installed in: $PREFIX/share/madd.todd"

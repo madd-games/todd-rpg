@@ -133,7 +133,6 @@ int main()
 
 	Scene::LoadScenes();
 	currentView = &mainMenu;
-	sceneView.setScene(Scene::Test);
 
 	NewGame();
 	SDL_ShowCursor(SDL_DISABLE);

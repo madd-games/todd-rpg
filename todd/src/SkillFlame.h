@@ -31,7 +31,7 @@ public:
 			};
 			time = Timer::Read();
 
-			battleView.emitParticle(target, stage, -stage/2+48, BattleView::FLAME); 
+			battleView.emitParticle(target, stage, -stage/2+48, BattleView::FLAME);
 		};
 	};
 

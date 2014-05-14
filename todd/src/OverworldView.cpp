@@ -35,6 +35,8 @@ vector<MapSpot> mapSpots;
 
 MapSpot mapSpot0 = {1, 283, 112, 0, 0, 0, 2, Scene::Castle, 10, 14, Mob::UP};
 MapSpot mapSpot1 = {2, 367, 280, 0, 0, 1, 0, Scene::Forest, 1, 2, Mob::DOWN};
+MapSpot mapSpot2 = {3, 407, 280, 0, 0, 0, 0, Scene::Forest, 40, 4, Mob::LEFT};
+// Maps spot ID to index in mapSpots.
 map<int, int> mapSpotMap;
 
 void OverworldView::init()
@@ -42,8 +44,10 @@ void OverworldView::init()
 	currentSpot = 0;
 	mapSpotMap[1] = 0;
 	mapSpotMap[2] = 1;
+	mapSpotMap[3] = 2;
 	mapSpots.push_back(mapSpot0);
 	mapSpots.push_back(mapSpot1);
+	mapSpots.push_back(mapSpot2);
 };
 
 void OverworldView::setPosition(int pos)

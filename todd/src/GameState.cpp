@@ -100,8 +100,9 @@ void NewGame()
 	mobFeminist->sceneID = 0;
 
 	// Chests
-	InitChest(0, 8, 1, Item::POTION, 10);
-	InitChest(0, 9, 1, Item::WOODEN_SHIELD, 1);
+//	InitChest(0, 8, 1, Item::POTION, 10);
+//	InitChest(0, 9, 1, Item::WOODEN_SHIELD, 1);
+	InitChest(Scene::Forest, 18, 2, Item::POTION, 1);
 
 	// Doors
 	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);

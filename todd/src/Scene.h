@@ -23,7 +23,6 @@ public:
 	 */
 	enum
 	{
-		Test = 0,
 		Forest = 1,
 		Castle_ToddRoom = 2,
 		Castle = 3,

@@ -23,8 +23,8 @@ winrc/todd.o: $(SRCDIR)/winrc/todd.rc $(SRCDIR)/winrc/todd.ico
 %.o: $(SRCDIR)/src/%.cpp
 	$(CXX) -c $< -o $@ $(CFLAGS)
 
-install: todd
-	sh $(SRCDIR)/install.sh $(SRCDIR) $(PREFIX) $(EXEC_PREFIX)
+install: todd$(EXE)
+	sh $(SRCDIR)/install.sh $(SRCDIR) $(PREFIX) $(EXEC_PREFIX) todd$(EXE)
 
 clean:
 	rm -f todd $(wildcard *.o) $(wildcard *.d)

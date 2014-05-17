@@ -33,6 +33,12 @@ using namespace std;
 #include <windows.h>
 #endif
 
+#ifdef TODD_DEBUG
+#define TODD_WINDOW_CAPTION "Todd [DEBUG]"
+#else
+#define TODD_WINDOW_CAPTION "Todd"
+#endif
+
 int cameraX = 0, cameraY = 0;
 SDL_Renderer *sdlRender;
 View *currentView = NULL;
@@ -102,7 +108,7 @@ int main()
 		return 1;
 	};
 
-	SDL_Window *win = SDL_CreateWindow("Todd", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+	SDL_Window *win = SDL_CreateWindow(TODD_WINDOW_CAPTION, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
 				SCREEN_WIDTH*48, SCREEN_HEIGHT*48, SDL_WINDOW_SHOWN);
 	if (win == NULL)
 	{

@@ -118,7 +118,8 @@ rm -f .test.cpp .test.o
 CFLAGS="$GEN_CFLAGS $SDL_CFLAGS $FT_CFLAGS"
 if [ "$DEBUG" = "yes" ]
 then
-	CFLAGS="$CFLAGS -ggdb"
+	EXE="_debug$EXE"
+	CFLAGS="$CFLAGS -ggdb -DTODD_DEBUG"
 fi
 LDFLAGS="$GEN_LDFLAGS -lSDL2_image -lSDL2_ttf $FT_LDFLAGS $SDL_LDFLAGS"
 

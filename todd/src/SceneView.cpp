@@ -15,6 +15,10 @@
 #include "BattleView.h"
 #include "Timer.h"
 
+#ifdef TODD_DEBUG
+#include "DebugOptionsView.h"
+#endif
+
 using namespace std;
 
 SceneView sceneView;
@@ -35,13 +39,13 @@ TileMapping tileMappings[] = {
 	{7, 8},				// Wooden floor
 	{8, 0},				// Door
 	{9, 0},				// Locked door
-	{10, 13},			// Grass with rock on it.
+	{10, 13},			// Grass with a rock on it.
 	// END
 	{0, 0}
 };
 
 SceneView::SceneView() : keyLeft(false), keyRight(false), keyUp(false), keyDown(false), gui(NULL), stepCount(0),
-				battleTimer(0)
+				battleTimer(0), ghostWalk(false), enableRandomBattles(true)
 {
 };
 
@@ -155,6 +159,12 @@ void SceneView::handleEvent(SDL_Event *ev)
 				};
 			};
 		}
+#ifdef TODD_DEBUG
+		else if (ev->key.keysym.sym == SDLK_F6)
+		{
+			currentView = &debugOptionsView;
+		}
+#endif
 		else if (ev->key.keysym.sym == SDLK_ESCAPE)
 		{
 			gui = new GameMenu();
@@ -183,13 +193,16 @@ void SceneView::handleEvent(SDL_Event *ev)
 
 void SceneView::render()
 {
-	if (battleTimer != 0)
+	if (enableRandomBattles)
 	{
-		if ((Timer::Read()-battleTimer) >= 1000)
+		if (battleTimer != 0)
 		{
-			battleTimer = 0;
-			StartBattle(randomBattle.a, randomBattle.b, randomBattle.c, randomBattle.d);
-			return;
+			if ((Timer::Read()-battleTimer) >= 1000)
+			{
+				battleTimer = 0;
+				StartBattle(randomBattle.a, randomBattle.b, randomBattle.c, randomBattle.d);
+				return;
+			};
 		};
 	};
 
@@ -211,10 +224,9 @@ void SceneView::render()
 			stepCount++;
 			if (stepCount >= 10)
 			{
-				if (GetRandomBattle(sceneID, randomBattle))
+				if (GetRandomBattle(sceneID, randomBattle) && enableRandomBattles)
 				{
 					stepCount = 0;
-					//StartBattle(bat.a, bat.b, bat.c, bat.d);
 					battleTimer = Timer::Read();
 					return;
 				};
@@ -222,19 +234,19 @@ void SceneView::render()
 
 			if (keyLeft)
 			{
-				state->beginMove(Mob::LEFT);
+				state->beginMove(Mob::LEFT, ghostWalk);
 			}
 			else if (keyRight)
 			{
-				state->beginMove(Mob::RIGHT);
+				state->beginMove(Mob::RIGHT, ghostWalk);
 			}
 			else if (keyUp)
 			{
-				state->beginMove(Mob::UP);
+				state->beginMove(Mob::UP, ghostWalk);
 			}
 			else
 			{
-				state->beginMove(Mob::DOWN);
+				state->beginMove(Mob::DOWN, ghostWalk);
 			};
 		};
 	};

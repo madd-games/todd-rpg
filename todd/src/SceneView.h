@@ -12,6 +12,10 @@
 #include "Dialog.h"
 #include "RandomBattle.h"
 
+#ifdef TODD_DEBUG
+#include "DebugOptionsView.h"
+#endif
+
 class SceneView : public View
 {
 private:
@@ -27,6 +31,12 @@ private:
 	RandomBattle randomBattle;
 
 public:
+	// Debugging options. Those can be enabled and disabled through a menu
+	// that can be opened with F6 in the debug build, but is not available
+	// in the standard release.
+	bool ghostWalk;
+	bool enableRandomBattles;
+
 	SceneView();
 
 	virtual void handleEvent(SDL_Event *ev);
@@ -52,6 +62,9 @@ public:
 	void openGUI(GUI *gui);
 
 	friend class LootView;
+#ifdef TODD_DEBUG
+	friend class DebugOptionsView;
+#endif
 };
 
 extern SceneView sceneView;

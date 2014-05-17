@@ -38,7 +38,7 @@ public:
 			if (stage == 2)
 			{
 				CharStats stats = battleView.getStats(battleView.getTurn());
-				int heal = 2 * (stats.INT + battleView.getLevel(battleView.getTurn())/2);
+				int heal = 4 * (10 + stats.INT + battleView.getLevel(battleView.getTurn()));
 				battleView.attack(target, AttackType::MAGIC, Element::LIGHT, -heal);
 			};
 			if (stage < 10)

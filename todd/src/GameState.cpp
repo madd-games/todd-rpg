@@ -99,10 +99,24 @@ void NewGame()
 	mobFeminist->orient = Mob::LEFT;
 	mobFeminist->sceneID = 0;
 
+	// The guy that stands around in the forest and blocks the path until you
+	// get Caspar.
+	state = (MobState*) GetGameData("MOBMANFOREST1", sizeof(MobState));
+	state->x = 3;
+	state->y = 4;
+	state->orient = Mob::LEFT;
+	state->sceneID = Scene::Forest;
+
+	// Bandit boss
+	state = (MobState*) GetGameData("MOBBANDIT", sizeof(MobState));
+	state->x = 26;
+	state->y = 4;
+	state->orient = Mob::LEFT;
+	state->sceneID = Scene::Forest;
+
 	// Chests
-//	InitChest(0, 8, 1, Item::POTION, 10);
-//	InitChest(0, 9, 1, Item::WOODEN_SHIELD, 1);
 	InitChest(Scene::Forest, 18, 2, Item::POTION, 1);
+	InitChest(Scene::Forest, 19, 4, Item::WOODEN_SHIELD, 1);
 
 	// Doors
 	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);

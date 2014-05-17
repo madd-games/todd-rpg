@@ -28,10 +28,11 @@ struct MobState
 	// Timer
 	unsigned long stepTimer;
 
-	// If this is nonzero, the mob is locked (doesn't walk around)
+	// If this is nonzero, the mob is locked (doesn't walk around).
+	// Applies to auto-mobs only.
 	int lock;
 
-	void beginMove(int orient);
+	void beginMove(int orient, bool force = false);
 };
 
 struct MobInfo
@@ -85,9 +86,21 @@ void InteractWithMob(string name);
  */
 MobInfo GetMobInfo(string name);
 
-class Mob
+/**
+ * \brief Returns true if the specified mob is not doing anything (the command queue is empty).
+ */
+bool IsMobReady(string name);
+
+/**
+ * \brief Enqueues a "move" action for a mob.
+ * \param name The internal name for the mob, e.g. MOBCASPAR.
+ * \param dir Which direction to move, e.g. Mob::LEFT.
+ * \param count How many tiles to move.
+ */
+void EnqueueMobMoves(string name, int dir, int count);
+
+namespace Mob
 {
-public:
 	// Mob orientations
 	enum
 	{

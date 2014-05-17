@@ -51,6 +51,12 @@ struct DialogEntry
 	 */
 	int numOptions;
 	DialogOption options[4];
+
+	/**
+	 * If this is not NULL, then it specifies the name of a mob who must complete its
+	 * command queue before X can be pressed to dismiss the message.
+	 */
+	const char *mobwait;
 };
 
 class Dialog : public GUI
@@ -73,5 +79,8 @@ extern DialogEntry dialFeminist[];
 extern DialogEntry dialCrystal[];
 extern DialogEntry dialLockedDoor[];
 extern DialogEntry dialCaspar[];
+extern DialogEntry dialManForest1WithoutCaspar[];
+extern DialogEntry dialManForest1WithCaspar[];
+extern DialogEntry dialBanditBoss[];
 
 #endif

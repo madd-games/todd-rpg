@@ -56,14 +56,31 @@ void GameAbort__(string msg)
 	exit(1);
 };
 
+string GetSubdirFor(string ext)
+{
+	if (ext == "png") return "images";
+	if (ext == "ttf") return "fonts";
+	if (ext == "scn") return "scenes";
+
+	// Files that can't be sorted go into the "misc" directory.
+	return "misc";
+};
+
 string GetResourcePath(string name)
 {
+	string subdir = "misc";
+	size_t dotpos = name.rfind(".");
+	if (dotpos != name.npos)
+	{
+		subdir = GetSubdirFor(name.substr(dotpos+1));
+	};
+
 	string path;
 #ifdef _WIN32
 	path = getenv("APPDATA");
-	path += "\\madd.todd-data\\";
+	path += "\\madd.todd-data\\" + subdir + "\\";
 #else
-	path = "/usr/share/madd.todd/";
+	path = "/usr/share/madd.todd/" + subdir + "/";
 #endif
 
 	return path + name;

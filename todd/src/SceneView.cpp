@@ -35,6 +35,7 @@ TileMapping tileMappings[] = {
 	{7, 8},				// Wooden floor
 	{8, 0},				// Door
 	{9, 0},				// Locked door
+	{10, 13},			// Grass with rock on it.
 	// END
 	{0, 0}
 };

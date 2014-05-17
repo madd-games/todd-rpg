@@ -13,6 +13,7 @@
 #include "BattleView.h"
 #include "EnemyFeminist.h"
 #include "EnemyGoblin.h"
+#include "EnemyBandit.h"
 #include "SaveView.h"
 #include "Character.h"
 
@@ -27,6 +28,11 @@ void Dialog::handleEvent(SDL_Event *ev)
 	{
 		if (ev->key.keysym.sym == SDLK_x)
 		{
+			if (currentEntry->mobwait != NULL)
+			{
+				if (!IsMobReady(currentEntry->mobwait)) return;
+			};
+
 			if (currentEntry->text != NULL)
 			{
 				string text = currentEntry->text;
@@ -216,12 +222,12 @@ void CrystalSave()
 };
 
 DialogEntry dialCrystalSave[] = {
-	{NULL, "Magic Crystal", "Basically, press X right now. I can't be bothered to put weird messages here ~Mariusz", CrystalSave},
+	{NULL, "Magic Crystal", "Select a save slot, press RIGHT, enter a name (if needed), and press RIGHT to save.", CrystalSave},
 	{NULL, NULL, NULL}
 };
 
 DialogEntry dialCrystal[] = {
-	{NULL, "Magic Crystal", "You shall be healed!", CrystalHeal},
+	{NULL, "Magic Crystal", "You have been fully healed!", CrystalHeal},
 	{"MOBTODD", "Todd", NULL, NULL, 2, {
 		{"Save...", dialCrystalSave},
 		{"Leave...", &dialEmpty}
@@ -249,5 +255,40 @@ DialogEntry dialCaspar[] = {
 	{"MOBCASPAR", "Caspar", "We have received reports that the Chief of Eastville was kidnapped. We need to go there and intervene."},
 	{"MOBCASPAR", "Caspar", "We can get to there through the forest to the east. We need to be careful since the goblins are getting pretty aggressive recently!"},
 	{"MOBTODD", "Todd", "OK, let's go!", CasparJoinParty},
+	{NULL, NULL, NULL}
+};
+
+// MAN IN THE FOREST THAT BLOCKS PATH UNTIL YOU TALK TO CASPAR
+DialogEntry dialManForest1WithoutCaspar[] = {
+	{"MOBMANFOREST1", "Man", "Sorry, I can't let you go through here sir, we're patrolling the area in search of bandits who are robbing passers-by."},
+	{NULL, NULL, NULL}
+};
+
+void ManForest1MoveAway()
+{
+	EnqueueMobMoves("MOBMANFOREST1", Mob::LEFT, 2);
+	EnqueueMobMoves("MOBMANFOREST1", Mob::UP, 5);
+};
+
+DialogEntry dialManForest1WithCaspar[] = {
+	{"MOBMANFOREST1", "Man", "Sorry, I can't let you go through here, we're patrolling the area in search of bandits who are robbing passers-by."},
+	{"MOBCASPAR", "Caspar", "We're in the Royal Guard, looking for the Chief of Eastville who was kidnapped. I command you to let us through. We'll take care of the bandits ourselves.", ManForest1MoveAway},
+	{"MOBMANFOREST1", "Man", "Yes, sir!", NULL, 0, {}, "MOBMANFOREST1"},
+	{NULL, NULL, NULL}
+};
+
+// BANDIT BOSS (IN THE FOREST)
+void BanditBossBattle()
+{
+	MobState *state = (MobState*) GetGameData("MOBBANDIT", sizeof(MobState));
+	state->sceneID = -1;
+
+	StartBattle(new EnemyBandit());
+};
+
+DialogEntry dialBanditBoss[] = {
+	{"MOBTODD", "Todd", "Hey! Who are you?"},
+	{"MOBBANDIT", "Bandit", "Give me all your money!"},
+	{"MOBCASPAR", "Caspar", "Come here and get it then!", BanditBossBattle},
 	{NULL, NULL, NULL}
 };

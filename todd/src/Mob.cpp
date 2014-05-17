@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
+#include "Character.h"
+#include <queue>
 
 using namespace std;
 
@@ -31,7 +33,7 @@ using namespace std;
  */
 unsigned long autoMobTimer;
 
-void MobState::beginMove(int orient)
+void MobState::beginMove(int orient, bool force)
 {
 	if (steps != 0) return;
 
@@ -44,28 +46,28 @@ void MobState::beginMove(int orient)
 
 	if (orient == Mob::LEFT)
 	{
-		if (!sceneView.canWalk(x-1, y)) return;
+		if (!sceneView.canWalk(x-1, y) && !force) return;
 		x--;
 		offX = 48;
 		motX = -WALK_SPEED;
 	}
 	else if (orient == Mob::RIGHT)
 	{
-		if (!sceneView.canWalk(x+1, y)) return;
+		if (!sceneView.canWalk(x+1, y) && !force) return;
 		x++;
 		offX = -48;
 		motX = WALK_SPEED;
 	}
 	else if (orient == Mob::DOWN)
 	{
-		if (!sceneView.canWalk(x, y+1)) return;
+		if (!sceneView.canWalk(x, y+1) && !force) return;
 		y++;
 		offY = -48;
 		motY = WALK_SPEED;
 	}
 	else
 	{
-		if (!sceneView.canWalk(x, y-1)) return;
+		if (!sceneView.canWalk(x, y-1) && !force) return;
 		y--;
 		offY = 48;
 		motY = -WALK_SPEED;
@@ -82,8 +84,14 @@ const char *mobNames[] = {
 	"MOBTODD",
 	"MOBFEMINIST",
 	"MOBCASPAR",
+	"MOBMANFOREST1",
+	"MOBBANDIT",
 	NULL
 };
+
+// List of steps to be taken by mobs automatically (including non-auto-mobs).
+// The 'int' value is the orient.
+map<string, queue<int> > mobQueues;
 
 /**
  * Mobs which automatically walk around aimlessly.
@@ -97,20 +105,26 @@ void InitMobs()
 {
 	autoMobTimer = Timer::Read();
 
-	/* sprites */
+	// Sprites
 	mobSprites["MOBTODD"] =			new SpriteSheet("todd.png");
 	mobSprites["MOBFEMINIST"] =		new SpriteSheet("feminist.png");
 	mobSprites["MOBCASPAR"] =		new SpriteSheet("caspar.png");
+	mobSprites["MOBMANFOREST1"] =		new SpriteSheet("man.png");
+	mobSprites["MOBBANDIT"] =		new SpriteSheet("bandit.png");
 
-	/* names */
+	// Names
 	mobRealNames["MOBTODD"] =		"Todd";
 	mobRealNames["MOBFEMINIST"] =		"Feminist";
 	mobRealNames["MOBCASPAR"] =		"Caspar";
+	mobRealNames["MOBMANFOREST1"] =		"Man";
+	mobRealNames["MOBBANDIT"] =		"Bandit";
 
-	/* elements */
+	// Elements
 	mobElements["MOBTODD"] =		Element::LIGHT;
 	mobElements["MOBFEMINIST"] =		Element::FIRE;
 	mobElements["MOBCASPAR"] =		Element::FIRE;
+	mobElements["MOBMANFOREST1"] =		Element::AIR;
+	mobElements["MOBBANDIT"] =		Element::DARKNESS;
 };
 
 void UpdateMobs()
@@ -151,14 +165,21 @@ void UpdateMobs()
 				state->steps--;
 				state->offX += state->motX;
 				state->offY += state->motY;
+			};
+		};
 
-				if (state->steps == 0)
-				{
-					state->offX = 0;
-					state->offY = 0;
-					state->motX = 0;
-					state->motY = 0;
-				};
+		if (state->steps == 0)
+		{
+			state->offX = 0;
+			state->offY = 0;
+			state->motX = 0;
+			state->motY = 0;
+
+			queue<int> &mq = mobQueues[name];
+			if (mq.size() != 0)
+			{
+				state->beginMove(mq.front(), true);
+				mq.pop();
 			};
 		};
 
@@ -250,6 +271,21 @@ void InteractWithMob(string name)
 		MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
 		state->lock = 1;
 		sceneView.openDialog(dialCaspar, "MOBCASPAR");
+	}
+	else if (name == "MOBMANFOREST1")
+	{
+		if (GetPartyMember(1) == "CHRCASPAR")
+		{
+			sceneView.openDialog(dialManForest1WithCaspar);
+		}
+		else
+		{
+			sceneView.openDialog(dialManForest1WithoutCaspar);
+		};
+	}
+	else if (name == "MOBBANDIT")
+	{
+		sceneView.openDialog(dialBanditBoss);
 	};
 };
 
@@ -260,4 +296,17 @@ MobInfo GetMobInfo(string name)
 	info.name = mobRealNames[name];
 	info.element = mobElements[name];
 	return info;
+};
+
+bool IsMobReady(string name)
+{
+	return mobQueues[name].size() == 0;
+};
+
+void EnqueueMobMoves(string name, int orient, int count)
+{
+	while (count--)
+	{
+		mobQueues[name].push(orient);
+	};
 };

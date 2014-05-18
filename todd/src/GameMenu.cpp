@@ -148,7 +148,7 @@ void GameMenu::handleEvent(SDL_Event *ev)
 						};
 					};
 				}
-				else if ((rmx > (leftX+390)) && (rmx < (leftX+546)) && (rmy > 330) && (rmy < 356))
+				else if ((rmx > (leftX+390)) && (rmx < (leftX+572)) && (rmy > 330) && (rmy < 356))
 				{
 					int slot = (rmx-(leftX+390))/26;
 					if (isItemGoodForSlot(handleStack.id, slot))
@@ -379,6 +379,9 @@ void GameMenu::drawInventoryPanel()
 						{
 							itemSel = GetItem(stk.id);
 						};
+
+						Text txtLabel(getEquipmentLabel(j), 255, 255, 255);
+						txtLabel.draw(390, 358);
 					};
 				};
 			};
@@ -476,4 +479,21 @@ int GameMenu::drawItemStatInfo(string statName, int value, int y)
 	txtValue.draw(leftX+50, y);
 
 	return 18;
+};
+
+string GameMenu::getEquipmentLabel(int slot)
+{
+	switch (slot)
+	{
+	case 0:
+		return "Weapon";
+	case 1:
+		return "Shield";
+	case 2:
+		return "Helmet";
+	case 3:
+		return "Armor";
+	default:
+		return "Accessory";
+	};
 };

@@ -13,6 +13,7 @@
 #include "ItemPotion.h"
 #include "ItemBasicSword.h"
 #include "ItemWoodenShield.h"
+#include "ItemMagicRing.h"
 
 using namespace std;
 
@@ -60,4 +61,5 @@ void InitItems()
 	new ItemPotion(Item::POTION);
 	new ItemBasicSword(Item::BASIC_SWORD);
 	new ItemWoodenShield(Item::WOODEN_SHIELD);
+	new ItemMagicRing(Item::MAGIC_RING);
 };

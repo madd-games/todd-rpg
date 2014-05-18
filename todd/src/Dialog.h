@@ -81,6 +81,7 @@ extern DialogEntry dialLockedDoor[];
 extern DialogEntry dialCaspar[];
 extern DialogEntry dialManForest1WithoutCaspar[];
 extern DialogEntry dialManForest1WithCaspar[];
+extern DialogEntry dialManForest2[];
 extern DialogEntry dialBanditBoss[];
 
 #endif

@@ -14,6 +14,7 @@
 #include "Text.h"
 #include "SpriteSheet.h"
 #include "Timer.h"
+#include "Character.h"
 
 DebugOptionsView debugOptionsView;
 
@@ -21,11 +22,34 @@ struct DebugOption
 {
 	const char *label;
 	bool *optPtr;
+	void (*callback)(void);
+};
+
+void OverpowerStats()
+{
+	int i;
+	for (i=0; i<4; i++)
+	{
+		string name = GetPartyMember(i);
+		if (name != "")
+		{
+			Character *chr = GetChar(name);
+			chr->setHP(99999, 99999);
+			chr->setMP(99999, 99999);
+			CharStats *stats = chr->getStats();
+			stats->STR = 99999;
+			stats->DEF = 100;
+			stats->INT = 99999;
+			stats->MDEF = 100;
+			chr->setLevel(99999);
+		};
+	};
 };
 
 DebugOption debugOptions[] = {
 	{"Ghost Walk Mode", &sceneView.ghostWalk},
 	{"Random Battles", &sceneView.enableRandomBattles},
+	{"Overpower Stats", NULL, OverpowerStats},
 	{NULL, NULL}
 };
 
@@ -54,6 +78,7 @@ void DebugOptionsView::handleEvent(SDL_Event *ev)
 		{
 			bool *ptr = debugOptions[sel].optPtr;
 			if (ptr != NULL) *ptr = !(*ptr);
+			if (debugOptions[sel].callback != NULL) debugOptions[sel].callback();
 		};
 	};
 };
@@ -78,25 +103,28 @@ void DebugOptionsView::render()
 		Text txt1(opt->label, red, green, blue);
 		txt1.draw(26, plotY);
 
-		bool value = *opt->optPtr;
-		string word;
-		if (value)
+		if (opt->optPtr != NULL)
 		{
-			word = "ON";
-			red = 0;
-			green = 255;
-			blue = 0;
-		}
-		else
-		{
-			word = "OFF";
-			red = 255;
-			green = 0;
-			blue = 0;
-		};
+			bool value = *opt->optPtr;
+			string word;
+			if (value)
+			{
+				word = "ON";
+				red = 0;
+				green = 255;
+				blue = 0;
+			}
+			else
+			{
+				word = "OFF";
+				red = 255;
+				green = 0;
+				blue = 0;
+			};
 
-		Text txt2(word, red, green, blue);
-		txt2.draw(920, plotY);
+			Text txt2(word, red, green, blue);
+			txt2.draw(920, plotY);
+		};
 
 		opt++;
 		i++;

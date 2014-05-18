@@ -17,12 +17,20 @@ bool GetRandomBattle(int sceneID, RandomBattle &bat)
 
 	if (sceneID == Scene::Forest)
 	{
-		if (per < 30)
+		if (per < 10)
 		{
 			bat.a = new EnemyGoblin;
 			bat.b = new EnemyGoblin;
 			bat.c = new EnemyGoblin;
 			bat.d = new EnemyGoblin;
+			return true;
+		}
+		else if (per < 20)
+		{
+			bat.a = new EnemyGoblin;
+			bat.b = new EnemyGoblin;
+			bat.c = new EnemyGoblin;
+			bat.d = NULL;
 			return true;
 		};
 	};

@@ -85,6 +85,7 @@ const char *mobNames[] = {
 	"MOBFEMINIST",
 	"MOBCASPAR",
 	"MOBMANFOREST1",
+	"MOBMANFOREST2",
 	"MOBBANDIT",
 	NULL
 };
@@ -110,6 +111,7 @@ void InitMobs()
 	mobSprites["MOBFEMINIST"] =		new SpriteSheet("feminist.png");
 	mobSprites["MOBCASPAR"] =		new SpriteSheet("caspar.png");
 	mobSprites["MOBMANFOREST1"] =		new SpriteSheet("man.png");
+	mobSprites["MOBMANFOREST2"] =		mobSprites["MOBMANFOREST1"];
 	mobSprites["MOBBANDIT"] =		new SpriteSheet("bandit.png");
 
 	// Names
@@ -117,6 +119,7 @@ void InitMobs()
 	mobRealNames["MOBFEMINIST"] =		"Feminist";
 	mobRealNames["MOBCASPAR"] =		"Caspar";
 	mobRealNames["MOBMANFOREST1"] =		"Man";
+	mobRealNames["MOBMANFOREST2"] =		"Man";
 	mobRealNames["MOBBANDIT"] =		"Bandit";
 
 	// Elements
@@ -124,6 +127,7 @@ void InitMobs()
 	mobElements["MOBFEMINIST"] =		Element::FIRE;
 	mobElements["MOBCASPAR"] =		Element::FIRE;
 	mobElements["MOBMANFOREST1"] =		Element::AIR;
+	mobElements["MOBMANFOREST2"] =		Element::WATER;
 	mobElements["MOBBANDIT"] =		Element::DARKNESS;
 };
 
@@ -282,6 +286,10 @@ void InteractWithMob(string name)
 		{
 			sceneView.openDialog(dialManForest1WithoutCaspar);
 		};
+	}
+	else if (name == "MOBMANFOREST2")
+	{
+		sceneView.openDialog(dialManForest2);
 	}
 	else if (name == "MOBBANDIT")
 	{

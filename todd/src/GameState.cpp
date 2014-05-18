@@ -107,6 +107,13 @@ void NewGame()
 	state->orient = Mob::LEFT;
 	state->sceneID = Scene::Forest;
 
+	// The guy that blocks the path in the forest.
+	state = (MobState*) GetGameData("MOBMANFOREST2", sizeof(MobState));
+	state->x = 11;
+	state->y = 10;
+	state->orient = Mob::RIGHT;
+	state->sceneID = Scene::Forest;
+
 	// Bandit boss
 	state = (MobState*) GetGameData("MOBBANDIT", sizeof(MobState));
 	state->x = 26;
@@ -115,7 +122,7 @@ void NewGame()
 	state->sceneID = Scene::Forest;
 
 	// Chests
-	InitChest(Scene::Forest, 18, 2, Item::POTION, 1);
+	InitChest(Scene::Forest, 18, 2, Item::POTION, 5);
 	InitChest(Scene::Forest, 19, 4, Item::WOODEN_SHIELD, 1);
 
 	// Doors

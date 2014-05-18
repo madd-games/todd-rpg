@@ -222,7 +222,7 @@ void SceneView::render()
 		if (move)
 		{
 			stepCount++;
-			if (stepCount >= 10)
+			if (stepCount >= 15)
 			{
 				if (GetRandomBattle(sceneID, randomBattle) && enableRandomBattles)
 				{

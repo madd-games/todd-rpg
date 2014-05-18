@@ -40,6 +40,11 @@ private:
 	 */
 	int drawItemStatInfo(string statName, int value, int y);
 
+	/**
+	 * \brief Returns a label for an equipment slot.
+	 */
+	string getEquipmentLabel(int slot);
+
 	ItemStack handleStack;
 
 public:

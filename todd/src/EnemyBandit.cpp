@@ -8,8 +8,11 @@
 #include "Skill.h"
 #include "BattleView.h"
 #include "Mob.h"
+#include "Item.h"
+#include <stdlib.h>
+#include <time.h>
 
-EnemyBandit::EnemyBandit()
+EnemyBandit::EnemyBandit() : numPotions(5), numFireSlash(3)
 {
 	spriteSheet = GetMobInfo("MOBBANDIT").mobSprite;
 	level = 5;
@@ -30,6 +33,35 @@ EnemyBandit::EnemyBandit()
 
 Skill *EnemyBandit::plan()
 {
-	skillAttack->init(battleView.getRandomAlly());
-	return skillAttack;
+	if ((hp < 200) && (numPotions > 0))
+	{
+		numPotions--;
+		skillPotion->init(4);
+		return skillPotion;
+	}
+	else
+	{
+		srand(time(NULL));
+		if (((rand() % 100) < 45) && (numFireSlash > 0))
+		{
+			skillFlame->init(battleView.getRandomAlly());
+			return skillFlame;
+		}
+		else
+		{
+			skillAttack->init(battleView.getRandomAlly());
+			return skillAttack;
+		};
+	};
+};
+
+void EnemyBandit::dropItems(vector<int> &drops)
+{
+	srand(time(NULL));
+
+	drops.push_back(Item::MAGIC_RING);
+	if ((rand() % 100) < 50)
+	{
+		drops.push_back(Item::POTION);
+	};
 };

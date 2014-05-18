@@ -9,9 +9,14 @@
 
 class EnemyBandit : public Enemy
 {
+private:
+	int numPotions;
+	int numFireSlash;
+
 public:
 	EnemyBandit();
 	virtual Skill *plan();
+	virtual void dropItems(vector<int> &drops);
 };
 
 #endif

@@ -277,6 +277,12 @@ DialogEntry dialManForest1WithCaspar[] = {
 	{NULL, NULL, NULL}
 };
 
+// MAN IN THE FOREST THAT BLOCKS THE MYSTERIOUS PATH
+DialogEntry dialManForest2[] = {
+	{"MOBMANFOREST2", "Man", "Sorry, nobody allowed past this point! There's secret government operations going on there!"},
+	{NULL, NULL, NULL}
+};
+
 // BANDIT BOSS (IN THE FOREST)
 void BanditBossBattle()
 {

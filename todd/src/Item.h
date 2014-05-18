@@ -24,6 +24,7 @@ public:
 		POTION = 1,
 		BASIC_SWORD = 2,
 		WOODEN_SHIELD = 3,
+		MAGIC_RING = 4,
 	};
 
 	enum

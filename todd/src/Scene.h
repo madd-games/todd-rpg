@@ -26,6 +26,7 @@ public:
 		Forest = 1,
 		Castle_ToddRoom = 2,
 		Castle = 3,
+		Eastville = 4,
 	};
 
 	static void LoadScenes();

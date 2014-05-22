@@ -23,6 +23,7 @@ void Scene::LoadScenes()
 	scenes[Forest] = new Scene("forest.scn");
 	scenes[Castle_ToddRoom] = new Scene("castle_todd_room.scn");
 	scenes[Castle] = new Scene("castle.scn");
+	scenes[Eastville] = new Scene("eastville.scn");
 };
 
 Scene* Scene::GetSceneByID(int id)

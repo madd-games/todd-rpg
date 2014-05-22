@@ -35,3 +35,8 @@ int Skill::getManaUse()
 {
 	return 0;
 };
+
+bool Skill::isMultiTarget()
+{
+	return false;
+};

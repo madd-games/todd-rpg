@@ -60,6 +60,13 @@ public:
 	 * \brief Return the amount of mana used by this skill (default is 0).
 	 */
 	virtual int getManaUse();
+
+	/**
+	 * \brief Returns true if this skill is supposed to be used on a whole party (allies or enemies).
+	 *
+	 * Default = false
+	 */
+	virtual bool isMultiTarget();
 };
 
 extern Skill *skillAttack;

@@ -22,6 +22,7 @@
 #include "Enemy.h"
 #include "Skillset.h"
 #include "OverworldView.h"
+#include "Options.h"
 
 using namespace std;
 
@@ -124,6 +125,8 @@ int main()
 		GameAbort(string("SDL_CreateRenderer() failed: ") + SDL_GetError());
 		return 1;
 	};
+
+	options.save();
 
 	SpriteSheet *ssMouseCursor = new SpriteSheet("mcursor.png", 24, 24);
 	ssTiles = new SpriteSheet("tiles.png");

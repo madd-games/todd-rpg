@@ -13,6 +13,7 @@
 #include "SceneView.h"
 #include "Mob.h"
 #include "LoadView.h"
+#include "Options.h"
 
 using namespace std;
 
@@ -68,7 +69,7 @@ void MainMenu::handleEvent(SDL_Event *ev)
 		{
 			if (selection != (NUM_ENTRIES-1)) selection++;
 		}
-		else if ((ev->key.keysym.sym == SDLK_RIGHT) || (ev->key.keysym.sym == SDLK_x))
+		else if ((ev->key.keysym.sym == SDLK_RIGHT) || (ev->key.keysym.sym == options.confirmKey))
 		{
 			void (*callback)(void) = mainMenuEntries[selection].callback;
 			if (callback != NULL)

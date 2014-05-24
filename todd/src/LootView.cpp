@@ -12,6 +12,7 @@
 #include <sstream>
 #include "SceneView.h"
 #include "Todd.h"
+#include "Options.h"
 
 using namespace std;
 
@@ -37,7 +38,7 @@ void LootView::handleEvent(SDL_Event *ev)
 			chrSel++;
 			if (GetPartyMember(chrSel) == "") chrSel--;
 		}
-		else if ((ev->key.keysym.sym == SDLK_DOWN) || (ev->key.keysym.sym == SDLK_x))
+		else if ((ev->key.keysym.sym == SDLK_DOWN) || (ev->key.keysym.sym == options.confirmKey))
 		{
 			Character *chr = GetChar(GetPartyMember(chrSel));
 			Container *cont = chr->getInventory();

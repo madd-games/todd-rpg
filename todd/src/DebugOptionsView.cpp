@@ -15,6 +15,7 @@
 #include "SpriteSheet.h"
 #include "Timer.h"
 #include "Character.h"
+#include "Options.h"
 
 DebugOptionsView debugOptionsView;
 
@@ -61,7 +62,7 @@ void DebugOptionsView::handleEvent(SDL_Event *ev)
 {
 	if (ev->type == SDL_KEYDOWN)
 	{
-		if ((ev->key.keysym.sym == SDLK_z) || (ev->key.keysym.sym == SDLK_LEFT) || (ev->key.keysym.sym == SDLK_F6))
+		if ((ev->key.keysym.sym == options.cancelKey) || (ev->key.keysym.sym == SDLK_LEFT) || (ev->key.keysym.sym == SDLK_F6))
 		{
 			currentView = &sceneView;
 		}
@@ -74,7 +75,7 @@ void DebugOptionsView::handleEvent(SDL_Event *ev)
 			sel++;
 			if (debugOptions[sel].label == NULL) sel--;
 		}
-		else if ((ev->key.keysym.sym == SDLK_RIGHT) || (ev->key.keysym.sym == SDLK_x))
+		else if ((ev->key.keysym.sym == SDLK_RIGHT) || (ev->key.keysym.sym == options.confirmKey))
 		{
 			bool *ptr = debugOptions[sel].optPtr;
 			if (ptr != NULL) *ptr = !(*ptr);

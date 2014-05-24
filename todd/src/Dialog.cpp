@@ -16,6 +16,7 @@
 #include "EnemyBandit.h"
 #include "SaveView.h"
 #include "Character.h"
+#include "Options.h"
 
 Dialog::Dialog(DialogEntry *entry, string with) : currentEntry(entry), with(with), letters(1), choice(0)
 {
@@ -26,7 +27,7 @@ void Dialog::handleEvent(SDL_Event *ev)
 {
 	if (ev->type == SDL_KEYDOWN)
 	{
-		if (ev->key.keysym.sym == SDLK_x)
+		if (ev->key.keysym.sym == options.confirmKey)
 		{
 			if (currentEntry->mobwait != NULL)
 			{

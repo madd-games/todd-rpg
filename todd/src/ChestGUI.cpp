@@ -11,6 +11,7 @@
 #include <sstream>
 #include "Character.h"
 #include "Timer.h"
+#include "Options.h"
 
 using namespace std;
 
@@ -38,7 +39,7 @@ void ChestGUI::handleEvent(SDL_Event *ev)
 		{
 			if (sel != 0) sel--;
 		}
-		else if (ev->key.keysym.sym == SDLK_x)
+		else if (ev->key.keysym.sym == options.confirmKey)
 		{
 			Container *cont = GetChar(GetPartyMember(sel))->getInventory();
 			ItemStack stk;

@@ -14,6 +14,7 @@
 #include "Timer.h"
 #include "Mob.h"
 #include "SceneView.h"
+#include "Options.h"
 
 using namespace std;
 
@@ -51,7 +52,7 @@ void LoadView::handleEvent(SDL_Event *ev)
 {
 	if (ev->type == SDL_KEYDOWN)
 	{
-		if ((ev->key.keysym.sym == SDLK_z) || (ev->key.keysym.sym == SDLK_LEFT))
+		if ((ev->key.keysym.sym == options.cancelKey) || (ev->key.keysym.sym == SDLK_LEFT))
 		{
 			currentView = &mainMenu;
 		}
@@ -63,7 +64,7 @@ void LoadView::handleEvent(SDL_Event *ev)
 		{
 			if (slotSel != 0) slotSel--;
 		}
-		else if ((ev->key.keysym.sym == SDLK_RIGHT) || (ev->key.keysym.sym == SDLK_x))
+		else if ((ev->key.keysym.sym == SDLK_RIGHT) || (ev->key.keysym.sym == options.confirmKey))
 		{
 			NewGame();
 			LoadGame(slotSel);

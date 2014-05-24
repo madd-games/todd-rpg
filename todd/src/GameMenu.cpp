@@ -11,6 +11,7 @@
 #include <sstream>
 #include "Character.h"
 #include <iostream>
+#include "Options.h"
 
 using namespace std;
 
@@ -35,7 +36,7 @@ void GameMenu::handleEvent(SDL_Event *ev)
 	{
 		if (ev->type == SDL_KEYDOWN)
 		{
-			if ((ev->key.keysym.sym == SDLK_ESCAPE) || (ev->key.keysym.sym == SDLK_z))
+			if ((ev->key.keysym.sym == options.menuKey) || (ev->key.keysym.sym == options.cancelKey))
 			{
 				timer = Timer::Read();
 				dying = true;

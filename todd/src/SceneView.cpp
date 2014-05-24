@@ -14,6 +14,7 @@
 #include "RandomBattle.h"
 #include "BattleView.h"
 #include "Timer.h"
+#include "Options.h"
 
 #ifdef TODD_DEBUG
 #include "DebugOptionsView.h"
@@ -113,7 +114,7 @@ void SceneView::handleEvent(SDL_Event *ev)
 		{
 			keyRight = !scene->checkWarp(1, 0);
 		}
-		else if (ev->key.keysym.sym == SDLK_x)
+		else if (ev->key.keysym.sym == options.confirmKey)
 		{
 			if (keyLeft || keyRight || keyUp || keyDown) return;
 
@@ -165,26 +166,26 @@ void SceneView::handleEvent(SDL_Event *ev)
 			currentView = &debugOptionsView;
 		}
 #endif
-		else if (ev->key.keysym.sym == SDLK_ESCAPE)
+		else if (ev->key.keysym.sym == options.menuKey)
 		{
 			gui = new GameMenu();
 		};
 	}
 	else if (ev->type == SDL_KEYUP)
 	{
-		if (ev->key.keysym.sym == SDLK_DOWN)
+		if (ev->key.keysym.sym == options.downKey)
 		{
 			keyDown = false;
 		}
-		else if (ev->key.keysym.sym == SDLK_UP)
+		else if (ev->key.keysym.sym == options.upKey)
 		{
 			keyUp = false;
 		}
-		else if (ev->key.keysym.sym == SDLK_LEFT)
+		else if (ev->key.keysym.sym == options.leftKey)
 		{
 			keyLeft = false;
 		}
-		else if (ev->key.keysym.sym == SDLK_RIGHT)
+		else if (ev->key.keysym.sym == options.rightKey)
 		{
 			keyRight = false;
 		};

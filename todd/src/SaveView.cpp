@@ -14,6 +14,7 @@
 #include "Timer.h"
 #include "Mob.h"
 #include "SceneView.h"
+#include "Options.h"
 
 SaveView saveView;
 
@@ -52,7 +53,7 @@ void SaveView::handleEvent(SDL_Event *ev)
 	{
 		if (!saving)
 		{
-			if ((ev->key.keysym.sym == SDLK_z) || (ev->key.keysym.sym == SDLK_LEFT))
+			if ((ev->key.keysym.sym == options.cancelKey) || (ev->key.keysym.sym == SDLK_LEFT))
 			{
 				currentView = &sceneView;
 			}
@@ -64,7 +65,7 @@ void SaveView::handleEvent(SDL_Event *ev)
 			{
 				if (slotSel != 0) slotSel--;
 			}
-			else if ((ev->key.keysym.sym == SDLK_RIGHT) || (ev->key.keysym.sym == SDLK_x))
+			else if ((ev->key.keysym.sym == SDLK_RIGHT) || (ev->key.keysym.sym == options.confirmKey))
 			{
 				saving = true;
 				saveName = slotNames[slotSel-1];

@@ -10,6 +10,8 @@
 #include "GameState.h"
 #include "SceneView.h"
 #include "Todd.h"
+#include "Text.h"
+#include "Options.h"
 
 OverworldView overworldView;
 
@@ -29,14 +31,17 @@ struct MapSpot
 	int sceneID;
 	int sceneX, sceneY;
 	int sceneOrient;
+
+	// The name of the area.
+	const char *name;
 };
 
 vector<MapSpot> mapSpots;
 
-MapSpot mapSpot0 = {1, 283, 112, 0, 0, 0, 2, Scene::Castle, 10, 14, Mob::UP};
-MapSpot mapSpot1 = {2, 367, 280, 0, 0, 1, 0, Scene::Forest, 1, 2, Mob::DOWN};
-MapSpot mapSpot2 = {3, 407, 280, 0, 4, 0, 0, Scene::Forest, 40, 4, Mob::LEFT};
-MapSpot mapSpot3 = {4, 457, 274, 3, 0, 0, 0, Scene::Eastville, 1, 1, Mob::RIGHT};
+MapSpot mapSpot0 = {1, 283, 112, 0, 0, 0, 2, Scene::Castle, 10, 14, Mob::UP, "Castle"};
+MapSpot mapSpot1 = {2, 367, 280, 0, 0, 1, 0, Scene::Forest, 1, 2, Mob::DOWN, "Forest (West)"};
+MapSpot mapSpot2 = {3, 407, 280, 0, 4, 0, 0, Scene::Forest, 40, 4, Mob::LEFT, "Forest (East)"};
+MapSpot mapSpot3 = {4, 457, 274, 3, 0, 0, 0, Scene::Eastville, 1, 1, Mob::RIGHT, "Eastville"};
 // Maps spot ID to index in mapSpots.
 map<int, int> mapSpotMap;
 
@@ -80,7 +85,7 @@ void OverworldView::handleEvent(SDL_Event *ev)
 		{
 			if (spot.down != 0) currentSpot = spot.down;
 		}
-		else if (ev->key.keysym.sym == SDLK_x)
+		else if (ev->key.keysym.sym == options.confirmKey)
 		{
 			MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
 			state->x = spot.sceneX;
@@ -100,6 +105,7 @@ void OverworldView::render()
 	ssOverworld->draw(0, 0, 0, false);
 
 	int mobX, mobY;
+	const char *placeName = "Unknown location";
 
 	vector<MapSpot>::iterator it;
 	for (it=mapSpots.begin(); it!=mapSpots.end(); ++it)
@@ -109,8 +115,12 @@ void OverworldView::render()
 		{
 			mobX = it->x-24;
 			mobY = it->y-24;
+			placeName = it->name;
 		};
 	};
 
 	GetMobInfo("MOBTODD").mobSprite->draw(mobX, mobY, 0, false);
+
+	Text text(placeName, 0, 0, 0, 255, fntCaption);
+	text.draw(mobX+48, mobY+10);
 };

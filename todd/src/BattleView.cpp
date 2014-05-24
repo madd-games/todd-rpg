@@ -17,6 +17,7 @@
 #include "LootView.h"
 #include "Item.h"
 #include <time.h>
+#include "Options.h"
 
 using namespace std;
 
@@ -67,7 +68,7 @@ void BattleView::handleEvent(SDL_Event *ev)
 			{
 				if (optionSel != 0) optionSel--;
 			}
-			else if ((ev->key.keysym.sym == SDLK_x) || (ev->key.keysym.sym == SDLK_RIGHT))
+			else if ((ev->key.keysym.sym == options.confirmKey) || (ev->key.keysym.sym == SDLK_RIGHT))
 			{
 				if (optionSel == 0)			// Attack
 				{
@@ -315,11 +316,11 @@ void BattleView::handleEvent(SDL_Event *ev)
 					};
 				};
 			}
-			else if (ev->key.keysym.sym == SDLK_z)
+			else if (ev->key.keysym.sym == options.cancelKey)
 			{
 				mode = Mode::MENU;
 			}
-			else if (ev->key.keysym.sym == SDLK_x)
+			else if (ev->key.keysym.sym == options.confirmKey)
 			{
 				Character *chr = GetChar(GetPartyMember(turn));
 				int mana = chr->getMP() - skillSel->getManaUse();
@@ -335,7 +336,7 @@ void BattleView::handleEvent(SDL_Event *ev)
 	{
 		if (ev->type == SDL_KEYDOWN)
 		{
-			if (ev->key.keysym.sym == SDLK_z)
+			if (ev->key.keysym.sym == options.cancelKey)
 			{
 				mode = Mode::MENU;
 			}
@@ -349,7 +350,7 @@ void BattleView::handleEvent(SDL_Event *ev)
 				int limit = (int) skillset->skills.size() - 1;
 				if (skillSelIndex != limit) skillSelIndex++;
 			}
-			else if ((ev->key.keysym.sym == SDLK_x) || (ev->key.keysym.sym == SDLK_RIGHT))
+			else if ((ev->key.keysym.sym == options.confirmKey) || (ev->key.keysym.sym == SDLK_RIGHT))
 			{
 				Skillset *skillset = GetSkillset(GetPartyMember(turn));
 				skillSel = skillset->skills[skillSelIndex];
@@ -396,11 +397,11 @@ void BattleView::handleEvent(SDL_Event *ev)
 	{
 		if (ev->type == SDL_KEYDOWN)
 		{
-			if (ev->key.keysym.sym == SDLK_z)
+			if (ev->key.keysym.sym == options.cancelKey)
 			{
 				mode = Mode::MENU;
 			}
-			else if ((ev->key.keysym.sym == SDLK_x) || (ev->key.keysym.sym == SDLK_RIGHT))
+			else if ((ev->key.keysym.sym == options.confirmKey) || (ev->key.keysym.sym == SDLK_RIGHT))
 			{
 				int id = expendableItems[itemSelIndex];
 				Character *chr = GetChar(GetPartyMember(turn));

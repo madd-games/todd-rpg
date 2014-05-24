@@ -14,6 +14,7 @@
 #include "Mob.h"
 #include "LoadView.h"
 #include "Options.h"
+#include "OptionsView.h"
 
 using namespace std;
 
@@ -41,15 +42,22 @@ void MainMenuLoadGame()
 	currentView = &loadView;
 };
 
+void MainMenuOptions()
+{
+	optionsView.init();
+	currentView = &optionsView;
+};
+
 void MainMenuQuitGame()
 {
 	toddQuit = true;
 };
 
-#define	NUM_ENTRIES	3
+#define	NUM_ENTRIES	4
 MainMenuEntry mainMenuEntries[NUM_ENTRIES] = {
 	{"New Game", MainMenuNewGame},
 	{"Load Game", MainMenuLoadGame},
+	{"Options", MainMenuOptions},
 	{"Quit", MainMenuQuitGame}
 };
 

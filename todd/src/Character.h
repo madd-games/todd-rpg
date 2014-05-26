@@ -43,6 +43,7 @@
 #include "SpriteSheet.h"
 #include "Container.h"
 #include "CharStats.h"
+#include "StatusEffect.h"
 
 using namespace std;
 
@@ -54,6 +55,7 @@ struct CharState
 	int ap, maxap;		/* used for passive skills */
 	int level;
 	CharStats stats;
+	StatusEffectSet ses;
 };
 
 struct CharInfo

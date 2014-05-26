@@ -130,6 +130,7 @@ public:
 	int *getResistances(int entity);
 	int getLevel(int entity);
 	int getTurn();
+	void getHP(int entity, int &hp, int &maxhp);
 
 	/**
 	 * \brief Inflict damage on a target.

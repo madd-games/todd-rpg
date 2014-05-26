@@ -939,6 +939,22 @@ int BattleView::getLevel(int entity)
 	};
 };
 
+void BattleView::getHP(int entity, int &hp, int &maxhp)
+{
+	if (entity < 4)
+	{
+		Character *chr = GetChar(GetPartyMember(entity));
+		hp = chr->getHP();
+		maxhp = chr->getMaxHP();
+	}
+	else
+	{
+		Enemy *enemy = enemies[entity-4];
+		hp = enemy->hp;
+		maxhp = enemy->maxhp;
+	};
+};
+
 int BattleView::getTurn()
 {
 	return turn;

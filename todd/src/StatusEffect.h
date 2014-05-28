@@ -81,7 +81,19 @@ public:
 	StatusEffectSet(const StatusEffectSet &ses);
 	StatusEffectSet& operator=(StatusEffectSet ses);
 
+	/**
+	 * \brief Test if a status effect is active.
+	 * \param effect The effect to test.
+	 * \sa StatusEffect
+	 */
 	bool test(int effect);
+
+	/**
+	 * \brief Change the state of a status effect.
+	 * \param effect The effect whose state shall be changed.
+	 * \param state The state; if true, this status effect is active.
+	 * \sa StatusEffect
+	 */
 	void set(int effect, bool state);
 };
 

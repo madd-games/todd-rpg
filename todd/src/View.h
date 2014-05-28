@@ -42,7 +42,19 @@
 class View
 {
 public:
+	/**
+	 * \brief Called to handle events from the main loop.
+	 *
+	 * SDL_QUIT is handled automatically.
+	 * \param ev The event that occured.
+	 */
 	virtual void handleEvent(SDL_Event *ev);
+
+	/**
+	 * \brief Called when the view shall be drawn.
+	 *
+	 * The framebuffer to which this function draws is guaranteed to be empty (filled with black).
+	 */
 	virtual void render() = 0;
 };
 

@@ -773,7 +773,7 @@ void BattleView::render()
 
 	// Render damage displays.
 	vector<DamageDisplay>::iterator it = dmgDisplays.begin();
-	while (it != dmgDisplays.end())
+	if (it != dmgDisplays.end())
 	{
 		int offset = (int) (Timer::Read()-it->start) / 10;
 		int x = it->x;
@@ -795,10 +795,12 @@ void BattleView::render()
 		if (offset >= 48)
 		{
 			it = dmgDisplays.erase(it);
+			if (it != dmgDisplays.end()) it->start = Timer::Read();
 		}
 		else
 		{
 			it++;
+			if (it != dmgDisplays.end()) it->start = Timer::Read();
 		};
 	};
 };

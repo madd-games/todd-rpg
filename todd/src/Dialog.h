@@ -46,7 +46,15 @@ using namespace std;
 struct DialogEntry;
 struct DialogOption
 {
+	/**
+	 * \brief The text to display for this option.
+	 */
 	const char *text;
+
+	/**
+	 * If the user chooses this option, and presses X, this dialog shall appear. This can be NULL,
+	 * in which case the dialog is dismissed.
+	 */
 	DialogEntry *effect;
 };
 
@@ -77,10 +85,14 @@ struct DialogEntry
 	void (*callback)(void);
 
 	/**
+	 * Number of options to choose from, if this is option mode (text == NULL).
+	 */
+	int numOptions;
+
+	/**
 	 * If this is option mode (text == NULL), then these are the options the player
 	 * can choose from, and what dialog they lead to.
 	 */
-	int numOptions;
 	DialogOption options[4];
 
 	/**

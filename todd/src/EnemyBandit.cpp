@@ -76,8 +76,8 @@ Skill *EnemyBandit::plan()
 		if (((rand() % 100) < 45) && (numFireSlash > 0))
 		{
 			numFireSlash--;
-			skillFlame->init(battleView.getRandomAlly());
-			return skillFlame;
+			skillFireSlash->init(battleView.getRandomAlly());
+			return skillFireSlash;
 		}
 		else
 		{

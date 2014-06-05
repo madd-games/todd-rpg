@@ -41,6 +41,7 @@
 #include <map>
 #include <vector>
 #include <sstream>
+#include "Struct.h"
 
 using namespace std;
 
@@ -78,8 +79,19 @@ private:
 		int targetScene;		// negative is overworld map spot indices.
 	};
 
+	// Describes a placed structure.
+	struct StructInfo
+	{
+		Struct *str;
+		int x;
+		int y;
+	};
+
 	// All the warp points in this scene.
 	vector<WarpPoint> warpPoints;
+
+	// All the structures in the scene.
+	vector<StructInfo> structList;
 
 	// Width and height of the board.
 	int width, height;

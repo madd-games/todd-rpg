@@ -45,7 +45,7 @@
 #include "SkillAttack.h"
 #include "SkillHeal.h"
 #include "SkillPotion.h"
-#include "SkillFlame.h"
+#include "SkillFireSlash.h"
 
 bool Skill::isUsableAgainstDead()
 {

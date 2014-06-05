@@ -30,79 +30,70 @@
 */
 
 /**
- * Skill.h
- * A class for representing skills used in battles.
+ * SkillFireSlash.h
  */
 
-#ifndef SKILL_H
-#define SKILL_H
-
-#include "Element.h"
-#include <string>
-
-using namespace std;
-
-class Skill
+class SkillFireSlash : public Skill
 {
+private:
+	int target;
+	unsigned int time;
+	int stage;
+
 public:
-	/**
- 	 * \brief Returns true if this skill can be used against dead people.
-	 *
-	 * Default = false
-	 */
-	virtual bool isUsableAgainstDead();
+	virtual void init(int target)
+	{
+		this->target = target;
+		time = Timer::Read();
+		stage = 0;
+	};
 
-	/**
-	 * \brief Called when this skill is activated.
-	 */
-	virtual void init(int target);
+	virtual void act()
+	{
+		if ((Timer::Read()-time) >= 10)
+		{
+			stage++;
+			if (stage == 2)
+			{
+				int damage = 50 + 10 * battleView.getLevel(battleView.getTurn());
+				battleView.attack(target, AttackType::PHYSICAL, Element::FIRE, damage);
+			};
+			time = Timer::Read();
 
-	/**
-	 * \brief Called repeatedly while this skill is active.
-	 */
-	virtual void act() = 0;
+			battleView.emitParticle(target, stage, -stage/2+48, BattleView::FLAME);
+		};
+	};
 
-	/**
-	 * \brief Returns false once the skill has completed acting.
-	 */
-	virtual bool isActive() = 0;
+	virtual bool isActive()
+	{
+		return stage < 30;
+	};
 
-	/**
-	 * \brief Returns true if this skill is offensive.
-	 */
-	virtual bool isOffensive() = 0;
+	virtual bool isOffensive()
+	{
+		return true;
+	};
 
-	/**
-	 * \brief Return this skill's element.
-	 */
-	virtual int getElement() = 0;
+	virtual int getElement()
+	{
+		return Element::FIRE;
+	};
 
-	/**
-	 * \brief Return the name of this skill.
-	 */
-	virtual string getName() = 0;
+	virtual string getName()
+	{
+		return "Fire Slash";
+	};
 
-	/**
-	 * \brief Return the description for this skill (default is an empty string).
-	 */
-	virtual string getDesc();
+	virtual string getDesc()
+	{
+		return "Deals physical fire damage by slashing the target with a burning sword.";
+	};
 
-	/**
-	 * \brief Return the amount of mana used by this skill (default is 0).
-	 */
-	virtual int getManaUse();
-
-	/**
-	 * \brief Returns true if this skill is supposed to be used on a whole party (allies or enemies).
-	 *
-	 * Default = false
-	 */
-	virtual bool isMultiTarget();
+	virtual int getManaUse()
+	{
+		return 8;
+	};
 };
 
-extern Skill *skillAttack;
-extern Skill *skillHeal;
-extern Skill *skillPotion;
-extern Skill *skillFireSlash;
-
-#endif
+SkillFireSlash skillFireSlashVal;
+Skill *skillFireSlash = &skillFireSlashVal;

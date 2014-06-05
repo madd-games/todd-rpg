@@ -57,7 +57,7 @@ void InitSkillsets()
 	skillsets["CHRCASPAR"] = &skillsetCaspar;
 	skillsetCaspar.name = "Fire Magic";
 	skillsetCaspar.skills.clear();
-	skillsetCaspar.skills.push_back(skillFlame);
+	skillsetCaspar.skills.push_back(skillFireSlash);
 };
 
 Skillset *GetSkillset(string charName)

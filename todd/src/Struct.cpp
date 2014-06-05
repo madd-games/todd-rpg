@@ -30,72 +30,55 @@
 */
 
 /**
- * SkillFlame.h
+ * Struct.cpp
+ * Handling structures, such as houses and caves
  */
 
-// TODO: Properly rename to "Fire Slash"
+#include "Struct.h"
+#include <map>
 
-class SkillFlame : public Skill
+using namespace std;
+
+map<string, Struct*> structMap;
+
+Struct::Struct(string imgName, int width, int height, bool *mask) : img(imgName, width*48, height*48),
+	width(width), height(height), mask(mask)
 {
-private:
-	int target;
-	unsigned int time;
-	int stage;
+};
 
-public:
-	virtual void init(int target)
+bool Struct::canWalkOn(int x, int y)
+{
+	if (mask == NULL)
 	{
-		this->target = target;
-		time = Timer::Read();
-		stage = 0;
-	};
-
-	virtual void act()
+		return false;
+	}
+	else
 	{
-		if ((Timer::Read()-time) >= 10)
-		{
-			stage++;
-			if (stage == 2)
-			{
-				int damage = 50 + 10 * battleView.getLevel(battleView.getTurn());
-				battleView.attack(target, AttackType::PHYSICAL, Element::FIRE, damage);
-			};
-			time = Timer::Read();
-
-			battleView.emitParticle(target, stage, -stage/2+48, BattleView::FLAME);
-		};
-	};
-
-	virtual bool isActive()
-	{
-		return stage < 30;
-	};
-
-	virtual bool isOffensive()
-	{
-		return true;
-	};
-
-	virtual int getElement()
-	{
-		return Element::FIRE;
-	};
-
-	virtual string getName()
-	{
-		return "Fire Slash";
-	};
-
-	virtual string getDesc()
-	{
-		return "Deals physical fire damage by slashing the target with a burning sword.";
-	};
-
-	virtual int getManaUse()
-	{
-		return 8;
+		return !mask[y * width + x];
 	};
 };
 
-SkillFlame skillFlameVal;
-Skill *skillFlame = &skillFlameVal;
+void Struct::draw(int x, int y)
+{
+	img.draw(x, y, 0);
+};
+
+int Struct::getWidth()
+{
+	return width;
+};
+
+int Struct::getHeight()
+{
+	return height;
+};
+
+Struct *GetStruct(string name)
+{
+	return structMap[name];
+};
+
+void InitStruct()
+{
+	structMap["h1"] = new Struct("h1.png", 7, 5, NULL);
+};

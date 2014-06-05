@@ -54,6 +54,7 @@
 #include "Skillset.h"
 #include "OverworldView.h"
 #include "Options.h"
+#include "Struct.h"
 
 using namespace std;
 
@@ -185,6 +186,7 @@ int main()
 	InitItems();
 	InitActiveTiles();
 	InitSkillsets();
+	InitStruct();
 	Text::Init();
 	overworldView.init();
 

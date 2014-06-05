@@ -289,6 +289,12 @@ void SceneView::render()
 	RenderMobs();
 	renderLayer(scene->ovLayer);
 
+	vector<Scene::StructInfo>::iterator it;
+	for (it=scene->structList.begin(); it!=scene->structList.end(); ++it)
+	{
+		it->str->draw(it->x*48, it->y*48);
+	};
+
 	if (battleTimer != 0)
 	{
 		ssTiles->draw(state->x*48, state->y*48-48, 10);
@@ -316,6 +322,25 @@ bool SceneView::canWalk(int x, int y)
 	if ((x < 0) || (x >= scene->width) || (y < 0) || (y >= scene->height)) return false;
 	if (scene->hardLayer[y * scene->width + x].id != 0) return false;
 	if (IsMobAt(sceneID, x, y)) return false;
+
+	vector<Scene::StructInfo>::iterator it;
+	for (it=scene->structList.begin(); it!=scene->structList.end(); ++it)
+	{
+		if ((x >= it->x) && (y >= it->y))
+		{
+			int relX = x - it->x;
+			int relY = y - it->y;
+
+			if ((relX < it->str->getWidth()) && (relY < it->str->getHeight()))
+			{
+				if (!it->str->canWalkOn(relX, relY))
+				{
+					return false;
+				};
+			};
+		};
+	};
+
 	return true;
 };
 

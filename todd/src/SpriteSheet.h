@@ -43,6 +43,10 @@
 
 using namespace std;
 
+/**
+ * A class for representing sprite sheets.
+ * Must only be instantiated on the heap (with the 'new' operator).
+ */
 class SpriteSheet
 {
 private:
@@ -53,7 +57,24 @@ private:
 	int sprWidth, sprHeight;
 
 public:
+	/**
+	 * \brief Constuctor.
+	 * \param name The name of the data file (PNG) to read the sprite sheet from.
+	 * \param width The width of each sprite on the sheet (default is 48).
+	 * \param height The height of each sprite on the sheet (default is 48).
+	 */
 	SpriteSheet(string name, int width = 48, int height = 48);
+
+	/**
+	 * \brief Draw a sprite.
+	 * \param x The X coordinate to draw on.
+	 * \param y The Y coordinate to draw on.
+	 * \param rel If this is true, then (x, y) are relative to the camera; otherwise, they are absolute.
+	 * \param width The width of the sprite to take (may be less than the real one).
+	 * \param dstwidth The destination width (if different from width, then the sprite is scaled).
+	 * \param height The height of the sprite to take (may be less than the real one).
+	 * \param dstheight The destination height (if different from height, then the sprite is scaled).
+	 */
 	void draw(int x, int y, int index, bool rel = true, int width = 0, int dstwidth = 0, int height = 0, int dstheight = 0);
 };
 

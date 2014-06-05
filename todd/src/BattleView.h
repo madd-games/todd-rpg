@@ -121,31 +121,78 @@ private:
 	SpriteSheet *getBackground(int sceneID);
 
 public:
+	/**
+	 * \brief Set up a battle with the specified enemies.
+	 *
+	 * Once the battle ends, the enemies will be deleted!
+	 */
 	void init(Enemy *a, Enemy *b, Enemy *c, Enemy *d);
 
 	virtual void handleEvent(SDL_Event *ev);
 	virtual void render();
 
+	/**
+	 * \brief Get the stats for an entity.
+	 * \param entity The entity to probe (0-3 = allies, 4-7 = enemies).
+	 * \return The CharStats structure for the entity.
+	 */
 	CharStats getStats(int entity);
+
+	/**
+	 * \brief Get the resistances for elements for an entity.
+	 * \param entity The entity to probe (0-3 = allies, 4-7 = enemies).
+	 * \return An array whose indices are element ID (see Element), and the values specify
+	 *         the resistance in %.
+	 */
 	int *getResistances(int entity);
+
+	/**
+	 * \brief Get the level of an entity.
+	 * \param entity The entity to probe (0-3 = allies, 4-7 = enemies).
+	 * \return The entity's level.
+	 */
 	int getLevel(int entity);
+
+	/**
+	 * \brief Check whose turn it is.
+	 * \return The entity whose turn it is (0-3 = allies, 4-7 = enemies).
+	 */
 	int getTurn();
+
+	/**
+	 * \brief Get an enemy's HP and max HP.
+	 * \param entity The entity to probe (0-3 = allies, 4-7 = enemies).
+	 * \param hp Reference to an int variable where HP shall be stored.
+	 * \param maxhp Reference to an int varbiable where max HP shall be stored.
+	 */
 	void getHP(int entity, int &hp, int &maxhp);
 
 	/**
 	 * \brief Inflict damage on a target.
 	 *
-	 * \param target The target getting hit.
+	 * \param target The target getting hit (0-3 = allies, 4-7 = enemies).
 	 * \param type AttackType::PHYSICAL or AttackType::MAGIC.
 	 * \param element The element.
 	 * \param damage The normal damage (not accounting for STR, DEF, etc.)
 	 */
 	void attack(int target, int type, int element, int damage);
 
+	/**
+	 * \brief Get a random ally.
+	 * \param allowDead If true, dead allies may be returned (default = false).
+	 * \return The ally entity number (0-3), the same as the party index.
+	 */
 	int getRandomAlly(bool allowDead = false);
+
+	/**
+	 * \brief Change whether it is possible to flee from this battle.
+	 * \param flee If true, the player may choose to flee.
+	 */
 	void setFlee(bool flee);
 
-	// Particle types.
+	/**
+	 * \brief Particle types.
+	 */
 	enum
 	{
 		SPARK,

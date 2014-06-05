@@ -43,6 +43,7 @@
 #include "GameState.h"
 #include "SceneView.h"
 #include "OverworldView.h"
+#include "Struct.h"
 
 using namespace std;
 
@@ -85,6 +86,7 @@ Scene::Scene(string name)
 	};
 
 	warpPoints.clear();
+	structList.clear();
 
 	vector<string> bgLines;
 	vector<string> hardLines;
@@ -212,6 +214,43 @@ Scene::Scene(string name)
 				tl.id = tile;
 				tl.meta = meta;
 				tileMap[c] = tl;
+			}
+			else if (cmd == ".struct")
+			{
+				size_t colonPos = param.find(":");
+				if (colonPos == param.npos)
+				{
+					GameAbort(string("Error loading scene ") + name + ": invalid syntax for .struct");
+				};
+
+				string name = param.substr(colonPos+1);
+				string coordParse = param.substr(0, colonPos);
+				size_t commaPos = coordParse.find(",");
+				if (commaPos == coordParse.npos)
+				{
+					GameAbort(string("Error loading scene ") + name + ": invalid syntax for .struct");
+				};
+
+				string strX = coordParse.substr(0, commaPos);
+				string strY = coordParse.substr(commaPos+1);
+
+				StructInfo info;
+				if (1)
+				{
+					stringstream ss;
+					ss << strX;
+					ss >> info.x;
+				};
+
+				if (1)
+				{
+					stringstream ss;
+					ss << strY;
+					ss >> info.y;
+				};
+
+				info.str = GetStruct(name);
+				structList.push_back(info);
 			}
 			else
 			{

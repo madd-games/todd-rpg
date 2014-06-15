@@ -61,6 +61,9 @@ struct TileMapping
 	int spriteIndex;
 };
 
+/**
+ * \brief Maps tile IDs to tile sprite indeces.
+ */
 TileMapping tileMappings[] = {
 	{1, 1},				// Black square
 	{2, 2},				// Grass

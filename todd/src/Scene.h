@@ -59,6 +59,7 @@ public:
 		Castle_ToddRoom = 2,
 		Castle = 3,
 		Eastville = 4,
+		Eastville_House1 = 5,
 	};
 
 	static void LoadScenes();

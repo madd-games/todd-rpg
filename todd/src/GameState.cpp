@@ -103,7 +103,6 @@ void NewGame()
 	ItemStack stackBasicSword = {2, 1};
 	charTodd->getInventory()->set(0, stackBasicSword);
 
-	//SetPartyMember(1, "CHRCASPAR");
 	Character *charCaspar = GetChar("CHRCASPAR");
 	charCaspar->setHP(120, 120);
 	charCaspar->setMP(80, 80);
@@ -159,6 +158,8 @@ void NewGame()
 	// Doors
 	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);
 	InitDoor(Scene::Castle, 18, 6, Scene::Castle_ToddRoom, 13, 1, Mob::DOWN);
+	InitDoor(Scene::Eastville, 8, 9, Scene::Eastville_House1, 11, 6, Mob::UP);
+	InitDoor(Scene::Eastville_House1, 11, 7, Scene::Eastville, 8, 10, Mob::DOWN);
 };
 
 string GetPathToSaveSlot(int slot)

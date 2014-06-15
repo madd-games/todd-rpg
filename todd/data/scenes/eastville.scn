@@ -6,6 +6,7 @@
 .tile S5
 .tile X6
 .tile R10
+.tile D11
 
 .warp 0,1:-4
 
@@ -36,14 +37,17 @@ FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 
 .hard
-TTTTTTT*T
-*****TT***T
-TTTT*T***TR
-TTT*****TTT
-TT******R***
+TTTTTTT*T*******
+*****TT***T*****
+TTTT*T***TR******
+TTT*****TTT****
+TT******R*********
 T***************
-TS*****R******
-TT***********
+TS*****R*********
+TT**************
+****************
+********D*******
+*****************
 
 .overlay
 ******************************************

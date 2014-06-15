@@ -30,74 +30,16 @@
 */
 
 /**
- * Options.h
- * Header file for managing player's options.
+ * TileHiddenDoor.h
+ * The 'hidden door' active tile.
  */
 
-#ifndef OPTIONS_H
-#define OPTIONS_H
-
-#include <string>
-#include <SDL2/SDL.h>
-
-using namespace std;
-
-/**
- * \brief A class that handles options.
- */
-class Options
+class TileHiddenDoor : public TileDoor
 {
-private:
-	string getPathToOptions();
-
 public:
-	/**
-	 * \brief The key used to confirm stuff (default is X).
-	 */
-	SDL_Keycode confirmKey;
-
-	/**
-	 * \brief The key used to cancel stuff (default is Z).
-	 */
-	SDL_Keycode cancelKey;
-
-	/**
-	 * \brief The key for walking up (default is up arrow key).
-	 */
-	SDL_Keycode upKey;
-
-	/**
-	 * \brief The key for walking down (default is down arrow key).
-	 */
-	SDL_Keycode downKey;
-
-	/**
-	 * \brief The key for walking left (default is left arrow key).
-	 */
-	SDL_Keycode leftKey;
-
-	/**
-	 * \brief The key for walking right (default is right arrow key).
-	 */
-	SDL_Keycode rightKey;
-
-	/**
-	 * \brief The key for opening the menu (default is ESC).
-	 */
-	SDL_Keycode menuKey;
-
-	Options();
-
-	/**
-	 * \brief Save the current options in the appropriate file.
-	 *
-	 * The file to which settings are saved and read from is platform-dependent.
-	 * It is called `madd.todd-options`, and on Windows it is stored in APPDATA, and on UNIX it's
-	 * stored in HOME.
-	 */
-	void save();
+	virtual int getTileIndex(void *state_)
+	{
+		(void)state_;
+		return 0;
+	};
 };
-
-extern Options options;
-
-#endif

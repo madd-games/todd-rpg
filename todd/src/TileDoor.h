@@ -45,18 +45,18 @@ using namespace std;
 class TileDoor : public ActiveTile
 {
 public:
-	size_t getStateSize()
+	virtual size_t getStateSize()
 	{
 		return sizeof(DoorState);
 	};
 
-	int getTileIndex(void *state_)
+	virtual int getTileIndex(void *state_)
 	{
 		(void)state_;
 		return 11;
 	};
 
-	void interact(void *state_)
+	virtual void interact(void *state_)
 	{
 		DoorState *state = (DoorState*) state_;
 		MobState *ms = (MobState*) GetGameData("MOBTODD", sizeof(MobState));

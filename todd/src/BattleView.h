@@ -46,12 +46,28 @@
 
 using namespace std;
 
+/**
+ * \brief Types of attacks.
+ */
 namespace AttackType
 {
 	enum
 	{
+		/**
+		 * \brief Physical attacks, affected by STR and DEF.
+		 */
 		PHYSICAL,
+
+		/**
+		 * \brief Magic attacks, affected by INT and MDEF.
+		 */
 		MAGIC,
+
+		/**
+		 * \brief Direct attacks, deal damage without being affected by any stats.
+		 *
+		 * This is used, for example, by items.
+		 */
 		DIRECT,
 	};
 };

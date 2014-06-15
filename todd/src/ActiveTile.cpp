@@ -44,6 +44,7 @@
 #include "TileCrystal.h"
 #include "TileDoor.h"
 #include "TileLockedDoor.h"
+#include "TileHiddenDoor.h"
 
 using namespace std;
 
@@ -55,6 +56,7 @@ void InitActiveTiles()
 	activeTileMap[5] = new TileCrystal;
 	activeTileMap[8] = new TileDoor;
 	activeTileMap[9] = new TileLockedDoor;
+	activeTileMap[11] = new TileHiddenDoor;
 };
 
 ActiveTile *GetActiveTile(int id)

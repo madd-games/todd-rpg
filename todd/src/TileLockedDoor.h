@@ -42,21 +42,10 @@
 
 using namespace std;
 
-class TileLockedDoor : public ActiveTile
+class TileLockedDoor : public TileDoor
 {
 public:
-	size_t getStateSize()
-	{
-		return 0;
-	};
-
-	int getTileIndex(void *state_)
-	{
-		(void)state_;
-		return 11;
-	};
-
-	void interact(void *state_)
+	virtual void interact(void *state_)
 	{
 		(void)state_;
 		sceneView.openDialog(dialLockedDoor);

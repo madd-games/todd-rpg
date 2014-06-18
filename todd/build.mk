@@ -20,7 +20,6 @@ winrc/todd.o: $(SRCDIR)/winrc/todd.rc $(SRCDIR)/winrc/todd.ico
 	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
-
 %.o: $(SRCDIR)/src/%.cpp
 	$(CXX) -c $< -o $@ $(CFLAGS)
 

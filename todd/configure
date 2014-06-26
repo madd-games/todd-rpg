@@ -9,6 +9,7 @@ GEN_LDFLAGS=
 EXE=
 NEED_FREETYPE="yes"
 DEBUG="no"
+DATA_DIR=
 
 if [ "$SRCDIR" = "." ]
 then
@@ -29,8 +30,12 @@ case $i in
 		WINDRES=$HOST-windres
 		;;
 
-	--exec-prefix*)
+	--exec-prefix=*)
 		EXEC_PREFIX=`echo $i | sed 's/[-a-zA-Z0-9]*=//'`
+		;;
+
+	--data-dir=*)
+		DATA_DIR=`echo $i | sed 's/[-a-zA-Z0-9]*=//'`
 		;;
 
 	--no-freetype)
@@ -56,6 +61,11 @@ fi
 if [ "$PREFIX" != "/usr" ]
 then
 	echo "$0: warning: you are using a non-standard prefix: the game might not be able to find its data files!"
+fi
+
+if [ "$DATA_DIR" != "" ]
+then
+	GEN_CFLAGS="$GEN_CFLAGS -DTODD_DATA_DIR=\\\"$DATA_DIR\\\""
 fi
 
 echo "checking C++ compiler..."

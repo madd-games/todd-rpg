@@ -125,6 +125,9 @@ extern DialogEntry dialCaspar[];
 extern DialogEntry dialManForest1WithoutCaspar[];
 extern DialogEntry dialManForest1WithCaspar[];
 extern DialogEntry dialManForest2[];
+extern DialogEntry dialManForest2b[];
 extern DialogEntry dialBanditBoss[];
+extern DialogEntry dialManEastville1a[];
+extern DialogEntry dialManEastville1b[];
 
 #endif

@@ -200,7 +200,7 @@ CharInfo charInfoTodd = {
 	"MOBTODD",
 	{5, 5, 5, 5, 20, -20, 0, 0},
 	{3, 1, 1, 1},
-	{2, 5, 0, 0},
+	{2, 5, 0, 2},
 };
 Character charTodd("CHRTODD", &charInfoTodd, "INVTODD");
 
@@ -209,6 +209,6 @@ CharInfo charInfoCaspar = {
 	"MOBCASPAR",
 	{20, -30, 3, 3, 0, 0, 0, 0},
 	{2, 2, 2, 2},
-	{5, 2, 0, 0},
+	{5, 2, 2, 0},
 };
 Character charCaspar("CHRCASPAR", &charInfoCaspar, "INVCASPAR");

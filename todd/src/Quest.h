@@ -83,6 +83,26 @@ public:
 	 * \brief Check if this quest has the specified id.
 	 */
 	bool isID(string id);
+
+	/**
+	 * \brief Return the status of this quest.
+	 */
+	Status getStatus();
+
+	/**
+	 * \brief Change the status of this quest.
+	 */
+	void setStatus(Status status);
+
+	/**
+	 * \brief Get the quest title.
+	 */
+	string getTitle();
+
+	/**
+	 * \brief Get the quest description.
+	 */
+	string getDescription();
 };
 
 /**
@@ -91,4 +111,10 @@ public:
  */
 Quest *GetQuest(string id);
 
+/**
+ * \brief Return a pointer to the quest array.
+ *
+ * The array is terminated with a quest with an ID that is an empty string.
+ */
+Quest *GetQuestList();
 #endif

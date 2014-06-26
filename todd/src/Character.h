@@ -126,7 +126,7 @@ public:
 	 * Index 1 = the shield,
 	 * Index 2 = the helmet,
 	 * Index 3 = the armor
-	 * Index 4-6 = the accessories,
+	 * Index 4-6 (inclusive) = the accessories,
 	 * Index 7-10 = reserved
 	 * Index 11+ = a 9x4 area to store items.
 	 */

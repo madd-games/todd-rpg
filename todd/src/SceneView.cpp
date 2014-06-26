@@ -69,13 +69,14 @@ TileMapping tileMappings[] = {
 	{2, 2},				// Grass
 	{3, 3},				// Tree (use in hard layer)
 	{4, 0},				// Chest (active tile)
-	{5, 0},				// Save crystal (active tile, use in hard layer).
+	{5, 0},				// Save crystal (active tile, use in hard layer)
 	{6, 7},				// Warp to overworld
 	{7, 8},				// Wooden floor
 	{8, 0},				// Door
 	{9, 0},				// Locked door
-	{10, 13},			// Grass with a rock on it.
-	{11, 0},			// Hidden door.
+	{10, 13},			// Grass with a rock on it
+	{11, 0},			// Hidden door
+	{12, 29},			// Sand
 	// END
 	{0, 0}
 };

@@ -49,18 +49,21 @@
 #include "Item.h"
 #include <time.h>
 #include "Options.h"
+#include "PlotState.h"
 
 using namespace std;
 
 BattleView battleView;
 
-#define	NUM_EXPENDABLE_ITEMS		1
+#define	NUM_EXPENDABLE_ITEMS		2
 int expendableItems[NUM_EXPENDABLE_ITEMS] = {
-	Item::POTION
+	Item::POTION,
+	Item::MANA_FRUIT,
 };
 
 Skill *itemSkills[NUM_EXPENDABLE_ITEMS] = {
-	skillPotion
+	skillPotion,
+	skillManaFruit,
 };
 
 void BattleView::init(Enemy *a, Enemy *b, Enemy *c, Enemy *d)
@@ -79,6 +82,7 @@ void BattleView::init(Enemy *a, Enemy *b, Enemy *c, Enemy *d)
 	dmgDisplays.clear();
 	particles.clear();
 	loots.clear();
+
 	if (a != NULL) a->dropItems(loots);
 	if (b != NULL) b->dropItems(loots);
 	if (c != NULL) c->dropItems(loots);
@@ -740,7 +744,11 @@ void BattleView::render()
 			for (i=0; i<4; i++)
 			{
 				Enemy *enemy = enemies[i];
-				if (enemy != NULL) delete enemy;
+				if (enemy != NULL)
+				{
+					GetPlotState()->gold += 10 * enemy->level;
+					delete enemy;
+				};
 			};
 
 			lootView.init(loots);
@@ -1031,6 +1039,39 @@ void BattleView::attack(int target, int type, int element, int damage)
 	disp.value = ss.str();
 	disp.start = Timer::Read();
 
+	if (target < 4)
+	{
+		disp.x = 396;
+		disp.y = 100+50*target;
+	}
+	else
+	{
+		disp.x = 548;
+		disp.y = 100+50*(target-4);
+	};
+	dmgDisplays.push_back(disp);
+};
+
+void BattleView::restoreMana(int target, int mp)
+{
+	if (target < 4)
+	{
+		Character *chr = GetChar(GetPartyMember(target));
+		int newMP = chr->getMP() + mp;
+		if (newMP > chr->getMaxMP()) newMP = chr->getMaxMP();
+		if (newMP < 0) newMP = 0;
+		chr->setMP(newMP);
+	}; // enemies don't have MP.
+
+	DamageDisplay disp;
+	disp.element = Element::DIVINE;
+	stringstream ss;
+	ss << "+" << mp << "MP";
+	disp.value = ss.str();
+	disp.red = 0;
+	disp.green = 64;
+	disp.blue = 255;
+	disp.start = Timer::Read();
 	if (target < 4)
 	{
 		disp.x = 396;

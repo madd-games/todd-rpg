@@ -116,10 +116,18 @@ string GetResourcePath(string name)
 
 	string path;
 #ifdef _WIN32
+#ifdef TODD_DATA_DIR
+	path = string(TODD_DATA_DIR) + "\\" + subdir + "\\";
+#else
 	path = getenv("APPDATA");
 	path += "\\madd.todd-data\\" + subdir + "\\";
+#endif
+#else
+#ifdef TODD_DATA_DIR
+	path = string(TODD_DATA_DIR) + "/" + subdir + "/";
 #else
 	path = "/usr/share/madd.todd/" + subdir + "/";
+#endif
 #endif
 
 	return path + name;
@@ -181,6 +189,8 @@ int main()
 	ssGoblin = new SpriteSheet("goblin.png");
 	ssForestBackground = new SpriteSheet("forest.png", 960, 480);
 	ssFlame = new SpriteSheet("flame.png", 16, 16);
+	ssQuest = new SpriteSheet("quest.png", 24, 24);
+	ssCoin = new SpriteSheet("coin.png", 24, 24);
 
 	InitMobs();
 	InitItems();

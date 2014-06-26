@@ -30,45 +30,47 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * ItemChainArmor.h
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
 #include "Item.h"
-#include "Character.h"
-#include "Todd.h"
+#include "Element.h"
 
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-
-bool Skill::isUsableAgainstDead()
+class ItemChainArmor : public Item
 {
-	return false;
-};
+public:
+	ItemChainArmor(int id) : Item(id)
+	{
+	};
 
-void Skill::init(int target)
-{
-	(void)target;
-};
+	virtual int getElement()
+	{
+		return Element::NEUTRAL;
+	};
 
-string Skill::getDesc()
-{
-	return "";
-};
+	virtual string getName()
+	{
+		return "Chain Armor";
+	};
 
-int Skill::getManaUse()
-{
-	return 0;
-};
+	virtual string getDesc()
+	{
+		return "A simple, cheap armor made from chains.";
+	};
 
-bool Skill::isMultiTarget()
-{
-	return false;
+	virtual bool isStackable()
+	{
+		return false;
+	};
+
+	virtual int getType()
+	{
+		return Item::ARMOR;
+	};
+
+	virtual void getStat(CharStats &stats)
+	{
+		stats.DEF = 5;
+		stats.MDEF = -1;
+	};
 };

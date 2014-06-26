@@ -57,6 +57,8 @@ SpriteSheet *ssMapSpot;
 SpriteSheet *ssGoblin;
 SpriteSheet *ssForestBackground;
 SpriteSheet *ssFlame;
+SpriteSheet *ssQuest;
+SpriteSheet *ssCoin;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

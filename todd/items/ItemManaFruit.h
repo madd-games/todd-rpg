@@ -30,45 +30,46 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * ItemManaFruit.h
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
 #include "Item.h"
-#include "Character.h"
-#include "Todd.h"
+#include "Element.h"
 
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-
-bool Skill::isUsableAgainstDead()
+class ItemManaFruit : public Item
 {
-	return false;
-};
+public:
+	ItemManaFruit(int id) : Item(id)
+	{
+	};
 
-void Skill::init(int target)
-{
-	(void)target;
-};
+	virtual int getElement()
+	{
+		return Element::NEUTRAL;
+	};
 
-string Skill::getDesc()
-{
-	return "";
-};
+	virtual string getName()
+	{
+		return "Mana Fruit";
+	};
 
-int Skill::getManaUse()
-{
-	return 0;
-};
+	virtual string getDesc()
+	{
+		return "A magical fruit, which when eaten, restores 15MP.";
+	};
 
-bool Skill::isMultiTarget()
-{
-	return false;
+	virtual bool isStackable()
+	{
+		return true;
+	};
+
+	virtual int getType()
+	{
+		return Item::EXPENDABLE;
+	};
+
+	virtual int getManaRestore()
+	{
+		return 15;
+	};
 };

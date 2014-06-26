@@ -148,3 +148,17 @@ void Text::draw(int x, int y, int xalign, int yalign)
 
 	SDL_RenderCopy(sdlRender, tex, NULL, &rect);
 };
+
+int Text::getWidth()
+{
+	int w, h;
+	SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+	return w;
+};
+
+int Text::getHeight()
+{
+	int w, h;
+	SDL_QueryTexture(tex, NULL, NULL, &w, &h);
+	return h;
+};

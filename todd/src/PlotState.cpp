@@ -30,45 +30,14 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * PlotState.cpp
+ * Maintains the state of plot events.
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
-#include "Item.h"
-#include "Character.h"
-#include "Todd.h"
+#include "PlotState.h"
+#include "GameState.h"
 
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-
-bool Skill::isUsableAgainstDead()
+PlotState *GetPlotState()
 {
-	return false;
-};
-
-void Skill::init(int target)
-{
-	(void)target;
-};
-
-string Skill::getDesc()
-{
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
+	return (PlotState*) GetGameData("PLOTSTATE", sizeof(PlotState));
 };

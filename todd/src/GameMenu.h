@@ -52,10 +52,13 @@ private:
 	// The menu
 	int selection;
 	int xsel;
+	int qsel;
+	int numQuests;
 
-	void drawPartyMember(int index, int x, int y);
+	void drawPartyMember(int index, int x, int y, int page);
 	void drawPartyPanel();
 	void drawInventoryPanel();
+	void drawQuestPanel();
 
 	/**
 	 * \brief In character's inventories, slots 0-9 have special use.

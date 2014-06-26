@@ -50,19 +50,56 @@ extern TTF_Font *fntItemName;
 extern TTF_Font *fntItemCount;
 extern TTF_Font *fntBattleCaption;
 
+/**
+ * \brief A class for rendering text.
+ */
 class Text
 {
 private:
 	SDL_Texture *tex;
 
 public:
+	/**
+	 * \brief An enumeration for specifying text alignment.
+	 */
 	enum {LEFT, CENTER, RIGHT, TOP, BOTTOM};
 
+	/**
+	 * \brief Called when the engine loads.
+	 */
 	static void Init();
 
+	/**
+	 * \brief Constructor.
+	 * \param text The text that will be drawn.
+	 * \param red The red color component (out of 255).
+	 * \param green The green color component (out of 255).
+	 * \param blue The blue color component (out of 255).
+	 * \param alpha The opacitiy (255 = opaque, 0 = transparent).
+	 * \param fnt The font to use.
+	 * \param wrap Maximum width of the text; if this is exceeded, the text will wrap.
+	 */
 	Text(string text, int red = 0, int green = 0, int blue = 0, int alpha = 255, TTF_Font *fnt = fntText, int wrap = 0);
 	~Text();
+
+	/**
+	 * \brief Draw the text.
+	 * \param x The X coordinate on the screen.
+	 * \param y The Y coordinate on the screen.
+	 * \param xalign Horizontal alignment - Text::LEFT, Text::CENTER or Text::RIGHT.
+	 * \param yalign Vertical alignment - Text::TOP, Text::CENTER or Text::BOTTOM.
+	 */
 	void draw(int x, int y, int xalign = LEFT, int yalign = TOP);
+
+	/**
+	 * \brief Return the width of the text.
+	 */
+	int getWidth();
+
+	/**
+	 * \brief Return the height of the text.
+	 */
+	int getHeight();
 };
 
 #endif

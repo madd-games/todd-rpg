@@ -35,9 +35,10 @@
  */
 
 #include "Quest.h"
+#include "GameState.h"
 
 Quest quests[] = {
-	Quest("QSTCHEASTV", "Chief of Eastville", "The chief of eastville has been kidnapped."),
+	Quest("QSTCHEASTV", "Chief of Eastville", "The Chief of Eastville has been kidnapped. You must go to Eastville and speak to the locals to help track down the kidnappers."),
 
 	// END
 	Quest("", "", "")
@@ -50,6 +51,28 @@ Quest::Quest(string id, string title, string desc) : id(id), title(title), desc(
 bool Quest::isID(string id)
 {
 	return this->id == id;
+};
+
+Quest::Status Quest::getStatus()
+{
+	Quest::Status *stptr = (Quest::Status*) GetGameData(id, sizeof(Quest::Status));
+	return *stptr;
+};
+
+void Quest::setStatus(Quest::Status status)
+{
+	Quest::Status *stptr = (Quest::Status*) GetGameData(id, sizeof(Quest::Status));
+	*stptr = status;
+};
+
+string Quest::getTitle()
+{
+	return title;
+};
+
+string Quest::getDescription()
+{
+	return desc;
 };
 
 Quest* GetQuest(string id)
@@ -65,4 +88,9 @@ Quest* GetQuest(string id)
 		quest++;
 	};
 	return NULL;
+};
+
+Quest *GetQuestList()
+{
+	return quests;
 };

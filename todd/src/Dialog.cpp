@@ -48,6 +48,7 @@
 #include "SaveView.h"
 #include "Character.h"
 #include "Options.h"
+#include "Quest.h"
 
 Dialog::Dialog(DialogEntry *entry, string with) : currentEntry(entry), with(with), letters(1), choice(0)
 {
@@ -140,7 +141,7 @@ void Dialog::render()
 
 	int red=0, green=0, blue=0;
 	if ((element == Element::WATER) || (element == Element::DARKNESS)
-		|| (element == Element::NEUTRAL))
+		|| (element == Element::NEUTRAL) || (element == Element::EARTH))
 	{
 		red = 255;
 		green = 255;
@@ -279,6 +280,9 @@ void CasparJoinParty()
 	SetPartyMember(1, "CHRCASPAR");
 	MobState *state = (MobState*) GetGameData("MOBCASPAR", sizeof(MobState));
 	state->sceneID = -1;
+
+	Quest *quest = GetQuest("QSTCHEASTV");
+	quest->setStatus(Quest::Active);
 };
 
 DialogEntry dialCaspar[] = {
@@ -286,6 +290,7 @@ DialogEntry dialCaspar[] = {
 	{"MOBTODD", "Todd", "I'm good. What's going on lately?"},
 	{"MOBCASPAR", "Caspar", "We have received reports that the Chief of Eastville was kidnapped. We need to go there and intervene."},
 	{"MOBCASPAR", "Caspar", "We can get to there through the forest to the east. We need to be careful since the goblins are getting pretty aggressive recently!"},
+	{"MOBCASPAR", "Caspar", "Once we get there, we must try to speak to people and find some witnesses to lead us to the Chief."},
 	{"MOBTODD", "Todd", "OK, let's go!", CasparJoinParty},
 	{NULL, NULL, NULL}
 };
@@ -303,7 +308,7 @@ void ManForest1MoveAway()
 };
 
 DialogEntry dialManForest1WithCaspar[] = {
-	{"MOBMANFOREST1", "Man", "Sorry, I can't let you go through here, we're patrolling the area in search of bandits who are robbing passers-by."},
+	{"MOBMANFOREST1", "Man", "Sorry, I can't let you go through here sir, we're patrolling the area in search of bandits who are robbing passers-by."},
 	{"MOBCASPAR", "Caspar", "We're in the Royal Guard, looking for the Chief of Eastville who was kidnapped. I command you to let us through. We'll take care of the bandits ourselves.", ManForest1MoveAway},
 	{"MOBMANFOREST1", "Man", "Yes, sir!", NULL, 0, {}, "MOBMANFOREST1"},
 	{NULL, NULL, NULL}
@@ -312,6 +317,24 @@ DialogEntry dialManForest1WithCaspar[] = {
 // MAN IN THE FOREST THAT BLOCKS THE MYSTERIOUS PATH
 DialogEntry dialManForest2[] = {
 	{"MOBMANFOREST2", "Man", "Sorry, nobody allowed past this point! There's secret government operations going on there!"},
+	{NULL, NULL, NULL}
+};
+
+void ManForest2Move()
+{
+	EnqueueMobMoves("MOBMANFOREST2", Mob::LEFT, 2);
+	EnqueueMobMoves("MOBMANFOREST2", Mob::DOWN, 4);
+};
+
+void ManForest2Die()
+{
+	MobState *state = (MobState*) GetGameData("MOBMANFOREST2", sizeof(MobState));
+	state->sceneID = -1;
+};
+
+DialogEntry dialManForest2b[] = {
+	{"MOBMANFOREST2", "Man", "The government operations are just finishing. I will now allow you to pass.", ManForest2Move},
+	{"MOBMANFOREST2", "Man", "Have a nice day guys.", ManForest2Die, 0, {}, "MOBMANFOREST2"},
 	{NULL, NULL, NULL}
 };
 
@@ -328,5 +351,21 @@ DialogEntry dialBanditBoss[] = {
 	{"MOBTODD", "Todd", "Hey! Who are you?"},
 	{"MOBBANDIT", "Bandit", "Give me all your money!"},
 	{"MOBCASPAR", "Caspar", "Come here and get it then!", BanditBossBattle},
+	{NULL, NULL, NULL}
+};
+
+// MAN IN EASTVILLE WHO IS WITNESS #1
+DialogEntry dialManEastville1a[] = {
+	{"MOBMANEASTV1", "George", "Ah, hello! My name is George! You must be soldiers of the Royal Guard."},
+	{"MOBTODD", "Todd", "Indeed. We are looking for the missing Chief. Do you know anything about what has happened?"},
+	{"MOBMANEASTV1", "George", "Last night I saw some men dressed in black going towards the Chief's home. I'm not sure, but I think they went towards towards the forest."},
+	{"MOBCASPAR", "Caspar", "That does seem very suspicious. Come on, Todd, we must go and see if they're still there!"},
+	{"MOBMANEASTV1", "George", "Before you go, I'd suggest you get some equipment! You can take everything from the chests I have here in my home, and by all means use my Save Crystal."},
+	{"MOBTODD", "Todd", "Thank you kind man!"},
+	{NULL, NULL, NULL}
+};
+
+DialogEntry dialManEastville1b[] = {
+	{"MOBMANEASTV1", "George", "You can take all my equipment! Go search for those bandits, they are probably in the forest!"},
 	{NULL, NULL, NULL}
 };

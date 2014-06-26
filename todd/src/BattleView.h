@@ -194,6 +194,13 @@ public:
 	void attack(int target, int type, int element, int damage);
 
 	/**
+	 * \brief Restore the target's mana.
+	 * \param target The target whose mana is to be restored (0-3 = allies, 4-7 = enemies).
+	 * \param mp The amount of mana to restore.
+	 */
+	void restoreMana(int target, int mp);
+
+	/**
 	 * \brief Get a random ally.
 	 * \param allowDead If true, dead allies may be returned (default = false).
 	 * \return The ally entity number (0-3), the same as the party index.

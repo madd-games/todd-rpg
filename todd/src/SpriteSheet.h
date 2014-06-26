@@ -98,5 +98,7 @@ extern SpriteSheet *ssMapSpot;
 extern SpriteSheet *ssGoblin;
 extern SpriteSheet *ssForestBackground;
 extern SpriteSheet *ssFlame;
+extern SpriteSheet *ssQuest;
+extern SpriteSheet *ssCoin;
 
 #endif

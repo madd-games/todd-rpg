@@ -30,45 +30,30 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * PlotState.h
+ * Maintains the state of plot events.
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
-#include "Item.h"
-#include "Character.h"
-#include "Todd.h"
+#ifndef PLOT_STATE_H
+#define PLOT_STATE_H
 
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-
-bool Skill::isUsableAgainstDead()
+/**
+ * \brief States of plot events.
+ *
+ * All fields of this structure start as 0, but may be updated by events going on in the game.
+ * The state of this structure is maintained across game saves. Call GetPlotState() for an up-to-date
+ * pointer to this structure.
+ */
+struct PlotState
 {
-	return false;
+	bool manEastville1Talked;
+
+	/**
+	 * \brief Amount of gold owned by the player.
+	 */
+	int gold;
 };
 
-void Skill::init(int target)
-{
-	(void)target;
-};
+PlotState *GetPlotState();
 
-string Skill::getDesc()
-{
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
-};
+#endif

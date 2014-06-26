@@ -45,6 +45,8 @@
 #include "ItemBasicSword.h"
 #include "ItemWoodenShield.h"
 #include "ItemMagicRing.h"
+#include "ItemChainArmor.h"
+#include "ItemManaFruit.h"
 
 using namespace std;
 
@@ -67,6 +69,11 @@ int Item::getDamage()
 
 void Item::getStat(CharStats &stats)
 {
+};
+
+int Item::getManaRestore()
+{
+	return 0;
 };
 
 void RegisterItem(int id, Item *item)
@@ -93,4 +100,6 @@ void InitItems()
 	new ItemBasicSword(Item::BASIC_SWORD);
 	new ItemWoodenShield(Item::WOODEN_SHIELD);
 	new ItemMagicRing(Item::MAGIC_RING);
+	new ItemChainArmor(Item::CHAIN_ARMOR);
+	new ItemManaFruit(Item::MANA_FRUIT);
 };

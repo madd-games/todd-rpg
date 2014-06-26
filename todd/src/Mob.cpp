@@ -46,6 +46,7 @@
 #include <iostream>
 #include "Character.h"
 #include <queue>
+#include "PlotState.h"
 
 using namespace std;
 
@@ -118,6 +119,7 @@ const char *mobNames[] = {
 	"MOBMANFOREST1",
 	"MOBMANFOREST2",
 	"MOBBANDIT",
+	"MOBMANEASTV1",
 	NULL
 };
 
@@ -129,7 +131,7 @@ map<string, queue<int> > mobQueues;
  * Mobs which automatically walk around aimlessly.
  */
 const char *autoMobs[] = {
-	"MOBFEMINIST",
+	"MOBMANEASTV1",
 	NULL
 };
 
@@ -144,6 +146,7 @@ void InitMobs()
 	mobSprites["MOBMANFOREST1"] =		new SpriteSheet("man.png");
 	mobSprites["MOBMANFOREST2"] =		mobSprites["MOBMANFOREST1"];
 	mobSprites["MOBBANDIT"] =		new SpriteSheet("bandit.png");
+	mobSprites["MOBMANEASTV1"] =		mobSprites["MOBMANFOREST1"];
 
 	// Names
 	mobRealNames["MOBTODD"] =		"Todd";
@@ -152,6 +155,7 @@ void InitMobs()
 	mobRealNames["MOBMANFOREST1"] =		"Man";
 	mobRealNames["MOBMANFOREST2"] =		"Man";
 	mobRealNames["MOBBANDIT"] =		"Bandit";
+	mobRealNames["MOBMANEASTV1"] =		"Villager";
 
 	// Elements
 	mobElements["MOBTODD"] =		Element::LIGHT;
@@ -160,10 +164,13 @@ void InitMobs()
 	mobElements["MOBMANFOREST1"] =		Element::AIR;
 	mobElements["MOBMANFOREST2"] =		Element::WATER;
 	mobElements["MOBBANDIT"] =		Element::DARKNESS;
+	mobElements["MOBMANEASTV1"] = 		Element::EARTH;
 };
 
 void UpdateMobs()
 {
+	MobState *stateTodd = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
+
 	const char **scan = autoMobs;
 	if ((Timer::Read()-autoMobTimer) >= 1500)
 	{
@@ -172,7 +179,7 @@ void UpdateMobs()
 		{
 			string name(*scan);
 			MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
-			if (!state->lock)
+			if ((!state->lock) && (state->sceneID == stateTodd->sceneID))
 			{
 				srand(time(NULL));
 				int chance = rand() % 100;
@@ -218,6 +225,7 @@ void UpdateMobs()
 			};
 		};
 
+		// TODO: move this elsewhere, because it flickers other mobs as they walk.
 		if (name == "MOBTODD")
 		{
 			// Adjust the camera so we can see the player's character.
@@ -320,11 +328,35 @@ void InteractWithMob(string name)
 	}
 	else if (name == "MOBMANFOREST2")
 	{
-		sceneView.openDialog(dialManForest2);
+		PlotState *ps = GetPlotState();
+		if (!ps->manEastville1Talked)
+		{
+			sceneView.openDialog(dialManForest2);
+		}
+		else
+		{
+			sceneView.openDialog(dialManForest2b);
+		};
 	}
 	else if (name == "MOBBANDIT")
 	{
 		sceneView.openDialog(dialBanditBoss);
+	}
+	else if (name == "MOBMANEASTV1")
+	{
+		MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
+		state->lock = 1;
+
+		PlotState *ps = GetPlotState();
+		if (!ps->manEastville1Talked)
+		{
+			ps->manEastville1Talked = true;
+			sceneView.openDialog(dialManEastville1a, name);
+		}
+		else
+		{
+			sceneView.openDialog(dialManEastville1b, name);
+		};
 	};
 };
 

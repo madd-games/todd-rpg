@@ -30,45 +30,62 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * SkillManaFruit.h
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
-#include "Item.h"
-#include "Character.h"
-#include "Todd.h"
-
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-
-bool Skill::isUsableAgainstDead()
+class SkillManaFruit : public Skill
 {
-	return false;
+private:
+	int target;
+	unsigned int time;
+	int stage;
+
+public:
+	virtual void init(int target)
+	{
+		this->target = target;
+		time = Timer::Read();
+		stage = 0;
+	};
+
+	virtual void act()
+	{
+		if ((Timer::Read()-time) >= 50)
+		{
+			stage++;
+			if (stage == 2)
+			{
+				battleView.restoreMana(target, 15);
+				if (battleView.getTurn() < 4)
+				{
+					Character *chr = GetChar(GetPartyMember(battleView.getTurn()));
+					chr->getInventory()->decrItem(Item::MANA_FRUIT);
+				};
+			};
+			time = Timer::Read();
+		};
+	};
+
+	virtual bool isActive()
+	{
+		return stage < 10;
+	};
+
+	virtual bool isOffensive()
+	{
+		return false;
+	};
+
+	virtual int getElement()
+	{
+		return Element::NEUTRAL;
+	};
+
+	virtual string getName()
+	{
+		return "Mana Fruit";
+	};
 };
 
-void Skill::init(int target)
-{
-	(void)target;
-};
-
-string Skill::getDesc()
-{
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
-};
+SkillManaFruit skillManaFruitVal;
+Skill *skillManaFruit = &skillManaFruitVal;

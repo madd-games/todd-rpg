@@ -151,14 +151,24 @@ void NewGame()
 	state->orient = Mob::LEFT;
 	state->sceneID = Scene::Forest;
 
+	// One of the villagers in Eastville.
+	state = (MobState*) GetGameData("MOBMANEASTV1", sizeof(MobState));
+	state->x = 12;
+	state->y = 3;
+	state->orient = Mob::DOWN;
+	state->sceneID = Scene::Eastville_House1;
+
 	// Chests
 	InitChest(Scene::Forest, 18, 2, Item::POTION, 5);
 	InitChest(Scene::Forest, 19, 4, Item::WOODEN_SHIELD, 1);
+	InitChest(Scene::Eastville_House1, 23, 1, Item::MANA_FRUIT, 5);
+	InitChest(Scene::Eastville_House1, 24, 1, Item::CHAIN_ARMOR, 1);
 
 	// Doors
 	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);
 	InitDoor(Scene::Castle, 18, 6, Scene::Castle_ToddRoom, 13, 1, Mob::DOWN);
 	InitDoor(Scene::Eastville, 8, 9, Scene::Eastville_House1, 11, 6, Mob::UP);
+	InitDoor(Scene::Eastville, 16, 9, Scene::Eastville, 10, 1, Mob::UP);
 	InitDoor(Scene::Eastville_House1, 11, 7, Scene::Eastville, 8, 10, Mob::DOWN);
 };
 

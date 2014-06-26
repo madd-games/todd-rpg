@@ -49,6 +49,9 @@ using namespace std;
 class Item
 {
 public:
+	/**
+	 * \brief Item IDs.
+	 */
 	enum
 	{
 		NONE = 0,
@@ -56,8 +59,13 @@ public:
 		BASIC_SWORD = 2,
 		WOODEN_SHIELD = 3,
 		MAGIC_RING = 4,
+		CHAIN_ARMOR = 5,
+		MANA_FRUIT = 6,
 	};
 
+	/**
+	 * \brief Item types.
+	 */
 	enum
 	{
 		PLOT = 0,
@@ -100,6 +108,8 @@ public:
 	/**
 	 * Returns the amount of damage dealt by this item, if it is expendable.
 	 * NOTE: Damage (or healing) of items is unaffected by defence etc.
+	 * This function is only used when the item is expended in the inventory screen, not during
+	 * battle.
 	 */
 	virtual int getDamage();
 
@@ -109,6 +119,12 @@ public:
 	 * when this item is equipped.
 	 */
 	virtual void getStat(CharStats &stats);
+
+	/**
+	 * Return the amount of mana that this item restores when expended through the inventory
+	 * screen.
+	 */
+	virtual int getManaRestore();
 };
 
 struct ItemStack

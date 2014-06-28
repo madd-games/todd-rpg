@@ -47,6 +47,7 @@
 #include "Character.h"
 #include <queue>
 #include "PlotState.h"
+#include "ShopView.h"
 
 using namespace std;
 
@@ -120,6 +121,7 @@ const char *mobNames[] = {
 	"MOBMANFOREST2",
 	"MOBBANDIT",
 	"MOBMANEASTV1",
+	"MOBEASTVPS",
 	NULL
 };
 
@@ -147,6 +149,7 @@ void InitMobs()
 	mobSprites["MOBMANFOREST2"] =		mobSprites["MOBMANFOREST1"];
 	mobSprites["MOBBANDIT"] =		new SpriteSheet("bandit.png");
 	mobSprites["MOBMANEASTV1"] =		mobSprites["MOBMANFOREST1"];
+	mobSprites["MOBEASTVPS"] =		mobSprites["MOBMANFOREST1"];
 
 	// Names
 	mobRealNames["MOBTODD"] =		"Todd";
@@ -156,6 +159,7 @@ void InitMobs()
 	mobRealNames["MOBMANFOREST2"] =		"Man";
 	mobRealNames["MOBBANDIT"] =		"Bandit";
 	mobRealNames["MOBMANEASTV1"] =		"Villager";
+	mobRealNames["MOBEASTVPS"] = 		"Eastville Potion Shop Keeper";
 
 	// Elements
 	mobElements["MOBTODD"] =		Element::LIGHT;
@@ -165,6 +169,7 @@ void InitMobs()
 	mobElements["MOBMANFOREST2"] =		Element::WATER;
 	mobElements["MOBBANDIT"] =		Element::DARKNESS;
 	mobElements["MOBMANEASTV1"] = 		Element::EARTH;
+	mobElements["MOBEASTVPS"] =		Element::AIR;
 };
 
 void UpdateMobs()
@@ -357,6 +362,11 @@ void InteractWithMob(string name)
 		{
 			sceneView.openDialog(dialManEastville1b, name);
 		};
+	}
+	else if (name == "MOBEASTVPS")
+	{
+		shopView.init("SHPPEASTVPS", "Eastville Potion Shop");
+		currentView = &shopView;
 	};
 };
 

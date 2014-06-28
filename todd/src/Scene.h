@@ -60,6 +60,7 @@ public:
 		Castle = 3,
 		Eastville = 4,
 		Eastville_House1 = 5,
+		Eastville_PotionShop = 6,
 	};
 
 	static void LoadScenes();

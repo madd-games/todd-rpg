@@ -30,76 +30,41 @@
 */
 
 /**
- * Container.h
- * Manages item containers that are saved in save files.
+ * ShopView.cpp
+ * A view that allows a player to trade with mobs.
  */
 
-#ifndef CONTAINER_H
-#define CONTAINER_H
+#include "ShopView.h"
 
-#include <string>
-#include "Item.h"
+#define SHOP_CONT_X		700
+#define	SHOP_CONT_Y		200
 
-using namespace std;
+ShopView shopView;
 
-class Container
+ShopView::ShopView() : shopCont(NULL)
 {
-private:
-	/**
-	 * Names the "game state segment" that identifies this container.
-	 */
-	string name;
-
-	/**
-	 * Size of this container (width * height)
-	 */
-	int size;
-
-public:
-	Container(string name, int size);
-
-	/**
-	 * \brief Returns the item stack at the specified slot.
-	 */
-	ItemStack get(int index);
-
-	/**
-	 * \brief Set the item stack at the specified slot.
-	 * \param index Which slot to update.
-	 * \param stack The ItemStack to put there.
-	 */
-	void set(int index, ItemStack stack);
-
-	/**
-	 * \brief Return the size of the container.
-	 */
-	int getSize();
-
-	/**
-	 * \brief Draw a container slot.
-	 * \param x The X coordinate to draw at.
-	 * \param y The Y coordinate to draw at.
-	 * \param index 
-	 * \param sel If true, the slot is drawn as selected (mouse hovering).
-	 */
-	void drawSlot(int x, int y, int index, bool sel = false);
-
-	/**
-	 * \brief Pushes an itemstack into the best-fitting places in this container.
-	 * \param stack The ItemStack that is to be distributed.
-	 * \param min The lowest slot index that this function can drop into.
-	 */
-	void pushStack(ItemStack stack, int min = 10);
-
-	/**
-	 * \brief Count the number of items with the given ID in this container.
-	 */
-	int count(int id);
-
-	/**
-	 * \brief Reduces the number of items with the given ID by 1.
-	 */
-	void decrItem(int id);
 };
 
-#endif
+void ShopView::init(string contName, string shopName)
+{
+	if (shopCont != NULL) delete shopCont;
+	this->shopName = shopName;
+	shopCont = new Container(contName, 9*4);
+};
+
+void ShopView::handleEvent(SDL_Event *ev)
+{
+	(void)ev;
+};
+
+void ShopView::render()
+{
+	int x, y;
+	for (x=0; x<9; x++)
+	{
+		for (y=0; y<4; y++)
+		{
+			shopCont->drawSlot(SHOP_CONT_X+26*x, SHOP_CONT_Y+26*y, y * 9 + x, false);
+		};
+	};
+};

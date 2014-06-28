@@ -30,76 +30,35 @@
 */
 
 /**
- * Container.h
- * Manages item containers that are saved in save files.
+ * ShopView.h
+ * A view that allows a player to trade with mobs.
  */
 
-#ifndef CONTAINER_H
-#define CONTAINER_H
+#ifndef SHOP_VIEW_H
+#define SHOP_VIEW_H
 
-#include <string>
-#include "Item.h"
+#include "View.h"
+#include "Container.h"
 
-using namespace std;
-
-class Container
+class ShopView : public View
 {
 private:
-	/**
-	 * Names the "game state segment" that identifies this container.
-	 */
-	string name;
-
-	/**
-	 * Size of this container (width * height)
-	 */
-	int size;
+	Container *shopCont;
+	string shopName;
 
 public:
-	Container(string name, int size);
+	ShopView();
 
 	/**
-	 * \brief Returns the item stack at the specified slot.
+	 * \brief Initialise the shop view.
+	 * \param contName The name of the container used by this shop - must be 9x4.
+	 * \param shopName The name of the shop.
 	 */
-	ItemStack get(int index);
-
-	/**
-	 * \brief Set the item stack at the specified slot.
-	 * \param index Which slot to update.
-	 * \param stack The ItemStack to put there.
-	 */
-	void set(int index, ItemStack stack);
-
-	/**
-	 * \brief Return the size of the container.
-	 */
-	int getSize();
-
-	/**
-	 * \brief Draw a container slot.
-	 * \param x The X coordinate to draw at.
-	 * \param y The Y coordinate to draw at.
-	 * \param index 
-	 * \param sel If true, the slot is drawn as selected (mouse hovering).
-	 */
-	void drawSlot(int x, int y, int index, bool sel = false);
-
-	/**
-	 * \brief Pushes an itemstack into the best-fitting places in this container.
-	 * \param stack The ItemStack that is to be distributed.
-	 * \param min The lowest slot index that this function can drop into.
-	 */
-	void pushStack(ItemStack stack, int min = 10);
-
-	/**
-	 * \brief Count the number of items with the given ID in this container.
-	 */
-	int count(int id);
-
-	/**
-	 * \brief Reduces the number of items with the given ID by 1.
-	 */
-	void decrItem(int id);
+	void init(string contName, string shopName);
+	virtual void handleEvent(SDL_Event *ev);
+	virtual void render();
 };
+
+extern ShopView shopView;
 
 #endif

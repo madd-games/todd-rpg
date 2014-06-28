@@ -151,12 +151,19 @@ void NewGame()
 	state->orient = Mob::LEFT;
 	state->sceneID = Scene::Forest;
 
-	// One of the villagers in Eastville.
+	// One of the villagers in Eastville ("George")
 	state = (MobState*) GetGameData("MOBMANEASTV1", sizeof(MobState));
 	state->x = 12;
 	state->y = 3;
 	state->orient = Mob::DOWN;
 	state->sceneID = Scene::Eastville_House1;
+
+	// Eastville Potion Shop Keeper.
+	state = (MobState*) GetGameData("MOBEASTVPS", sizeof(MobState));
+	state->x = 11;
+	state->y = 3;
+	state->orient = Mob::DOWN;
+	state->sceneID = Scene::Eastville_PotionShop;
 
 	// Chests
 	InitChest(Scene::Forest, 18, 2, Item::POTION, 5);
@@ -168,8 +175,9 @@ void NewGame()
 	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);
 	InitDoor(Scene::Castle, 18, 6, Scene::Castle_ToddRoom, 13, 1, Mob::DOWN);
 	InitDoor(Scene::Eastville, 8, 9, Scene::Eastville_House1, 11, 6, Mob::UP);
-	InitDoor(Scene::Eastville, 16, 9, Scene::Eastville, 10, 1, Mob::UP);
+	InitDoor(Scene::Eastville, 16, 9, Scene::Eastville_PotionShop, 11, 6, Mob::UP);
 	InitDoor(Scene::Eastville_House1, 11, 7, Scene::Eastville, 8, 10, Mob::DOWN);
+	InitDoor(Scene::Eastville_PotionShop, 11, 7, Scene::Eastville, 16, 10, Mob::DOWN);
 };
 
 string GetPathToSaveSlot(int slot)

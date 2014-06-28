@@ -358,9 +358,9 @@ DialogEntry dialBanditBoss[] = {
 DialogEntry dialManEastville1a[] = {
 	{"MOBMANEASTV1", "George", "Ah, hello! My name is George! You must be soldiers of the Royal Guard."},
 	{"MOBTODD", "Todd", "Indeed. We are looking for the missing Chief. Do you know anything about what has happened?"},
-	{"MOBMANEASTV1", "George", "Last night I saw some men dressed in black going towards the Chief's home. I'm not sure, but I think they went towards towards the forest."},
+	{"MOBMANEASTV1", "George", "Last night I saw some men dressed in black going towards the Chief's home. I'm not sure, but I think they went towards the forest."},
 	{"MOBCASPAR", "Caspar", "That does seem very suspicious. Come on, Todd, we must go and see if they're still there!"},
-	{"MOBMANEASTV1", "George", "Before you go, I'd suggest you get some equipment! You can take everything from the chests I have here in my home, and by all means use my Save Crystal."},
+	{"MOBMANEASTV1", "George", "Before you go, I'd suggest you get some equipment! You can take everything from the chests I have here in my home. You can also use my Save Crystal."},
 	{"MOBTODD", "Todd", "Thank you kind man!"},
 	{NULL, NULL, NULL}
 };

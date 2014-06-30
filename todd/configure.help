@@ -1,0 +1,22 @@
+configure [--option[=value]]
+Set up the project for building.
+
+Run this script in a directory outside the source package, and it will set that directory up such
+that if you run `make`, it will build the project with the specified configuration. The source package
+will remain untouched, as all object files will be placed in the build directory.
+
+Options:
+	--prefix=PREF		Specifies the directory containing the subdirectories 'include',
+				'lib', etc. Default is /usr. Data files will be installed here.
+
+	--exec-prefix=EPREF	Specifies the directory where executables will be installed. Default
+				is the same as --prefix.
+
+	--host=HOST		Specifies which OS the project should be built for. The C++ compiler used
+				will be HOST-g++.
+
+	--data-dir=DIR		Specifies which directory the game should look for data files in.
+
+	--no-freetype		Tells the configure script not to look for Freetype. Not recommended.
+
+	--debug			Makes a debug version of the game, with GDB symbols and cheat options.

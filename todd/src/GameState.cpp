@@ -47,6 +47,7 @@
 #include "Item.h"
 #include "ActiveTile.h"
 #include "SceneView.h"
+#include "Shops.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -88,6 +89,15 @@ void InitDoor(int scene, int x, int y, int targetScene, int targetX, int targetY
 	state->x = targetX;
 	state->y = targetY;
 	state->orient = orient;
+};
+
+void InitShop(string name, ItemStack *stack)
+{
+	Container *cont = new Container(name, 9*8);
+	while (stack->id != 0)
+	{
+		cont->pushStack(*stack++, 0);
+	};
 };
 
 void NewGame()
@@ -178,6 +188,9 @@ void NewGame()
 	InitDoor(Scene::Eastville, 16, 9, Scene::Eastville_PotionShop, 11, 6, Mob::UP);
 	InitDoor(Scene::Eastville_House1, 11, 7, Scene::Eastville, 8, 10, Mob::DOWN);
 	InitDoor(Scene::Eastville_PotionShop, 11, 7, Scene::Eastville, 16, 10, Mob::DOWN);
+
+	// Shops
+	InitShop("SHOPEASTVPS", shopEastvillePotion);
 };
 
 string GetPathToSaveSlot(int slot)

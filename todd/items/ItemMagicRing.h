@@ -43,6 +43,11 @@ public:
 	{
 	};
 
+	virtual int getCost()
+	{
+		return 400;
+	};
+
 	virtual int getElement()
 	{
 		return Element::DARKNESS;

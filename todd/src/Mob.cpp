@@ -365,7 +365,7 @@ void InteractWithMob(string name)
 	}
 	else if (name == "MOBEASTVPS")
 	{
-		shopView.init("SHPPEASTVPS", "Eastville Potion Shop");
+		shopView.init("SHOPEASTVPS", "Eastville Potion Shop");
 		currentView = &shopView;
 	};
 };

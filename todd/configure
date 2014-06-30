@@ -20,6 +20,11 @@ fi
 for i in "$@"
 do
 case $i in
+	--help)
+		cat >&2 "$SRCDIR/configure.help"
+		exit 1
+		;;
+
 	--prefix=*)
 		PREFIX=`echo $i | sed 's/[-a-zA-Z0-9]*=//'`
 		;;

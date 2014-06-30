@@ -45,6 +45,8 @@ class ShopView : public View
 private:
 	Container *shopCont;
 	string shopName;
+	int charSel;
+	ItemStack handleStack;
 
 public:
 	ShopView();

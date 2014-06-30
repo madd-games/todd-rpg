@@ -599,25 +599,7 @@ void GameMenu::drawInventoryPanel()
 	ssCursor->draw(leftX+321+(xsel*48), plotY, 1, false);
 
 	ssInfoPanel->draw(leftX, 0, 0, false);
-	if (itemSel != NULL)
-	{
-		ssElements->draw(leftX+2, 5, itemSel->getElement(), false);
-		ssItems->draw(leftX+28, 5, itemSel->id, false);
-		Text txtName(itemSel->getName(), 255, 255, 255, 255, fntItemName);
-		txtName.draw(leftX+54, 5);
-		Text txtDesc(itemSel->getDesc(), 255, 255, 255, 255, fntText, 300);
-		txtDesc.draw(leftX+2, 34);
-
-		int drawY = 350;
-		CharStats stats;
-		memset(&stats, 0, sizeof(CharStats));
-		itemSel->getStat(stats);
-
-		drawY += drawItemStatInfo("STR", stats.STR, drawY);
-		drawY += drawItemStatInfo("INT", stats.INT, drawY);
-		drawY += drawItemStatInfo("DEF", stats.DEF, drawY);
-		drawY += drawItemStatInfo("MDEF", stats.MDEF, drawY);
-	};
+	Container::drawInfoPanel(leftX, itemSel);
 
 	if (handleStack.id != 0)
 	{
@@ -629,7 +611,7 @@ void GameMenu::drawInventoryPanel()
 			stringstream ss;
 			ss << handleStack.amount;
 			Text text(ss.str(), 255, 255, 255, 255, fntItemCount);
-			text.draw(x-1, y+3);
+			text.draw(x+10, y+3, Text::RIGHT);
 		};
 	};
 
@@ -660,35 +642,6 @@ bool GameMenu::isItemGoodForSlot(int id, int slot)
 		if ((type == Item::ACCESSORY) && (slot >= 4) && (slot <= 6)) return true;
 		return false;
 	};
-};
-
-int GameMenu::drawItemStatInfo(string statName, int value, int y)
-{
-	if (value == 0) return 0;
-
-	Text txtName(statName, 0, 0, 255, 255, fntText);
-	txtName.draw(leftX+5, y);
-
-	int red=0, green=0;
-	if (value < 0)
-	{
-		red = 255;
-		green = 0;
-	}
-	else
-	{
-		red = 0;
-		green = 255;
-	};
-	(void)red;
-	(void)green;
-	stringstream ss;
-	if (value > 0) ss << "+";
-	ss << value;
-	Text txtValue(ss.str(), red, green, 0, 255, fntText);
-	txtValue.draw(leftX+50, y);
-
-	return 18;
 };
 
 string GameMenu::getEquipmentLabel(int slot)

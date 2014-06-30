@@ -81,6 +81,11 @@ public:
 	Item(int id);
 
 	/**
+	 * Return the cost of this item.
+	 */
+	virtual int getCost() = 0;
+
+	/**
 	 * Return the element associated with the item.
 	 */
 	virtual int getElement() = 0;

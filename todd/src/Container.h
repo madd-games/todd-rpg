@@ -79,7 +79,7 @@ public:
 	 * \brief Draw a container slot.
 	 * \param x The X coordinate to draw at.
 	 * \param y The Y coordinate to draw at.
-	 * \param index 
+	 * \param index The slot to draw.
 	 * \param sel If true, the slot is drawn as selected (mouse hovering).
 	 */
 	void drawSlot(int x, int y, int index, bool sel = false);
@@ -100,6 +100,22 @@ public:
 	 * \brief Reduces the number of items with the given ID by 1.
 	 */
 	void decrItem(int id);
+
+	/**
+	 * \brief Draw the stats part of an item's description.
+	 *
+	 * Returns the height of the drawn text.
+	 */
+	static int drawItemStatInfo(int leftX, string statName, int value, int y);
+
+	/**
+	 * \brief Draw the item info panel.
+	 *
+	 * The panel is drawn on the left side of the screen. The background is not drawn.
+	 * \param leftX X coordinate of the left side of the panel.
+	 * \param item The item to draw information for.
+	 */
+	static void drawInfoPanel(int leftX, Item *item);
 };
 
 #endif

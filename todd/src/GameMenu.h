@@ -68,13 +68,6 @@ private:
 	bool isItemGoodForSlot(int id, int slot);
 
 	/**
-	 * \brief Draw the stats part of an item's description.
-	 *
-	 * Returns the height of the drawn text.
-	 */
-	int drawItemStatInfo(string statName, int value, int y);
-
-	/**
 	 * \brief Returns a label for an equipment slot.
 	 */
 	string getEquipmentLabel(int slot);

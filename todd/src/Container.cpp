@@ -76,7 +76,7 @@ void Container::drawSlot(int x, int y, int index, bool sel)
 		stringstream ss;
 		ss << stack.amount;
 		Text text(ss.str(), 255, 255, 255, 255, fntItemCount);
-		text.draw(x+12, y+16);
+		text.draw(x+24, y+16, Text::RIGHT);
 	};
 };
 
@@ -161,5 +161,56 @@ void Container::decrItem(int id)
 			set(i, stack);
 			break;
 		};
+	};
+};
+
+int Container::drawItemStatInfo(int leftX, string statName, int value, int y)
+{
+	if (value == 0) return 0;
+
+	Text txtName(statName, 0, 0, 255, 255, fntText);
+	txtName.draw(leftX+5, y);
+
+	int red=0, green=0;
+	if (value < 0)
+	{
+		red = 255;
+		green = 0;
+	}
+	else
+	{
+		red = 0;
+		green = 255;
+	};
+
+	stringstream ss;
+	if (value > 0) ss << "+";
+	ss << value;
+	Text txtValue(ss.str(), red, green, 0, 255, fntText);
+	txtValue.draw(leftX+50, y);
+
+	return 18;
+};
+
+void Container::drawInfoPanel(int leftX, Item *item)
+{
+	if (item != NULL)
+	{
+		ssElements->draw(leftX+2, 5, item->getElement(), false);
+		ssItems->draw(leftX+28, 5, item->id, false);
+		Text txtName(item->getName(), 255, 255, 255, 255, fntItemName);
+		txtName.draw(leftX+54, 5);
+		Text txtDesc(item->getDesc(), 255, 255, 255, 255, fntText, 300);
+		txtDesc.draw(leftX+2, 34);
+
+		int drawY = 350;
+		CharStats stats;
+		memset(&stats, 0, sizeof(CharStats));
+		item->getStat(stats);
+
+		drawY += drawItemStatInfo(leftX, "STR", stats.STR, drawY);
+		drawY += drawItemStatInfo(leftX, "INT", stats.INT, drawY);
+		drawY += drawItemStatInfo(leftX, "DEF", stats.DEF, drawY);
+		drawY += drawItemStatInfo(leftX, "MDEF", stats.MDEF, drawY);
 	};
 };

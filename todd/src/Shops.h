@@ -30,51 +30,17 @@
 */
 
 /**
- * ItemBasicSword.h
+ * Shops.h
+ * This file should only be included by GameState.cpp!
+ * List of all the shops' contents.
  */
 
-#include "Item.h"
-#include "Element.h"
-
-class ItemBasicSword : public Item
-{
-public:
-	ItemBasicSword(int id) : Item(id)
-	{
-	};
-
-	virtual int getCost()
-	{
-		return 300;
-	};
-
-	virtual int getElement()
-	{
-		return Element::NEUTRAL;
-	};
-
-	virtual string getName()
-	{
-		return "Basic Sword";
-	};
-
-	virtual string getDesc()
-	{
-		return "A very basic sword, with a force of 10.";
-	};
-
-	virtual bool isStackable()
-	{
-		return false;
-	};
-
-	virtual int getType()
-	{
-		return Item::WEAPON;
-	};
-
-	virtual void getStat(CharStats &stats)
-	{
-		stats.STR = 10;
-	};
+ItemStack shopEastvillePotion[] = {
+	{Item::POTION, 64},
+	{Item::POTION, 64},
+	{Item::POTION, 64},
+	{Item::MANA_FRUIT, 64},
+	{Item::MANA_FRUIT, 64},
+	{Item::MANA_FRUIT, 64},
+	{0, 0}
 };

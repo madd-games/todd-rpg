@@ -93,7 +93,7 @@ void LoadView::handleEvent(SDL_Event *ev)
 		}
 		else if (ev->key.keysym.sym == SDLK_UP)
 		{
-			if (slotSel != 0) slotSel--;
+			if (slotSel != 1) slotSel--;
 		}
 		else if ((ev->key.keysym.sym == SDLK_RIGHT) || (ev->key.keysym.sym == options.confirmKey))
 		{

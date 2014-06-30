@@ -43,6 +43,11 @@ public:
 	{
 	};
 
+	virtual int getCost()
+	{
+		return 120;
+	};
+
 	virtual int getElement()
 	{
 		return Element::NEUTRAL;

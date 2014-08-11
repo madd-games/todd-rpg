@@ -7,27 +7,35 @@ CFLAGS := $(CFLAGS) -I $(SRCDIR)/skills -I $(SRCDIR)/se -I $(SRCDIR)/items -I $(
 .PHONY: install clean distclean
 
 todd$(EXE): $(OBJ)
-	$(CXX) $^ -o $@ $(LDFLAGS)
+	@echo ">Link into $@"
+	@$(CXX) $^ -o $@ $(LDFLAGS)
 
 -include $(DEP)
 
 winrc/todd.o: $(SRCDIR)/winrc/todd.rc $(SRCDIR)/winrc/todd.ico
-	$(WINDRES) $< -o $@
+	@echo ">Compile $<"
+	@$(WINDRES) $< -o $@
 
 %.d: $(SRCDIR)/src/%.cpp
-	set -e; rm -f $@; \
+	@echo ">Parse $<"
+	@set -e; rm -f $@; \
 	$(CXX) -M $(CFLAGS) $< > $@.$$$$; \
 	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
 %.o: $(SRCDIR)/src/%.cpp
-	$(CXX) -c $< -o $@ $(CFLAGS)
+	@echo ">Compile $<"
+	@$(CXX) -c $< -o $@ $(CFLAGS)
 
 install: todd$(EXE)
-	sh $(SRCDIR)/install.sh $(SRCDIR) $(PREFIX) $(EXEC_PREFIX) todd$(EXE)
+	@echo ">Install $<"
+	@sh $(SRCDIR)/install.sh $(SRCDIR) $(PREFIX) $(EXEC_PREFIX) todd$(EXE)
 
 clean:
-	rm -f todd $(wildcard *.o) $(wildcard *.d)
+	@echo ">Delete object and dependency files"
+	@rm -f todd $(wildcard *.o) $(wildcard *.d)
 
 distclean: clean
-	rm -f config.mk
+	@echo ">Delete configuration and output files"
+	@rm -f config.mk todd$(EXE) Doxyfile Makefile
+

@@ -345,6 +345,7 @@ void BanditBossBattle()
 	state->sceneID = -1;
 
 	StartBattle(new EnemyBandit());
+	battleView.setFlee(false);
 };
 
 DialogEntry dialBanditBoss[] = {

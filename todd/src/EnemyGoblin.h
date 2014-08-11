@@ -43,6 +43,7 @@ class EnemyGoblin : public Enemy
 public:
 	EnemyGoblin();
 	virtual Skill *plan();
+	virtual void dropItems(vector<int> &drops);
 };
 
 #endif

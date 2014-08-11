@@ -47,6 +47,7 @@
 #include "ItemMagicRing.h"
 #include "ItemChainArmor.h"
 #include "ItemManaFruit.h"
+#include "ItemGoblinDust.h"
 
 using namespace std;
 
@@ -102,4 +103,5 @@ void InitItems()
 	new ItemMagicRing(Item::MAGIC_RING);
 	new ItemChainArmor(Item::CHAIN_ARMOR);
 	new ItemManaFruit(Item::MANA_FRUIT);
+	new ItemGoblinDust(Item::GOBLIN_DUST);
 };

@@ -175,6 +175,13 @@ void NewGame()
 	state->orient = Mob::DOWN;
 	state->sceneID = Scene::Eastville_PotionShop;
 
+	// Demonic stone in the forest.
+	state = (MobState*) GetGameData("MOBDEMSTONE1", sizeof(MobState));
+	state->x = 28;
+	state->y = 18;
+	state->orient = Mob::DOWN;
+	state->sceneID = Scene::Forest;
+
 	// Chests
 	InitChest(Scene::Forest, 18, 2, Item::POTION, 5);
 	InitChest(Scene::Forest, 19, 4, Item::WOODEN_SHIELD, 1);

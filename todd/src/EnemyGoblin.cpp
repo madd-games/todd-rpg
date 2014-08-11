@@ -38,6 +38,9 @@
 #include "Element.h"
 #include "Skill.h"
 #include "BattleView.h"
+#include <stdlib.h>
+#include <time.h>
+#include "Item.h"
 
 EnemyGoblin::EnemyGoblin()
 {
@@ -63,4 +66,24 @@ Skill *EnemyGoblin::plan()
 {
 	skillAttack->init(battleView.getRandomAlly());
 	return skillAttack;
+};
+
+void EnemyGoblin::dropItems(vector<int> &drops)
+{
+	srand(time(NULL));
+
+	if ((rand() % 100) < 40)
+	{
+		drops.push_back(Item::MANA_FRUIT);
+	};
+
+	if ((rand() % 100) < 30)
+	{
+		drops.push_back(Item::POTION);
+	};
+
+	if ((rand() % 100) < 15)
+	{
+		drops.push_back(Item::GOBLIN_DUST);
+	};
 };

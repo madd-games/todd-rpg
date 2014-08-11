@@ -61,6 +61,7 @@ public:
 		MAGIC_RING = 4,
 		CHAIN_ARMOR = 5,
 		MANA_FRUIT = 6,
+		GOBLIN_DUST = 7,
 	};
 
 	/**

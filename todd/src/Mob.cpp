@@ -122,6 +122,7 @@ const char *mobNames[] = {
 	"MOBBANDIT",
 	"MOBMANEASTV1",
 	"MOBEASTVPS",
+	"MOBDEMSTONE1",
 	NULL
 };
 
@@ -150,6 +151,7 @@ void InitMobs()
 	mobSprites["MOBBANDIT"] =		new SpriteSheet("bandit.png");
 	mobSprites["MOBMANEASTV1"] =		mobSprites["MOBMANFOREST1"];
 	mobSprites["MOBEASTVPS"] =		mobSprites["MOBMANFOREST1"];
+	mobSprites["MOBDEMSTONE1"] =		new SpriteSheet("demonic_stone.png");
 
 	// Names
 	mobRealNames["MOBTODD"] =		"Todd";
@@ -160,6 +162,7 @@ void InitMobs()
 	mobRealNames["MOBBANDIT"] =		"Bandit";
 	mobRealNames["MOBMANEASTV1"] =		"Villager";
 	mobRealNames["MOBEASTVPS"] = 		"Eastville Potion Shop Keeper";
+	mobRealNames["MOBDEMSTONE1"] = 		"Demonic Stone";
 
 	// Elements
 	mobElements["MOBTODD"] =		Element::LIGHT;
@@ -170,6 +173,7 @@ void InitMobs()
 	mobElements["MOBBANDIT"] =		Element::DARKNESS;
 	mobElements["MOBMANEASTV1"] = 		Element::EARTH;
 	mobElements["MOBEASTVPS"] =		Element::AIR;
+	mobElements["MOBDEMSTONE1"] =		Element::DARKNESS;
 };
 
 void UpdateMobs()
@@ -230,35 +234,32 @@ void UpdateMobs()
 			};
 		};
 
-		// TODO: move this elsewhere, because it flickers other mobs as they walk.
-		if (name == "MOBTODD")
-		{
-			// Adjust the camera so we can see the player's character.
-			int realX = state->x*48+state->offX;
-			int realY = state->y*48+state->offY;
-
-			if (realX < (cameraX+MAGIC_BOUND)) cameraX = realX - MAGIC_BOUND;
-			if (realX > (cameraX+(SCREEN_WIDTH*48)-MAGIC_BOUND)) cameraX = realX - (SCREEN_WIDTH*48) + MAGIC_BOUND;
-			if (realY < (cameraY+MAGIC_BOUND)) cameraY = realY - MAGIC_BOUND;
-			if (realY > (cameraY+(SCREEN_HEIGHT*48)-MAGIC_BOUND)) cameraY = realY - (SCREEN_HEIGHT*48) + MAGIC_BOUND;
-
-			if (cameraX < 0) cameraX = 0;
-			if (cameraX > (48*(sceneView.width()-SCREEN_WIDTH))) cameraX = 48*(sceneView.width()-SCREEN_WIDTH);
-			if (cameraY < 0) cameraY = 0;
-			if (cameraY > (48*(sceneView.height()-SCREEN_HEIGHT))) cameraY = (48*(sceneView.height()-SCREEN_HEIGHT));
-		};
-
 		scan++;
 	};
 };
 
 void RenderMobs()
 {
+	// Adjust the camera so we can see the player's character.
+	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
+	int realX = state->x*48+state->offX;
+	int realY = state->y*48+state->offY;
+
+	if (realX < (cameraX+MAGIC_BOUND)) cameraX = realX - MAGIC_BOUND;
+	if (realX > (cameraX+(SCREEN_WIDTH*48)-MAGIC_BOUND)) cameraX = realX - (SCREEN_WIDTH*48) + MAGIC_BOUND;
+	if (realY < (cameraY+MAGIC_BOUND)) cameraY = realY - MAGIC_BOUND;
+	if (realY > (cameraY+(SCREEN_HEIGHT*48)-MAGIC_BOUND)) cameraY = realY - (SCREEN_HEIGHT*48) + MAGIC_BOUND;
+
+	if (cameraX < 0) cameraX = 0;
+	if (cameraX > (48*(sceneView.width()-SCREEN_WIDTH))) cameraX = 48*(sceneView.width()-SCREEN_WIDTH);
+	if (cameraY < 0) cameraY = 0;
+	if (cameraY > (48*(sceneView.height()-SCREEN_HEIGHT))) cameraY = (48*(sceneView.height()-SCREEN_HEIGHT));
+
 	const char **scan = mobNames;
 	while (*scan != NULL)
 	{
 		string name(*scan);
-		MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
+		state = (MobState*) GetGameData(name, sizeof(MobState));
 
 		if (state->sceneID == sceneView.getScene())
 		{
@@ -308,13 +309,7 @@ bool IsMobAt(int scene, int x, int y)
 
 void InteractWithMob(string name)
 {
-	if (name == "MOBFEMINIST")
-	{
-		MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
-		state->lock = 1;
-		sceneView.openDialog(dialFeminist, "MOBFEMINIST");
-	}
-	else if (name == "MOBCASPAR")
+	if (name == "MOBCASPAR")
 	{
 		MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
 		state->lock = 1;

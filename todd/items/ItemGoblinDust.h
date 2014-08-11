@@ -30,69 +30,46 @@
 */
 
 /**
- * Quest.cpp
- * Describes quests.
+ * ItemGoblinDust.h
  */
 
-#include "Quest.h"
-#include "GameState.h"
+#include "Item.h"
+#include "Element.h"
 
-Quest quests[] = {
-	Quest("QSTCHEASTV", "Chief of Eastville", "The Chief of Eastville has been kidnapped. You must go to Eastville and speak to the locals to help track down the kidnappers."),
-
-	Quest("QSTGOBLINDUST", "Goblin Dust", "Bob from Eastville needs 20x Goblin Dust to make a spell."),
-
-	// END
-	Quest("", "", "")
-};
-
-Quest::Quest(string id, string title, string desc) : id(id), title(title), desc(desc)
+class ItemGoblinDust : public Item
 {
-};
-
-bool Quest::isID(string id)
-{
-	return this->id == id;
-};
-
-Quest::Status Quest::getStatus()
-{
-	Quest::Status *stptr = (Quest::Status*) GetGameData(id, sizeof(Quest::Status));
-	return *stptr;
-};
-
-void Quest::setStatus(Quest::Status status)
-{
-	Quest::Status *stptr = (Quest::Status*) GetGameData(id, sizeof(Quest::Status));
-	*stptr = status;
-};
-
-string Quest::getTitle()
-{
-	return title;
-};
-
-string Quest::getDescription()
-{
-	return desc;
-};
-
-Quest* GetQuest(string id)
-{
-	Quest *quest = quests;
-	while (!quest->isID(""))
+public:
+	ItemGoblinDust(int id) : Item(id)
 	{
-		if (quest->isID(id))
-		{
-			return quest;
-		};
-
-		quest++;
 	};
-	return NULL;
-};
 
-Quest *GetQuestList()
-{
-	return quests;
+	virtual int getCost()
+	{
+		return 10;
+	};
+
+	virtual int getElement()
+	{
+		return Element::EARTH;
+	};
+
+	virtual string getName()
+	{
+		return "Goblin Dust";
+	};
+
+	virtual string getDesc()
+	{
+		return "A magic dust carried by goblins.";
+	};
+
+	virtual bool isStackable()
+	{
+		return true;
+	};
+
+	virtual int getType()
+	{
+		return Item::PLOT;
+	};
 };

@@ -39,8 +39,22 @@ ItemStack shopEastvillePotion[] = {
 	{Item::POTION, 64},
 	{Item::POTION, 64},
 	{Item::POTION, 64},
+	{Item::POTION, 64},
+	{Item::POTION, 64},
+	{Item::POTION, 64},
+	{Item::POTION, 64},
+	{Item::POTION, 64},
+	{Item::POTION, 64},
+
 	{Item::MANA_FRUIT, 64},
 	{Item::MANA_FRUIT, 64},
 	{Item::MANA_FRUIT, 64},
+	{Item::MANA_FRUIT, 64},
+	{Item::MANA_FRUIT, 64},
+	{Item::MANA_FRUIT, 64},
+	{Item::MANA_FRUIT, 64},
+	{Item::MANA_FRUIT, 64},
+	{Item::MANA_FRUIT, 64},
+
 	{0, 0}
 };

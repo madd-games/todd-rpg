@@ -47,6 +47,7 @@
 #include "Timer.h"
 #include "Character.h"
 #include "Options.h"
+#include "PlotState.h"
 
 DebugOptionsView debugOptionsView;
 
@@ -78,10 +79,16 @@ void OverpowerStats()
 	};
 };
 
+void MillionGold()
+{
+	GetPlotState()->gold = 1000000;
+};
+
 DebugOption debugOptions[] = {
 	{"Ghost Walk Mode", &sceneView.ghostWalk},
 	{"Random Battles", &sceneView.enableRandomBattles},
 	{"Overpower Stats", NULL, OverpowerStats},
+	{"Million Gold", NULL, MillionGold},
 	{NULL, NULL}
 };
 

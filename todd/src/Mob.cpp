@@ -123,6 +123,7 @@ const char *mobNames[] = {
 	"MOBMANEASTV1",
 	"MOBEASTVPS",
 	"MOBDEMSTONE1",
+	"MOBBOB",
 	NULL
 };
 
@@ -135,6 +136,7 @@ map<string, queue<int> > mobQueues;
  */
 const char *autoMobs[] = {
 	"MOBMANEASTV1",
+	"MOBBOB",
 	NULL
 };
 
@@ -152,6 +154,7 @@ void InitMobs()
 	mobSprites["MOBMANEASTV1"] =		mobSprites["MOBMANFOREST1"];
 	mobSprites["MOBEASTVPS"] =		mobSprites["MOBMANFOREST1"];
 	mobSprites["MOBDEMSTONE1"] =		new SpriteSheet("demonic_stone.png");
+	mobSprites["MOBBOB"] =			new SpriteSheet("bob.png");
 
 	// Names
 	mobRealNames["MOBTODD"] =		"Todd";
@@ -163,6 +166,7 @@ void InitMobs()
 	mobRealNames["MOBMANEASTV1"] =		"Villager";
 	mobRealNames["MOBEASTVPS"] = 		"Eastville Potion Shop Keeper";
 	mobRealNames["MOBDEMSTONE1"] = 		"Demonic Stone";
+	mobRealNames["MOBBOB"] = 		"Bob";
 
 	// Elements
 	mobElements["MOBTODD"] =		Element::LIGHT;
@@ -174,6 +178,7 @@ void InitMobs()
 	mobElements["MOBMANEASTV1"] = 		Element::EARTH;
 	mobElements["MOBEASTVPS"] =		Element::AIR;
 	mobElements["MOBDEMSTONE1"] =		Element::DARKNESS;
+	mobElements["MOBBOB"] =			Element::WATER;
 };
 
 void UpdateMobs()

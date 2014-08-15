@@ -182,6 +182,12 @@ void NewGame()
 	state->orient = Mob::DOWN;
 	state->sceneID = Scene::Forest;
 
+	// Bob (Eastville)
+	state = (MobState*) GetGameData("MOBBOB", sizeof(MobState));
+	state->x = 7;
+	state->y = 12;
+	state->sceneID = Scene::Eastville;
+
 	// Chests
 	InitChest(Scene::Forest, 18, 2, Item::POTION, 5);
 	InitChest(Scene::Forest, 19, 4, Item::WOODEN_SHIELD, 1);

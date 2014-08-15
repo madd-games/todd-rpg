@@ -31,7 +31,7 @@
 
 /**
  * Mob.h
- * A class for handling mobs.
+ * A header file for handling mobs.
  */
 
 #ifndef MOB_H
@@ -40,29 +40,68 @@
 #include "SpriteSheet.h"
 #include "Element.h"
 
+/**
+ * \brief Stores the state of a mob.
+ */
 struct MobState
 {
-	// Position of the mob in the scene (in the 48x48 units)
-	int x, y;
+	/**
+	 * \brief X position of the mob in the scene (in 48x48 units).
+	 */
+	int x;
 
-	// Orientation (see below)
+	/**
+	 * \brief Y position of the mob in the scene (in 48x48 units)
+	 */
+	int y;
+
+	/**
+	 * \brief Orientation of the mob.
+	 * \sa Mob::Orientation
+	 */
 	int orient;
 
-	// Which scene this mob resides on.
+	/**
+	 * \brief Which scene the mob is currently located in.
+	 */
 	int sceneID;
 
-	// Motion info
-	int motX, motY;
-	int offX, offY;
+	/**
+	 * \brief Velocity along the X axis.
+	 */
+	int motX;
+
+	/**
+	 * \brief Velocity across the Y axis.
+	 */
+	int motY;
+
+	/**
+	 * \brief Offset (in pixels) from the grid position.
+	 */
+	int offX;
+
+	/**
+	 * \brief Offset (in pixels) from the grid position.
+	 */
+	int offY;
 	int steps;
 
 	// Timer
 	unsigned long stepTimer;
 
-	// If this is nonzero, the mob is locked (doesn't walk around).
-	// Applies to auto-mobs only.
+	/**
+	 * If this is nonzero, the mob is locked (doesn't walk around).
+	 * Applies to auto-mobs only.
+	 */
 	int lock;
 
+	/**
+	 * \brief Tells the mob to begin moving, this includes animation.
+	 * \param orient The direction to move in.
+	 * \param force If true, the mob will walk even into walls If false, and there is a wall in the way,
+	 *              the mob will only turn around.
+	 */
 	void beginMove(int orient, bool force = false);
 };
 
@@ -130,10 +169,15 @@ bool IsMobReady(string name);
  */
 void EnqueueMobMoves(string name, int dir, int count);
 
+/**
+ * \brief Mob-related stuff.
+ */
 namespace Mob
 {
-	// Mob orientations
-	enum
+	/**
+	 * \brief Mob orientations.
+	 */
+	enum Orientation
 	{
 		DOWN = 0,
 		LEFT = 1,

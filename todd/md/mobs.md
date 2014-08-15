@@ -10,3 +10,5 @@ The SpriteSheet for a mob must be a 3x4 grid of 48x48 sprites, and a single Spri
 If a mob ID is listed in the `autoMobs` array, then the mob will randomly walk around the scene. This is used for villagers, for example.
 
 The mob `MOBTODD` gets special treatment in the engine - keyboard input moves that mob around, and its position is used to set the camera.
+
+In `GameState.cpp`, in the `NewGame()` function, you must initialise the state of all mobs; there are plenty of examples of how it is done in there already. You may also want to check out the full MobState structure, in Mob.h.

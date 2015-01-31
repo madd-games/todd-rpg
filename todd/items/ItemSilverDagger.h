@@ -30,21 +30,51 @@
 */
 
 /**
- * EnemyFeminist.h
- * The "Feminist" enemy.
+ * ItemSilverDagger.h
  */
 
-#ifndef ENEMY_FEMINIST_H
-#define ENEMY_FEMINIST_H
+#include "Item.h"
+#include "Element.h"
 
-#include "Enemy.h"
-
-class EnemyFeminist : public Enemy
+class ItemSilverDagger : public Item
 {
 public:
-	EnemyFeminist();
-	virtual Skill *plan();
-	virtual void dropItems(vector<int> &drops);
-};
+	ItemSilverDagger(int id) : Item(id)
+	{
+	};
 
-#endif
+	virtual int getCost()
+	{
+		return 50;
+	};
+
+	virtual int getElement()
+	{
+		return Element::NEUTRAL;
+	};
+
+	virtual string getName()
+	{
+		return "Silver Dagger";
+	};
+
+	virtual string getDesc()
+	{
+		return "A dagger made of silver, dealing minimal damage.";
+	};
+
+	virtual bool isStackable()
+	{
+		return false;
+	};
+
+	virtual int getType()
+	{
+		return Item::WEAPON;
+	};
+
+	virtual void getStat(CharStats &stats)
+	{
+		stats.STR = 2;
+	};
+};

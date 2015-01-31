@@ -30,71 +30,46 @@
 */
 
 /**
- * EnemyGoblin.cpp
+ * ItemSpiritKey.h
  */
 
-#include "EnemyGoblin.h"
-#include "SpriteSheet.h"
-#include "Element.h"
-#include "Skill.h"
-#include "BattleView.h"
-#include <stdlib.h>
-#include <time.h>
 #include "Item.h"
-#include <random>
+#include "Element.h"
 
-using namespace std;
-
-EnemyGoblin::EnemyGoblin()
+class ItemSpiritKey : public Item
 {
-	spriteSheet = ssGoblin;
-	level = 3;
-	name = "Goblin";
-
-	hp = maxhp = 30;
-	element = Element::EARTH;
-
-	memset(&stats, 0, sizeof(CharStats));
-	stats.STR = 0;
-	stats.DEF = -1;
-
-	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
-	resist[Element::EARTH] = 10;
-	resist[Element::AIR] = -50;
-	resist[Element::WATER] = -10;
-	resist[Element::FIRE] = -10;
-};
-
-Skill *EnemyGoblin::plan()
-{
-	skillAttack->init(battleView.getRandomAlly());
-	return skillAttack;
-};
-
-int getProb()
-{
-	random_device rd;
-	default_random_engine e1(rd());
-	uniform_int_distribution<int> mknum(0, 99);
-	return mknum(e1);
-};
-
-void EnemyGoblin::dropItems(vector<int> &drops)
-{
-	srand(time(NULL));
-
-	if (getProb() < 40)
+public:
+	ItemSpiritKey(int id) : Item(id)
 	{
-		drops.push_back(Item::MANA_FRUIT);
 	};
 
-	if (getProb() < 30)
+	virtual int getCost()
 	{
-		drops.push_back(Item::POTION);
+		return 0;
 	};
 
-	if (getProb() < 20)
+	virtual int getElement()
 	{
-		drops.push_back(Item::GOBLIN_DUST);
+		return Element::NEUTRAL;
+	};
+
+	virtual string getName()
+	{
+		return "Spirit Key";
+	};
+
+	virtual string getDesc()
+	{
+		return "Grants access to the Shadow Realm.";
+	};
+
+	virtual bool isStackable()
+	{
+		return false;
+	};
+
+	virtual int getType()
+	{
+		return Item::PLOT;
 	};
 };

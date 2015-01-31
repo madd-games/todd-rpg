@@ -48,6 +48,10 @@
 #include "ItemChainArmor.h"
 #include "ItemManaFruit.h"
 #include "ItemGoblinDust.h"
+#include "ItemSpiritKey.h"
+#include "ItemSilverDagger.h"
+#include "ItemBottleOfPoison.h"
+#include "ItemAntidote.h"
 
 using namespace std;
 
@@ -104,4 +108,8 @@ void InitItems()
 	new ItemChainArmor(Item::CHAIN_ARMOR);
 	new ItemManaFruit(Item::MANA_FRUIT);
 	new ItemGoblinDust(Item::GOBLIN_DUST);
+	new ItemSpiritKey(Item::SPIRIT_KEY);
+	new ItemSilverDagger(Item::SILVER_DAGGER);
+	new ItemBottleOfPoison(Item::BOTTLE_OF_POISON);
+	new ItemAntidote(Item::ANTIDOTE);
 };

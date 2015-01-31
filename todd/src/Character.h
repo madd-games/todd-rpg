@@ -106,6 +106,7 @@ public:
 
 	CharStats *getStats();
 	int *getResistances();
+	StatusEffectSet &getStatusEffectSet();
 
 	/**
 	 * \brief Deals damage without checking resistances etc.

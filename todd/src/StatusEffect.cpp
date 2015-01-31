@@ -37,6 +37,7 @@
 #include "StatusEffect.h"
 #include "BattleView.h"
 #include "Element.h"
+#include "SpriteSheet.h"
 
 // Include status effect classes here.
 #include "SEPoison.h"
@@ -82,6 +83,19 @@ void StatusEffectSet::set(int effect, bool state)
 	};
 };
 
+void StatusEffectSet::onTurn(int entity)
+{
+	int i;
+	for (i=0; i<StatusEffect::COUNT; i++)
+	{
+		if (test(i))
+		{
+			StatusEffect *se = GetStatusEffect(i);
+			se->onTurn(entity);
+		};
+	};
+};
+
 SEPoison sePoison;
 
 StatusEffect *GetStatusEffect(int effect)
@@ -92,5 +106,17 @@ StatusEffect *GetStatusEffect(int effect)
 		return &sePoison;
 	default:
 		return NULL;
+	};
+};
+
+void renderStatusEffectSet(int x, int y, StatusEffectSet ses)
+{
+	int i;
+	for (i=0; i<StatusEffect::COUNT; i++)
+	{
+		if (ses.test(i))
+		{
+			ssStatus->draw(x+16*i, y, i, false);
+		};
 	};
 };

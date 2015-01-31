@@ -37,6 +37,16 @@
 class SEPoison : public StatusEffect
 {
 public:
+	virtual int getElement()
+	{
+		return Element::EARTH;
+	};
+
+	virtual string getName()
+	{
+		return "Poison";
+	};
+
 	virtual bool isPositive()
 	{
 		return false;
@@ -46,6 +56,6 @@ public:
 	{
 		int hp, maxhp;
 		battleView.getHP(entity, hp, maxhp);
-		battleView.attack(entity, AttackType::PHYSICAL, Element::EARTH, maxhp * 0.1);
+		battleView.attack(entity, AttackType::PHYSICAL, Element::EARTH, maxhp / 10);
 	};
 };

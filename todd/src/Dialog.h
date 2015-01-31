@@ -129,5 +129,10 @@ extern DialogEntry dialManForest2b[];
 extern DialogEntry dialBanditBoss[];
 extern DialogEntry dialManEastville1a[];
 extern DialogEntry dialManEastville1b[];
+extern DialogEntry dialBob_a[];
+extern DialogEntry dialBob_b_no[];
+extern DialogEntry dialBob_b_yes[];
+extern DialogEntry dialDemStoneWithoutKey[];
+extern DialogEntry dialDemStone[];
 
 #endif

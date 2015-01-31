@@ -38,6 +38,9 @@
 #define STATUS_EFFECT_H
 
 #include <inttypes.h>
+#include <string>
+
+using namespace std;
 
 class StatusEffect
 {
@@ -49,9 +52,21 @@ public:
 	{
 		POISON = 0,
 		REGEN = 1,
+
+		COUNT
 	};
 
 	virtual ~StatusEffect();
+
+	/**
+	 * \brief Returns the element associated with this status effect.
+	 */
+	virtual int getElement() = 0;
+
+	/**
+	 * \brief Returns the name of this status effect.
+	 */
+	virtual string getName() = 0;
 
 	/**
 	 * \brief Returns true if this status effect is positive.
@@ -95,8 +110,14 @@ public:
 	 * \sa StatusEffect
 	 */
 	void set(int effect, bool state);
+
+	/**
+	 * \brief Apply all status effects to the entity.
+	 */
+	void onTurn(int entity);
 };
 
 StatusEffect *GetStatusEffect(int effect);
+void renderStatusEffectSet(int x, int y, StatusEffectSet ses);
 
 #endif

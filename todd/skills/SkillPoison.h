@@ -30,71 +30,72 @@
 */
 
 /**
- * EnemyGoblin.cpp
+ * SkillPoison.h
  */
 
-#include "EnemyGoblin.h"
-#include "SpriteSheet.h"
-#include "Element.h"
-#include "Skill.h"
-#include "BattleView.h"
-#include <stdlib.h>
-#include <time.h>
-#include "Item.h"
-#include <random>
-
-using namespace std;
-
-EnemyGoblin::EnemyGoblin()
+class SkillPoison : public Skill
 {
-	spriteSheet = ssGoblin;
-	level = 3;
-	name = "Goblin";
+private:
+	int target;
+	unsigned int time;
+	int stage;
 
-	hp = maxhp = 30;
-	element = Element::EARTH;
-
-	memset(&stats, 0, sizeof(CharStats));
-	stats.STR = 0;
-	stats.DEF = -1;
-
-	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
-	resist[Element::EARTH] = 10;
-	resist[Element::AIR] = -50;
-	resist[Element::WATER] = -10;
-	resist[Element::FIRE] = -10;
-};
-
-Skill *EnemyGoblin::plan()
-{
-	skillAttack->init(battleView.getRandomAlly());
-	return skillAttack;
-};
-
-int getProb()
-{
-	random_device rd;
-	default_random_engine e1(rd());
-	uniform_int_distribution<int> mknum(0, 99);
-	return mknum(e1);
-};
-
-void EnemyGoblin::dropItems(vector<int> &drops)
-{
-	srand(time(NULL));
-
-	if (getProb() < 40)
+public:
+	virtual void init(int target)
 	{
-		drops.push_back(Item::MANA_FRUIT);
+		this->target = target;
+		time = Timer::Read();
+		stage = 0;
 	};
 
-	if (getProb() < 30)
+	virtual void act()
 	{
-		drops.push_back(Item::POTION);
+		if ((Timer::Read()-time) >= 10)
+		{
+			stage++;
+			battleView.emitParticle(target, 0, 0, BattleView::POISON_BUBBLE);
+			if (stage == 2)
+			{
+				battleView.attack(target, AttackType::PHYSICAL, Element::EARTH, 250);
+			};
+			if (stage == 25)
+			{
+				battleView.inflictStatus(target, StatusEffect::POISON);
+			};
+			time = Timer::Read();
+		};
 	};
 
-	if (getProb() < 20)
+	virtual bool isActive()
 	{
-		drops.push_back(Item::GOBLIN_DUST);
+		return stage < 30;
+	};
+
+	virtual bool isOffensive()
+	{
+		return true;
+	};
+
+	virtual int getElement()
+	{
+		return Element::EARTH;
+	};
+
+	virtual string getName()
+	{
+		return "Bottle of Poison";
+	};
+
+	virtual string getDesc()
+	{
+		return "";
+	};
+
+	virtual int getManaUse()
+	{
+		return 0;
 	};
 };
+
+SkillPoison skillPoisonVal;
+Skill *skillPoison = &skillPoisonVal;

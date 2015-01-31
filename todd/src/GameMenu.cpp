@@ -45,6 +45,7 @@
 #include "Options.h"
 #include "Quest.h"
 #include "PlotState.h"
+#include "StatusEffect.h"
 
 using namespace std;
 
@@ -369,7 +370,7 @@ void GameMenu::drawPartyMember(int index, int x, int y, int page)
 
 		chr->getSpriteSheet()->draw(x+10, y+5, 0, false);
 		ssElements->draw(x+15, y+50, chr->getElement(), false);
-
+		renderStatusEffectSet(x+58, y+5, chr->getStatusEffectSet());
 		Text txt1(chr->getName(), 255, 255, 255);
 		Text txt2(ss.str(), 0, 0, 255);
 

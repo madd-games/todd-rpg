@@ -105,5 +105,7 @@ extern Skill *skillHeal;
 extern Skill *skillPotion;
 extern Skill *skillFireSlash;
 extern Skill *skillManaFruit;
+extern Skill *skillSplash;
+extern Skill *skillPoison;
 
 #endif

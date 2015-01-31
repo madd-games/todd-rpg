@@ -40,6 +40,7 @@
 #include "Item.h"
 #include "Character.h"
 #include "Todd.h"
+#include "StatusEffect.h"
 
 // Include skills here.
 #include "SkillAttack.h"
@@ -47,6 +48,8 @@
 #include "SkillPotion.h"
 #include "SkillFireSlash.h"
 #include "SkillManaFruit.h"
+#include "SkillSplash.h"
+#include "SkillPoison.h"
 
 bool Skill::isUsableAgainstDead()
 {

@@ -52,6 +52,8 @@ struct PlotState
 	 * \brief Amount of gold owned by the player.
 	 */
 	int gold;
+
+	int bobTalkCount;
 };
 
 PlotState *GetPlotState();

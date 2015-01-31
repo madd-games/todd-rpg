@@ -40,7 +40,7 @@
 Quest quests[] = {
 	Quest("QSTCHEASTV", "Chief of Eastville", "The Chief of Eastville has been kidnapped. You must go to Eastville and speak to the locals to help track down the kidnappers."),
 
-	Quest("QSTGOBLINDUST", "Goblin Dust", "Bob from Eastville needs 20x Goblin Dust to make a spell."),
+	Quest("QSTGOBLINDUST", "Goblin Dust", "Collect 10x Goblin Dust in order to make a Spirit Key which grants access to the Shadow Realm, where the Chief of Eastville may be."),
 
 	// END
 	Quest("", "", "")

@@ -2,7 +2,7 @@ SRC := $(wildcard $(SRCDIR)/src/*.cpp)
 CPP_FILES := $(notdir $(SRC))
 DEP := $(CPP_FILES:.cpp=.d)
 OBJ := $(CPP_FILES:.cpp=.o) $(EXTRA_OBJ)
-CFLAGS := $(CFLAGS) -I $(SRCDIR)/skills -I $(SRCDIR)/se -I $(SRCDIR)/items -I $(SRCDIR)/atiles -I $(SRCDIR)/src
+CFLAGS := $(CFLAGS) -I $(SRCDIR)/skills -I $(SRCDIR)/se -I $(SRCDIR)/items -I $(SRCDIR)/atiles -I $(SRCDIR)/src -std=c++11
 
 .PHONY: install clean distclean
 

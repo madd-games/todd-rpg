@@ -44,6 +44,7 @@ map<string, Skillset*> skillsets;
 
 Skillset skillsetTodd;
 Skillset skillsetCaspar;
+Skillset skillsetBob;
 
 void InitSkillsets()
 {
@@ -58,6 +59,12 @@ void InitSkillsets()
 	skillsetCaspar.name = "Fire Magic";
 	skillsetCaspar.skills.clear();
 	skillsetCaspar.skills.push_back(skillFireSlash);
+
+	// Bob
+	skillsets["CHRBOB"] = &skillsetBob;
+	skillsetBob.name = "Water Magic";
+	skillsetBob.skills.clear();
+	skillsetBob.skills.push_back(skillSplash);
 };
 
 Skillset *GetSkillset(string charName)

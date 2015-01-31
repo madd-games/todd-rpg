@@ -146,6 +146,12 @@ int *Character::getResistances()
 	return charInfo->resist;
 };
 
+StatusEffectSet &Character::getStatusEffectSet()
+{
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	return state->ses;
+};
+
 void Character::dealDirectDamage(int dmg)
 {
 	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
@@ -212,3 +218,12 @@ CharInfo charInfoCaspar = {
 	{5, 2, 2, 0},
 };
 Character charCaspar("CHRCASPAR", &charInfoCaspar, "INVCASPAR");
+
+// Bob
+CharInfo charInfoBob = {
+	"MOBBOB",
+	{90, 70, 0, -50, 0, 0, 0, 0},
+	{2, 2, 2, 2},
+	{1, 7, -1, 10},
+};
+Character charBob("CHRBOB", &charInfoBob, "INVBOB");

@@ -43,6 +43,7 @@
 #include "Skill.h"
 #include "CharStats.h"
 #include <vector>
+#include "StatusEffect.h"
 
 using namespace std;
 
@@ -60,6 +61,7 @@ public:
 	int element;
 	CharStats stats;
 	int resist[Element::NUM_ELEMENTS];
+	StatusEffectSet ses;
 
 	virtual ~Enemy();
 

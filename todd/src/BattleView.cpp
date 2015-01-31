@@ -55,15 +55,17 @@ using namespace std;
 
 BattleView battleView;
 
-#define	NUM_EXPENDABLE_ITEMS		2
+#define	NUM_EXPENDABLE_ITEMS		3
 int expendableItems[NUM_EXPENDABLE_ITEMS] = {
 	Item::POTION,
 	Item::MANA_FRUIT,
+	Item::BOTTLE_OF_POISON
 };
 
 Skill *itemSkills[NUM_EXPENDABLE_ITEMS] = {
 	skillPotion,
 	skillManaFruit,
+	skillPoison
 };
 
 void BattleView::init(Enemy *a, Enemy *b, Enemy *c, Enemy *d)
@@ -549,6 +551,7 @@ void BattleView::render()
 
 			chr->getSpriteSheet()->draw(plotX+10, y+5, 0, false);
 			ssElements->draw(plotX+15, y+50, chr->getElement(), false);
+			renderStatusEffectSet(plotX+58, y+5, chr->getStatusEffectSet());
 			plotX += 241;
 		};
 	};
@@ -578,6 +581,7 @@ void BattleView::render()
 
 			enemy->spriteSheet->draw(plotX+10, y+5, 0, false);
 			ssElements->draw(plotX+15, y+50, enemy->element, false);
+			renderStatusEffectSet(plotX+58, y+5, enemy->ses);
 			plotX += 241;
 		};
 	};
@@ -864,6 +868,9 @@ void BattleView::schedTurn()
 		if (turn == 8) turn = 0;
 	} while (!canMove(turn));
 
+	StatusEffectSet ses = getStatusEffectSet(turn);
+	ses.onTurn(turn);
+
 	if (turn < 4)
 	{
 		optionSel = 0;
@@ -874,6 +881,26 @@ void BattleView::schedTurn()
 		Enemy *enemy = enemies[turn-4];
 		skillSel = enemy->plan();
 		mode = Mode::SKILL;
+	};
+};
+
+StatusEffectSet BattleView::getStatusEffectSet(int entity)
+{
+	StatusEffectSet se0;
+
+	if (entity < 4)
+	{
+		string name = GetPartyMember(entity);
+		if (name == "") return se0;
+
+		Character *chr = GetChar(name);
+		return chr->getStatusEffectSet();
+	}
+	else
+	{
+		Enemy *enemy = enemies[entity-4];
+		if (enemy == NULL) return se0;
+		return enemy->ses;
 	};
 };
 
@@ -1085,6 +1112,44 @@ void BattleView::restoreMana(int target, int mp)
 	dmgDisplays.push_back(disp);
 };
 
+void BattleView::inflictStatus(int target, int effect)
+{
+	if (target < 4)
+	{
+		string name = GetPartyMember(target);
+		if (name == "") return;
+
+		Character *chr = GetChar(name);
+		chr->getStatusEffectSet().set(effect, true);
+	}
+	else
+	{
+		Enemy *enemy = enemies[target-4];
+		if (enemy == NULL) return;
+		enemy->ses.set(effect, true);
+	};
+	StatusEffect *se = GetStatusEffect(effect);
+
+	DamageDisplay disp;
+	disp.element = se->getElement();
+	disp.value = se->getName();
+	disp.red = 255;
+	disp.green = 0;
+	disp.blue = 0;
+	disp.start = Timer::Read();
+	if (target < 4)
+	{
+		disp.x = 396;
+		disp.y = 100+50*target;
+	}
+	else
+	{
+		disp.x = 548;
+		disp.y = 100+50*(target-4);
+	};
+	dmgDisplays.push_back(disp);
+};
+
 int BattleView::getRandomAlly(bool allowDead)
 {
 	vector<int> chooseable;
@@ -1148,6 +1213,21 @@ void BattleView::emitParticle(int entity, int offX, int offY, int type)
 		part.x -= 8;
 		part.y -= 8;
 		part.vy = -(1.0/20.0);
+		break;
+	case SPLASH:
+		part.ss = ssWaterDrop;
+		part.timeStage = 250;
+		part.numStages = 5;
+		part.vx = (float)RandomUniform(-10, 10) / 100.0;
+		part.vy = (float)RandomUniform(-10, 10) / 100.0;
+		break;
+	case POISON_BUBBLE:
+		part.ss = ssPoison;
+		part.timeStage = 250;
+		part.numStages = 5;
+		part.x += RandomUniform(0, 48);
+		part.y += RandomUniform(30, 60);
+		part.vy = (float)RandomUniform(-4, -1) / 100.0;
 		break;
 	};
 

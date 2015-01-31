@@ -30,58 +30,70 @@
 */
 
 /**
- * EnemyFeminist.cpp
- * Feminist.
+ * SkillSplash.h
  */
 
-#include "EnemyFeminist.h"
-#include "SpriteSheet.h"
-#include "Mob.h"
-#include "BattleView.h"
-#include "Item.h"
-#include <time.h>
-
-EnemyFeminist::EnemyFeminist()
+class SkillSplash : public Skill
 {
-	spriteSheet = GetMobInfo("MOBFEMINIST").mobSprite;
-	level = 9;
-	name = "Feminist";
+private:
+	int target;
+	unsigned int time;
+	int stage;
 
-	hp = maxhp = 350;
-	mp = maxmp = 120;
-	xp = 400;
-	maxxp = 1000;
-
-	element = Element::FIRE;
-
-	memset(&stats, 0, sizeof(CharStats));
-	stats.STR = 5;
-	stats.DEF = 2;
-
-	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
-	resist[Element::FIRE] = 80;
-	resist[Element::WATER] = -100;
-	
-};
-
-Skill *EnemyFeminist::plan()
-{
-	srand(time(NULL));
-	if ((rand() % 100) < 50)
+public:
+	virtual void init(int target)
 	{
-		skillAttack->init(battleView.getRandomAlly());
-		return skillAttack;
-	}
-	else
+		this->target = target;
+		time = Timer::Read();
+		stage = 0;
+	};
+
+	virtual void act()
 	{
-		skillHeal->init(4);
-		return skillHeal;
+		if ((Timer::Read()-time) >= 10)
+		{
+			stage++;
+			if (stage == 2)
+			{
+				int count = 50;
+				while (count--) battleView.emitParticle(target, 0, 0, BattleView::SPLASH);
+				int damage = RandomUniform(40, 60) + RandomUniform(5, 10) * battleView.getLevel(battleView.getTurn());
+				battleView.attack(target, AttackType::MAGIC, Element::WATER, damage);
+			};
+			time = Timer::Read();
+		};
+	};
+
+	virtual bool isActive()
+	{
+		return stage < 30;
+	};
+
+	virtual bool isOffensive()
+	{
+		return true;
+	};
+
+	virtual int getElement()
+	{
+		return Element::WATER;
+	};
+
+	virtual string getName()
+	{
+		return "Splash";
+	};
+
+	virtual string getDesc()
+	{
+		return "Deals water damage to the target.";
+	};
+
+	virtual int getManaUse()
+	{
+		return 10;
 	};
 };
 
-void EnemyFeminist::dropItems(vector<int> &drops)
-{
-	drops.push_back(Item::POTION);
-	drops.push_back(Item::POTION);
-	drops.push_back(Item::BASIC_SWORD);
-};
+SkillSplash skillSplashVal;
+Skill *skillSplash = &skillSplashVal;

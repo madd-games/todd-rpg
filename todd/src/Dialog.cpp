@@ -42,13 +42,14 @@
 #include "Text.h"
 #include "Timer.h"
 #include "BattleView.h"
-#include "EnemyFeminist.h"
 #include "EnemyGoblin.h"
 #include "EnemyBandit.h"
 #include "SaveView.h"
 #include "Character.h"
 #include "Options.h"
 #include "Quest.h"
+#include "SceneView.h"
+#include "Scene.h"
 
 Dialog::Dialog(DialogEntry *entry, string with) : currentEntry(entry), with(with), letters(1), choice(0)
 {
@@ -197,40 +198,7 @@ bool Dialog::isLiving()
 	return live;
 };
 
-// FEMINIST
-void FemFight()
-{
-	StartBattle(new EnemyFeminist, new EnemyGoblin, new EnemyGoblin, new EnemyGoblin);
-	battleView.setFlee(false);
-};
-
-DialogEntry dialFeministRapeCulture[] = {
-	{"MOBFEMINIST", "Feminist", "But Rape Culture is very bad :'("},
-	{NULL, NULL, NULL}
-};
-
-DialogEntry dialFeministFight[] = {
-	{"MOBFEMINIST", "Feminist", "Very well! Let's have it broth!", FemFight},
-	{"MOBTODD", "Todd", "Haha! I defeated you because you are stupid!"},
-	{"MOBFEMINIST", "Feminist", "Rapist :'("},
-	{NULL, NULL, NULL}
-};
-
 DialogEntry dialEmpty = {NULL, NULL, NULL};
-
-DialogEntry dialFeminist[] = {
-	{"MOBFEMINIST", "Feminist", "Stop oppressing me!"},
-	{"MOBTODD", "Todd", "I'm not."},
-	{"MOBFEMINIST", "Feminist", "You are!"},
-	{"MOBTODD", "Todd", "Nah."},
-	{"MOBFEMINIST", "Feminist", "Could you please leave? :/"},
-	{"MOBTODD", "Todd", NULL, NULL, 3, {
-		{"K.", &dialEmpty},
-		{"I support Rape Culture", dialFeministRapeCulture},
-		{"I want to fight you because I have swag.", dialFeministFight}
-	}},
-	{NULL, NULL, NULL}
-};
 
 // CRYSTAL
 void CrystalHeal()
@@ -361,12 +329,92 @@ DialogEntry dialManEastville1a[] = {
 	{"MOBTODD", "Todd", "Indeed. We are looking for the missing Chief. Do you know anything about what has happened?"},
 	{"MOBMANEASTV1", "George", "Last night I saw some men dressed in black going towards the Chief's home. I'm not sure, but I think they went towards the forest."},
 	{"MOBCASPAR", "Caspar", "That does seem very suspicious. Come on, Todd, we must go and see if they're still there!"},
-	{"MOBMANEASTV1", "George", "Before you go, I'd suggest you get some equipment! You can take everything from the chests I have here in my home. You can also use my Save Crystal."},
-	{"MOBTODD", "Todd", "Thank you kind man!"},
+	{"MOBMANEASTV1", "George", "Before you go, I'd suggest you get some equipment! You can take everything from these chests . You can also use my Save Crystal."},
+	{"MOBTODD", "Todd", "Thank you!"},
 	{NULL, NULL, NULL}
 };
 
 DialogEntry dialManEastville1b[] = {
 	{"MOBMANEASTV1", "George", "You can take all my equipment! Go search for those bandits, they are probably in the forest!"},
+	{NULL, NULL, NULL}
+};
+
+// BOB
+void BobQuestStart()
+{
+	Quest *quest = GetQuest("QSTGOBLINDUST");
+	quest->setStatus(Quest::Active);
+};
+
+DialogEntry dialBob_a[] = {
+	{"MOBBOB", "Bob", "Hey, are you from the Royal Guard?"},
+	{"MOBCASPAR", "Caspar", "Yes we are."},
+	{"MOBBOB", "Bob", "Looking for the chief, aren't you? Last night I saw some dark figures going west, perhaps with the Chief. I suspect they may have taken him to the Shadow Realm."},
+	{"MOBCASPAR", "Caspar", "The Shadow Realm?"},
+	{"MOBBOB", "Bob", "It is a secret place in Farewell Forest, which can be accessed using the Spirit Key, through the Demonic Stone."},
+	{"MOBCASPAR", "Caspar", "How can we get the Spirit Key?"},
+	{"MOBBOB", "Bob", "I need you to fight some Goblins and get 10x Goblin Dust. I have all the other ingredients ready.", BobQuestStart},
+	{"MOBBOB", "Bob", "Once you find it, I will join you and open the Shadow Realm."},
+	{NULL, NULL, NULL}
+};
+
+void BobJoin()
+{
+	SetPartyMember(2, "CHRBOB");
+	MobState *state = (MobState*) GetGameData("MOBBOB", sizeof(MobState));
+	state->sceneID = -1;
+
+	Quest *quest = GetQuest("QSTGOBLINDUST");
+	quest->setStatus(Quest::Complete);
+};
+
+DialogEntry dialBob_b_no[] = {
+	{"MOBBOB", "Bob", "Sorry, that's not enough Goblin Dust. I need 10 units of it."},
+	{NULL, NULL, NULL}
+};
+
+DialogEntry dialBob_b_yes[] = {
+	{"MOBTODD", "Todd", "Okay, we've got enough Goblin Dust, here you go."},
+	{"MOBBOB", "Bob", "Ah, great! I can now make the Spirit Key."},
+	{"MOBBOB", "Bob", "Now let's go to the Demonic Stone!", BobJoin},
+	{NULL, NULL, NULL}
+};
+
+// DEMONIC STONE (FAREWELL FOREST)
+DialogEntry dialDemStoneWithoutKey[] = {
+	{"MOBBOB", "Bob", "Hey, where's my Spirit Key ?!"},
+	{NULL, NULL, NULL}
+};
+
+void DemStoneGoto()
+{
+	MobState *state = (MobState*) GetGameData("MOBDEMSTONE1", sizeof(MobState));
+	state->sceneID = -1;
+
+	state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
+	state->sceneID = Scene::ShadowRealm;
+	state->x = 5;
+	state->y = 5;
+
+	sceneView.setScene(Scene::ShadowRealm);
+};
+
+DialogEntry dialDemStone_goto[] = {
+	{"MOBBOB", "Bob", "OK, here we go!", DemStoneGoto},
+	{"MOBTODD", "Todd", "WOW! This place is... uh..."},
+	{"MOBCASPAR", "Caspar", "Oh my God!"},
+	{"MOBBOB", "Bob", "Yes, I know, it can be quite shocking to those who have never seen it before."},
+	{"MOBBOB", "Bob", "Now we have to get to the Shadow Dungeon. That's where they probably took the Chief. But we must watch out for the strange monsters and lost souls around here!"},
+	{NULL, NULL, NULL}
+};
+
+DialogEntry dialDemStone[] = {
+	{"MOBTODD", "Todd", "Is this the demonic stone?"},
+	{"MOBBOB", "Bob", "Yes. Allow me to use my Spirit Key to access the Shadow Realm."},
+	{"MOBBOB", "Bob", "Are you ready for it?"},
+	{"MOBTODD", "Todd", NULL, NULL, 2, {
+		{"Yes, let's go!", dialDemStone_goto},
+		{"No, not yet.", &dialEmpty}
+	}},
 	{NULL, NULL, NULL}
 };

@@ -35,6 +35,7 @@
  */
 
 #include "Container.h"
+#include "Character.h"
 #include "GameState.h"
 #include "SpriteSheet.h"
 #include <sstream>
@@ -213,4 +214,42 @@ void Container::drawInfoPanel(int leftX, Item *item)
 		drawY += drawItemStatInfo(leftX, "DEF", stats.DEF, drawY);
 		drawY += drawItemStatInfo(leftX, "MDEF", stats.MDEF, drawY);
 	};
+};
+
+bool TryTakeAwayItem(int id, int count)
+{
+	int totalCount = 0;
+
+	int i;
+	for (i=0; i<4; i++)
+	{
+		string member = GetPartyMember(i);
+		if (member != "")
+		{
+			Character *chr = GetChar(member);
+			totalCount += chr->getInventory()->count(id);
+		};
+	};
+
+	if (totalCount < count)
+	{
+		return false;
+	};
+
+	// OK, they've got the item, it's all fine and dandy.
+	// now remove it.
+	for (i=0; i<4; i++)
+	{
+		string member = GetPartyMember(i);
+		if (member != "")
+		{
+			Container *inv = GetChar(member)->getInventory();
+			int toRemove = inv->count(id);
+			if (toRemove > count) toRemove = count;
+			count -= toRemove;
+			while (toRemove--) inv->decrItem(id);
+		};
+	};
+
+	return true;
 };

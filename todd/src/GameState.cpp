@@ -120,6 +120,18 @@ void NewGame()
 	charCaspar->setLevel(1);
 	charCaspar->getInventory()->set(0, stackBasicSword);
 
+	Character *charBob = GetChar("CHRBOB");
+	charBob->setHP(700, 700);
+	charBob->setMP(300, 300);
+	charBob->setXP(20, 1000);
+	charBob->setLevel(6);
+	ItemStack stackSpiritKey = {Item::SPIRIT_KEY, 1};
+	ItemStack stackSilverDagger = {Item::SILVER_DAGGER, 1};
+	ItemStack stackPotion = {Item::POTION, 10};
+	charBob->getInventory()->set(10, stackSpiritKey);
+	charBob->getInventory()->set(0, stackSilverDagger);
+	charBob->getInventory()->set(11, stackPotion);
+
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
 	state->x = 10;
 	state->y = 3;

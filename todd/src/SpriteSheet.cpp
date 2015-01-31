@@ -59,6 +59,9 @@ SpriteSheet *ssForestBackground;
 SpriteSheet *ssFlame;
 SpriteSheet *ssQuest;
 SpriteSheet *ssCoin;
+SpriteSheet *ssWaterDrop;
+SpriteSheet *ssPoison;
+SpriteSheet *ssStatus;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

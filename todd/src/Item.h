@@ -62,6 +62,10 @@ public:
 		CHAIN_ARMOR = 5,
 		MANA_FRUIT = 6,
 		GOBLIN_DUST = 7,
+		SPIRIT_KEY = 8,
+		SILVER_DAGGER = 9,
+		BOTTLE_OF_POISON = 10,
+		ANTIDOTE = 11,
 	};
 
 	/**

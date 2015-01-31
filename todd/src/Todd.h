@@ -38,6 +38,7 @@
 #define TODD_H
 
 #include <string>
+#include <random>
 #include "View.h"
 
 using namespace std;
@@ -58,6 +59,7 @@ extern bool toddQuit;
 extern bool showCursor;
 
 void DrawBar(int x, int y, int value, int max, int index);
+int RandomUniform(int min, int max);
 
 template<class T>
 void Swap(T &a, T &b)

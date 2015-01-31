@@ -43,6 +43,7 @@
 #include <vector>
 #include "CharStats.h"
 #include "Element.h"
+#include "StatusEffect.h"
 
 using namespace std;
 
@@ -136,6 +137,9 @@ private:
 	// Returns the background image for the specified scene, or NULL.
 	SpriteSheet *getBackground(int sceneID);
 
+	// Returns the status effect set for the specified entity.
+	StatusEffectSet getStatusEffectSet(int entity);
+
 public:
 	/**
 	 * \brief Set up a battle with the specified enemies.
@@ -201,6 +205,13 @@ public:
 	void restoreMana(int target, int mp);
 
 	/**
+	 * \brief Inflict a status effect on a target.
+	 * \param target The target (0-3 = allies, 4-7 = enemies).
+	 * \param effect The status effect, from the enum in StatusEffect.
+	 */
+	void inflictStatus(int target, int effect);
+
+	/**
 	 * \brief Get a random ally.
 	 * \param allowDead If true, dead allies may be returned (default = false).
 	 * \return The ally entity number (0-3), the same as the party index.
@@ -220,6 +231,8 @@ public:
 	{
 		SPARK,
 		FLAME,
+		SPLASH,
+		POISON_BUBBLE,
 	};
 
 	/**

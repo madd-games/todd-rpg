@@ -191,6 +191,9 @@ int main()
 	ssFlame = new SpriteSheet("flame.png", 16, 16);
 	ssQuest = new SpriteSheet("quest.png", 24, 24);
 	ssCoin = new SpriteSheet("coin.png", 24, 24);
+	ssWaterDrop = new SpriteSheet("waterdrop.png", 16, 16);
+	ssPoison = new SpriteSheet("poison.png", 16, 16);
+	ssStatus = new SpriteSheet("status.png", 16, 16);
 
 	InitMobs();
 	InitItems();
@@ -247,4 +250,12 @@ void DrawBar(int x, int y, int value, int max, int index)
 	ss << value << "/" << max;
 	Text text(ss.str(), 255, 255, 255);
 	text.draw(x+3, y+2);
+};
+
+int RandomUniform(int min, int max)
+{
+	random_device rd;
+	default_random_engine e1(rd());
+	uniform_int_distribution<int> mknum(min, max);
+	return mknum(e1);
 };

@@ -100,5 +100,8 @@ extern SpriteSheet *ssForestBackground;
 extern SpriteSheet *ssFlame;
 extern SpriteSheet *ssQuest;
 extern SpriteSheet *ssCoin;
+extern SpriteSheet *ssWaterDrop;
+extern SpriteSheet *ssPoison;
+extern SpriteSheet *ssStatus;
 
 #endif

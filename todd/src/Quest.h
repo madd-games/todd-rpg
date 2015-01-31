@@ -117,4 +117,5 @@ Quest *GetQuest(string id);
  * The array is terminated with a quest with an ID that is an empty string.
  */
 Quest *GetQuestList();
+
 #endif

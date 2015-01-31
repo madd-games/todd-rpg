@@ -367,6 +367,52 @@ void InteractWithMob(string name)
 	{
 		shopView.init("SHOPEASTVPS", "Eastville Potion Shop");
 		currentView = &shopView;
+	}
+	else if (name == "MOBBOB")
+	{
+		MobState *state = (MobState*) GetGameData(name, sizeof(MobState));
+		state->lock = 1;
+
+		PlotState *ps = GetPlotState();
+		if (ps->bobTalkCount == 0)
+		{
+			ps->bobTalkCount++;
+			sceneView.openDialog(dialBob_a, name);
+		}
+		else
+		{
+			if (TryTakeAwayItem(Item::GOBLIN_DUST, 10))
+			{
+				sceneView.openDialog(dialBob_b_yes, name);
+			}
+			else
+			{
+				sceneView.openDialog(dialBob_b_no, name);
+			};
+		};
+	}
+	else if (name == "MOBDEMSTONE1")
+	{
+		int i;
+		for (i=0; i<4; i++)
+		{
+			if (GetPartyMember(i) == "CHRBOB") break;
+		};
+
+		if (i == 4)
+		{
+			return;
+		};
+
+		Character *chr = GetChar("CHRBOB");
+		if (chr->getInventory()->count(Item::SPIRIT_KEY) == 0)
+		{
+			sceneView.openDialog(dialDemStoneWithoutKey);
+		}
+		else
+		{
+			sceneView.openDialog(dialDemStone);
+		};
 	};
 };
 

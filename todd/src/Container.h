@@ -118,4 +118,11 @@ public:
 	static void drawInfoPanel(int leftX, Item *item);
 };
 
+/**
+ * Try to get a specific amount of an item with the specified ID from the party.
+ * Returns true if there is enough of the item, and that amount is removed from the inventory.
+ * Otherwise, it returns false and no inventory is modified.
+ */
+bool TryTakeAwayItem(int id, int count);
+
 #endif

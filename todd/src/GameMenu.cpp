@@ -216,16 +216,14 @@ void GameMenu::handleEvent(SDL_Event *ev)
 						if (item->getType() == Item::EXPENDABLE)
 						{
 							Character *chr = GetChar(GetPartyMember(xsel));
-							chr->dealDirectDamage(item->getDamage());
-							int newMP = chr->getMP() + item->getManaRestore();
-							if (newMP > chr->getMaxMP()) newMP = chr->getMaxMP();
-							if (newMP < 0) newMP = 0;
-							chr->setMP(newMP);
 
-							handleStack.amount--;
-							if (handleStack.amount == 0) handleStack.id = 0;
-							if (handleStack.id == 0) showCursor = true;
-							else showCursor = false;
+							if (item->expend(chr))
+							{
+								handleStack.amount--;
+								if (handleStack.amount == 0) handleStack.id = 0;
+								if (handleStack.id == 0) showCursor = true;
+								else showCursor = false;
+							};
 						};
 					};
 				}

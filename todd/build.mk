@@ -4,11 +4,16 @@ DEP := $(CPP_FILES:.cpp=.d)
 OBJ := $(CPP_FILES:.cpp=.o) $(EXTRA_OBJ)
 CFLAGS := $(CFLAGS) -I $(SRCDIR)/skills -I $(SRCDIR)/se -I $(SRCDIR)/items -I $(SRCDIR)/atiles -I $(SRCDIR)/src -std=c++11
 
-.PHONY: install clean distclean
+.PHONY: all maps install clean distclean
+
+all: todd$(EXE) maps
 
 todd$(EXE): $(OBJ)
 	@echo ">Link into $@"
 	@$(CXX) $^ -o $@ $(LDFLAGS)
+
+maps:
+	@python $(SRCDIR)/mkscenes.py $(SRCDIR)
 
 -include $(DEP)
 

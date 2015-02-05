@@ -78,6 +78,7 @@ TileMapping tileMappings[] = {
 	{11, 0},			// Hidden door
 	{12, 29},			// Sand
 	{13, 30},			// Shadow sand (the sandy stuff in the shadow realm)
+	{14, 12},			// Water
 	// END
 	{0, 0}
 };

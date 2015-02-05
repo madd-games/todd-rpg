@@ -194,6 +194,8 @@ int main()
 	ssWaterDrop = new SpriteSheet("waterdrop.png", 16, 16);
 	ssPoison = new SpriteSheet("poison.png", 16, 16);
 	ssStatus = new SpriteSheet("status.png", 16, 16);
+	ssShadowWarrior = new SpriteSheet("shadow_warrior.png");
+	ssShadowRealmBackground = new SpriteSheet("shadow_realm.png", 960, 480);
 
 	InitMobs();
 	InitItems();
@@ -258,4 +260,9 @@ int RandomUniform(int min, int max)
 	default_random_engine e1(rd());
 	uniform_int_distribution<int> mknum(min, max);
 	return mknum(e1);
+};
+
+bool Probably(int chance)
+{
+	return RandomUniform(0, chance) < chance;
 };

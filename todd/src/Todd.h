@@ -60,6 +60,7 @@ extern bool showCursor;
 
 void DrawBar(int x, int y, int value, int max, int index);
 int RandomUniform(int min, int max);
+bool Probably(int chance);
 
 template<class T>
 void Swap(T &a, T &b)

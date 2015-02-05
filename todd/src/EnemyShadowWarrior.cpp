@@ -30,53 +30,82 @@
 */
 
 /**
- * RandomBattle.cpp
- * Handling random battles.
+ * EnemyShadowWarrior.cpp
  */
 
-#include "RandomBattle.h"
-#include "Scene.h"
-#include "EnemyGoblin.h"
 #include "EnemyShadowWarrior.h"
+#include "SpriteSheet.h"
+#include "Element.h"
+#include "Skill.h"
+#include "BattleView.h"
 #include <stdlib.h>
 #include <time.h>
+#include "Item.h"
+#include <random>
 #include "Todd.h"
 
-bool GetRandomBattle(int sceneID, RandomBattle &bat)
-{
-	int per = RandomUniform(0, 100);
-	(void)per;
+using namespace std;
 
-	if (sceneID == Scene::Forest)
+EnemyShadowWarrior::EnemyShadowWarrior()
+{
+	poisons = RandomUniform(1, 5);
+	poisonsUsed = 0;
+
+	spriteSheet = ssShadowWarrior;
+	level = 3;
+	name = "Shadow Warrior";
+
+	hp = maxhp = 350;
+	element = Element::DARKNESS;
+
+	memset(&stats, 0, sizeof(CharStats));
+	stats.STR = 10;
+	stats.DEF = 10;
+	stats.MDEF = 20;
+
+	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
+	resist[Element::EARTH] = 30;
+	resist[Element::AIR] = 30;
+	resist[Element::WATER] = 30;
+	resist[Element::FIRE] = 20;
+	resist[Element::DARKNESS] = 75;
+	resist[Element::LIGHT] = -100;
+};
+
+Skill *EnemyShadowWarrior::plan()
+{
+	int chanceOfPoison = 70 - (10 * poisonsUsed);
+	if (Probably(chanceOfPoison) && (poisons > 0))
 	{
-		if (per < 10)
-		{
-			bat.a = new EnemyGoblin;
-			bat.b = new EnemyGoblin;
-			bat.c = new EnemyGoblin;
-			bat.d = new EnemyGoblin;
-			return true;
-		}
-		else if (per < 20)
-		{
-			bat.a = new EnemyGoblin;
-			bat.b = new EnemyGoblin;
-			bat.c = new EnemyGoblin;
-			bat.d = NULL;
-			return true;
-		};
+		poisons--;
+		poisonsUsed++;
+		skillPoison->init(battleView.getRandomAlly());
+		return skillPoison;
 	}
-	else if (sceneID == Scene::ShadowRealm)
+	else
 	{
-		if (per < 20)
+		skillAttack->init(battleView.getRandomAlly());
+		return skillAttack;
+	};
+};
+
+void EnemyShadowWarrior::dropItems(vector<int> &drops)
+{
+	if (poisons > 2);
+	{
+		if (Probably(30))
 		{
-			bat.a = new EnemyShadowWarrior;
-			bat.b = new EnemyGoblin;
-			bat.c = new EnemyShadowWarrior;
-			bat.d = NULL;
-			return true;
+			drops.push_back(Item::BOTTLE_OF_POISON);
 		};
 	};
 
-	return false;
+	if (Probably(20))
+	{
+		drops.push_back(Item::ANTIDOTE);
+	};
+
+	if (Probably(5))
+	{
+		drops.push_back(Item::CHAIN_ARMOR);
+	};
 };

@@ -62,6 +62,8 @@ SpriteSheet *ssCoin;
 SpriteSheet *ssWaterDrop;
 SpriteSheet *ssPoison;
 SpriteSheet *ssStatus;
+SpriteSheet *ssShadowWarrior;
+SpriteSheet *ssShadowRealmBackground;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

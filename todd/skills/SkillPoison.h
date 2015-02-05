@@ -56,10 +56,6 @@ public:
 			battleView.emitParticle(target, 0, 0, BattleView::POISON_BUBBLE);
 			if (stage == 2)
 			{
-				battleView.attack(target, AttackType::PHYSICAL, Element::EARTH, 250);
-			};
-			if (stage == 25)
-			{
 				battleView.inflictStatus(target, StatusEffect::POISON);
 			};
 			time = Timer::Read();
@@ -68,7 +64,7 @@ public:
 
 	virtual bool isActive()
 	{
-		return stage < 30;
+		return stage < 100;
 	};
 
 	virtual bool isOffensive()

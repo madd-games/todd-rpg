@@ -43,6 +43,8 @@
 
 using namespace std;
 
+class Character;
+
 /**
  * Base class for all items.
  */
@@ -135,6 +137,12 @@ public:
 	 * screen.
 	 */
 	virtual int getManaRestore();
+
+	/**
+	 * Called when the item is being expended to a character. Return true if one instance of this item
+	 * is to be removed (i.e. somehing actually happened), false otherwise.
+	 */
+	virtual bool expend(Character *chr);
 };
 
 struct ItemStack

@@ -75,6 +75,20 @@ public:
 
 	virtual int getDamage()
 	{
-		return -100;
+		return 0;
+	};
+
+	virtual bool expend(Character *chr)
+	{
+		StatusEffectSet &ses = chr->getStatusEffectSet();
+		if (ses.test(StatusEffect::POISON))
+		{
+			ses.set(StatusEffect::POISON, false);
+			return true;
+		}
+		else
+		{
+			return false;
+		};
 	};
 };

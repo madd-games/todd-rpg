@@ -59,7 +59,7 @@ using namespace std;
 
 #define	WALK_SPEED			6
 #define	WALK_STEPS			8	// Steps per tile
-#define	STEP_TIME			65
+#define	STEP_TIME			45
 
 /**
  * Controls how long we wait before we move auto-mobs around.

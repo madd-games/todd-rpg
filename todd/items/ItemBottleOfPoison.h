@@ -60,7 +60,7 @@ public:
 
 	virtual string getDesc()
 	{
-		return "Deals 250 physical Earth damage, and inflicts POISON on the target.";
+		return "A mixture of poisonous herbs from a forest. Throwing this at an enemy inflicts the POISON status effect.";
 	};
 
 	virtual bool isStackable()

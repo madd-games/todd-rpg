@@ -39,6 +39,7 @@
 #include <map>
 #include <sstream>
 #include <iostream>
+#include "Character.h"
 
 // Include item classes here.
 #include "ItemPotion.h"
@@ -79,6 +80,18 @@ void Item::getStat(CharStats &stats)
 int Item::getManaRestore()
 {
 	return 0;
+};
+
+bool Item::expend(Character *chr)
+{
+	chr->dealDirectDamage(getDamage());
+							
+	int newMP = chr->getMP() + getManaRestore();
+	if (newMP > chr->getMaxMP()) newMP = chr->getMaxMP();
+	if (newMP < 0) newMP = 0;
+	chr->setMP(newMP);
+
+	return (getManaRestore() != 0) || (getDamage() != 0);
 };
 
 void RegisterItem(int id, Item *item)

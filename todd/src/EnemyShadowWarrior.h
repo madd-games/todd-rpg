@@ -30,53 +30,24 @@
 */
 
 /**
- * RandomBattle.cpp
- * Handling random battles.
+ * EnemyShadowWarrior.h
  */
 
-#include "RandomBattle.h"
-#include "Scene.h"
-#include "EnemyGoblin.h"
-#include "EnemyShadowWarrior.h"
-#include <stdlib.h>
-#include <time.h>
-#include "Todd.h"
+#ifndef ENEMY_SHADOW_WARRIOR_H
+#define ENEMY_SHADOW_WARRIOR_H
 
-bool GetRandomBattle(int sceneID, RandomBattle &bat)
+#include "Enemy.h"
+
+class EnemyShadowWarrior : public Enemy
 {
-	int per = RandomUniform(0, 100);
-	(void)per;
+private:
+	int poisons;
+	int poisonsUsed;
 
-	if (sceneID == Scene::Forest)
-	{
-		if (per < 10)
-		{
-			bat.a = new EnemyGoblin;
-			bat.b = new EnemyGoblin;
-			bat.c = new EnemyGoblin;
-			bat.d = new EnemyGoblin;
-			return true;
-		}
-		else if (per < 20)
-		{
-			bat.a = new EnemyGoblin;
-			bat.b = new EnemyGoblin;
-			bat.c = new EnemyGoblin;
-			bat.d = NULL;
-			return true;
-		};
-	}
-	else if (sceneID == Scene::ShadowRealm)
-	{
-		if (per < 20)
-		{
-			bat.a = new EnemyShadowWarrior;
-			bat.b = new EnemyGoblin;
-			bat.c = new EnemyShadowWarrior;
-			bat.d = NULL;
-			return true;
-		};
-	};
-
-	return false;
+public:
+	EnemyShadowWarrior();
+	virtual Skill *plan();
+	virtual void dropItems(vector<int> &drops);
 };
+
+#endif

@@ -910,6 +910,8 @@ SpriteSheet *BattleView::getBackground(int sceneID)
 	{
 	case Scene::Forest:
 		return ssForestBackground;
+	case Scene::ShadowRealm:
+		return ssShadowRealmBackground;
 	default:
 		return NULL;
 	};

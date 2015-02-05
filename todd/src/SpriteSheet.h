@@ -103,5 +103,7 @@ extern SpriteSheet *ssCoin;
 extern SpriteSheet *ssWaterDrop;
 extern SpriteSheet *ssPoison;
 extern SpriteSheet *ssStatus;
+extern SpriteSheet *ssShadowWarrior;
+extern SpriteSheet *ssShadowRealmBackground;
 
 #endif

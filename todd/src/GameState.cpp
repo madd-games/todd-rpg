@@ -205,6 +205,8 @@ void NewGame()
 	InitChest(Scene::Forest, 19, 4, Item::WOODEN_SHIELD, 1);
 	InitChest(Scene::Eastville_House1, 23, 1, Item::MANA_FRUIT, 5);
 	InitChest(Scene::Eastville_House1, 24, 1, Item::CHAIN_ARMOR, 1);
+	InitChest(Scene::ShadowRealm, 34, 14, Item::BOTTLE_OF_POISON, 5);
+	InitChest(Scene::ShadowRealm, 35, 14, Item::ANTIDOTE, 1);
 
 	// Doors
 	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);

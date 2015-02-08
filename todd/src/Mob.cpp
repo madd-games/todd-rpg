@@ -124,6 +124,7 @@ const char *mobNames[] = {
 	"MOBEASTVPS",
 	"MOBDEMSTONE1",
 	"MOBBOB",
+	"MOBSHPRIEST",
 	NULL
 };
 
@@ -155,6 +156,7 @@ void InitMobs()
 	mobSprites["MOBEASTVPS"] =		mobSprites["MOBMANFOREST1"];
 	mobSprites["MOBDEMSTONE1"] =		new SpriteSheet("demonic_stone.png");
 	mobSprites["MOBBOB"] =			new SpriteSheet("bob.png");
+	mobSprites["MOBSHPRIEST"] =		new SpriteSheet("shadow_priest.png");
 
 	// Names
 	mobRealNames["MOBTODD"] =		"Todd";
@@ -167,6 +169,7 @@ void InitMobs()
 	mobRealNames["MOBEASTVPS"] = 		"Eastville Potion Shop Keeper";
 	mobRealNames["MOBDEMSTONE1"] = 		"Demonic Stone";
 	mobRealNames["MOBBOB"] = 		"Bob";
+	mobRealNames["MOBSHPRIEST"] =		"Shadow Priest";
 
 	// Elements
 	mobElements["MOBTODD"] =		Element::LIGHT;
@@ -179,6 +182,7 @@ void InitMobs()
 	mobElements["MOBEASTVPS"] =		Element::AIR;
 	mobElements["MOBDEMSTONE1"] =		Element::DARKNESS;
 	mobElements["MOBBOB"] =			Element::WATER;
+	mobElements["MOBSHPRIEST"] =		Element::DARKNESS;
 };
 
 void UpdateMobs()
@@ -413,6 +417,10 @@ void InteractWithMob(string name)
 		{
 			sceneView.openDialog(dialDemStone);
 		};
+	}
+	else if (name == "MOBSHPRIEST")
+	{
+		sceneView.openDialog(dialShadowPriest);
 	};
 };
 

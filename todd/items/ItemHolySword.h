@@ -30,70 +30,52 @@
 */
 
 /**
- * SkillSplash.h
+ * ItemHolySword.h
  */
 
-class SkillSplash : public Skill
+#include "Item.h"
+#include "Element.h"
+
+class ItemHolySword : public Item
 {
-private:
-	int target;
-	unsigned int time;
-	int stage;
-
 public:
-	virtual void init(int target)
+	ItemHolySword(int id) : Item(id)
 	{
-		this->target = target;
-		time = Timer::Read();
-		stage = 0;
 	};
 
-	virtual void act()
+	virtual int getCost()
 	{
-		if ((Timer::Read()-time) >= 10)
-		{
-			stage++;
-			if (stage == 2)
-			{
-				int count = 50;
-				while (count--) battleView.emitParticle(target, 0, 0, BattleView::SPLASH);
-				int damage = RandomUniform(40, 60) + RandomUniform(5, 10) * battleView.getLevel(battleView.getTurn());
-				battleView.attack(target, AttackType::MAGIC, Element::WATER, damage);
-			};
-			time = Timer::Read();
-		};
-	};
-
-	virtual bool isActive()
-	{
-		return stage < 100;
-	};
-
-	virtual bool isOffensive()
-	{
-		return true;
+		return 1200;
 	};
 
 	virtual int getElement()
 	{
-		return Element::WATER;
+		return Element::LIGHT;
 	};
 
 	virtual string getName()
 	{
-		return "Splash";
+		return "Holy Sword";
 	};
 
 	virtual string getDesc()
 	{
-		return "Deals water damage to the target.";
+		return "A blessed sword with a physical force of 8, and a magical power of 5. A healing spell is inscribed on it, to be used by a healer.";
 	};
 
-	virtual int getManaUse()
+	virtual bool isStackable()
 	{
-		return 10;
+		return false;
+	};
+
+	virtual int getType()
+	{
+		return Item::WEAPON;
+	};
+
+	virtual void getStat(CharStats &stats)
+	{
+		stats.STR = 8;
+		stats.INT = 5;
 	};
 };
-
-SkillSplash skillSplashVal;
-Skill *skillSplash = &skillSplashVal;

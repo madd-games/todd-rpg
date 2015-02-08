@@ -48,6 +48,7 @@
 #include "ActiveTile.h"
 #include "SceneView.h"
 #include "Shops.h"
+#include <iostream>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -200,6 +201,12 @@ void NewGame()
 	state->y = 12;
 	state->sceneID = Scene::Eastville;
 
+	// Shadow Priest (Shadow Realm)
+	state = (MobState*) GetGameData("MOBSHPRIEST", sizeof(MobState));
+	state->x = 96;
+	state->y = 16;
+	state->sceneID = Scene::ShadowRealm;
+
 	// Chests
 	InitChest(Scene::Forest, 18, 2, Item::POTION, 5);
 	InitChest(Scene::Forest, 19, 4, Item::WOODEN_SHIELD, 1);
@@ -207,6 +214,9 @@ void NewGame()
 	InitChest(Scene::Eastville_House1, 24, 1, Item::CHAIN_ARMOR, 1);
 	InitChest(Scene::ShadowRealm, 34, 14, Item::BOTTLE_OF_POISON, 5);
 	InitChest(Scene::ShadowRealm, 35, 14, Item::ANTIDOTE, 1);
+	InitChest(Scene::ShadowRealm, 66, 6, Item::POTION, 1);
+	InitChest(Scene::ShadowRealm, 86, 15, Item::ANTIDOTE, 5);
+	InitChest(Scene::ShadowRealm, 87, 15, Item::HOLY_SWORD, 1);
 
 	// Doors
 	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);
@@ -350,5 +360,23 @@ void *GetGameData(string name, size_t size)
 			gameState[name] = seg;
 		};
 		return seg.ptr;
+	};
+};
+
+void RemoveGameData(string name)
+{
+	if (gameState.count(name) != 0)
+	{
+		free(gameState[name].ptr);
+		gameState.erase(name);
+	};
+};
+
+void PrintGameData()
+{
+	map<string, GameStateSegment>::iterator it;
+	for (it=gameState.begin(); it!=gameState.end(); ++it)
+	{
+		cout << it->first << endl;
 	};
 };

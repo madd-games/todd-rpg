@@ -68,6 +68,8 @@ public:
 		SILVER_DAGGER = 9,
 		BOTTLE_OF_POISON = 10,
 		ANTIDOTE = 11,
+		HOLY_SWORD = 12,
+		STEEL_DAGGER = 13,
 	};
 
 	/**

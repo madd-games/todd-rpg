@@ -103,9 +103,4 @@ void EnemyShadowWarrior::dropItems(vector<int> &drops)
 	{
 		drops.push_back(Item::ANTIDOTE);
 	};
-
-	if (Probably(5))
-	{
-		drops.push_back(Item::CHAIN_ARMOR);
-	};
 };

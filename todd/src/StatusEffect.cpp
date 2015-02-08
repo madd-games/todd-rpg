@@ -83,6 +83,11 @@ void StatusEffectSet::set(int effect, bool state)
 	};
 };
 
+void StatusEffectSet::clear()
+{
+	bitset = 0;
+};
+
 void StatusEffectSet::onTurn(int entity)
 {
 	int i;

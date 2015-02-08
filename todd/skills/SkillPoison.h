@@ -53,7 +53,7 @@ public:
 		if ((Timer::Read()-time) >= 10)
 		{
 			stage++;
-			battleView.emitParticle(target, 0, 0, BattleView::POISON_BUBBLE);
+			if (stage < 25) battleView.emitParticle(target, 0, 0, BattleView::POISON_BUBBLE);
 			if (stage == 2)
 			{
 				battleView.inflictStatus(target, StatusEffect::POISON);

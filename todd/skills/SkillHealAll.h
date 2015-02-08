@@ -30,10 +30,23 @@
 */
 
 /**
- * SkillSplash.h
+ * SkillHealAll.h
  */
 
-class SkillSplash : public Skill
+int HealAllPartOff[10][2] = {
+	{12, 12},	
+	{15, 13},
+	{14, 16},
+	{20, 13},
+	{15, 17},
+	{18, 19},
+	{24, 24},
+	{29, 28},
+	{23, 24},
+	{24, 23}
+};
+
+class SkillHealAll : public Skill
 {
 private:
 	int target;
@@ -43,22 +56,46 @@ private:
 public:
 	virtual void init(int target)
 	{
-		this->target = target;
+		if (target < 4)
+		{
+			this->target = 0;
+		}
+		else
+		{
+			this->target = 4;
+		};
 		time = Timer::Read();
 		stage = 0;
 	};
 
 	virtual void act()
 	{
-		if ((Timer::Read()-time) >= 10)
+		if ((Timer::Read()-time) >= 50)
 		{
 			stage++;
 			if (stage == 2)
 			{
-				int count = 50;
-				while (count--) battleView.emitParticle(target, 0, 0, BattleView::SPLASH);
-				int damage = RandomUniform(40, 60) + RandomUniform(5, 10) * battleView.getLevel(battleView.getTurn());
-				battleView.attack(target, AttackType::MAGIC, Element::WATER, damage);
+				int heal = 25 + (3 * battleView.getLevel(battleView.getTurn()));
+				int i;
+				for (i=0; i<4; i++)
+				{
+					if (battleView.canMove(target+i))
+					{
+						battleView.attack(target+i, AttackType::MAGIC, Element::LIGHT, -heal);
+					};
+				};
+			};
+			if (stage < 10)
+			{
+				int i;
+				for (i=0; i<4; i++)
+				{
+					if (battleView.canMove(target+i))
+					{
+						battleView.emitParticle(target+i, HealAllPartOff[stage][0],
+							HealAllPartOff[stage][1], BattleView::SPARK);
+					};
+				};
 			};
 			time = Timer::Read();
 		};
@@ -66,34 +103,46 @@ public:
 
 	virtual bool isActive()
 	{
-		return stage < 100;
+		return stage < 20;
 	};
 
 	virtual bool isOffensive()
 	{
-		return true;
+		return false;
 	};
 
 	virtual int getElement()
 	{
-		return Element::WATER;
+		return Element::LIGHT;
 	};
 
 	virtual string getName()
 	{
-		return "Splash";
+		return "Heal All";
 	};
 
 	virtual string getDesc()
 	{
-		return "Deals water damage to the target.";
+		return "Restores some HP of all allies.";
 	};
 
 	virtual int getManaUse()
 	{
-		return 10;
+		return 20;
+	};
+
+	virtual bool isMultiTarget()
+	{
+		return true;
+	};
+
+	virtual void configLearning(string &countVar, int &countToLearn, int &itemID)
+	{
+		countVar = "SKLHEALALL";
+		countToLearn = 10;
+		itemID = Item::HOLY_SWORD;
 	};
 };
 
-SkillSplash skillSplashVal;
-Skill *skillSplash = &skillSplashVal;
+SkillHealAll skillHealAllVal;
+Skill *skillHealAll = &skillHealAllVal;

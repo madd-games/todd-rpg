@@ -53,6 +53,8 @@
 #include "ItemSilverDagger.h"
 #include "ItemBottleOfPoison.h"
 #include "ItemAntidote.h"
+#include "ItemHolySword.h"
+#include "ItemSteelDagger.h"
 
 using namespace std;
 
@@ -125,4 +127,6 @@ void InitItems()
 	new ItemSilverDagger(Item::SILVER_DAGGER);
 	new ItemBottleOfPoison(Item::BOTTLE_OF_POISON);
 	new ItemAntidote(Item::ANTIDOTE);
+	new ItemHolySword(Item::HOLY_SWORD);
+	new ItemSteelDagger(Item::STEEL_DAGGER);
 };

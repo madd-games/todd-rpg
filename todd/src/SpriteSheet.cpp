@@ -64,6 +64,7 @@ SpriteSheet *ssPoison;
 SpriteSheet *ssStatus;
 SpriteSheet *ssShadowWarrior;
 SpriteSheet *ssShadowRealmBackground;
+SpriteSheet *ssBattleTurn;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

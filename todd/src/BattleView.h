@@ -125,7 +125,6 @@ private:
 
 	Skill *skillSel;
 
-	bool canMove(int entity);
 	void schedTurn();
 	bool canFlee;
 	unsigned long victoryTimer;
@@ -141,6 +140,8 @@ private:
 	StatusEffectSet getStatusEffectSet(int entity);
 
 public:
+	bool canMove(int entity);
+
 	/**
 	 * \brief Set up a battle with the specified enemies.
 	 *
@@ -210,6 +211,21 @@ public:
 	 * \param effect The status effect, from the enum in StatusEffect.
 	 */
 	void inflictStatus(int target, int effect);
+
+	/**
+	 * \brief Remove a status effect from a target.
+	 * \param target The target (0-3 = allies, 4-7 = enemies).
+	 * \param effect The status effect, from the enum in StatusEffect.
+	 */
+	void removeStatus(int target, int effect);
+
+	/**
+	 * \brief Check if an entity has the specified status effect.
+	 * \param entity The entity (0-3 = allies, 4-7 = enemies).
+	 * \param effect The status effect to probe, from the enum in StatusEffect.
+	 * \return true if this entity has the specified status effect.
+	 */
+	bool hasStatusEffect(int entity, int effect);
 
 	/**
 	 * \brief Get a random ally.

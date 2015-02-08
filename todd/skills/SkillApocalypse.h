@@ -30,10 +30,10 @@
 */
 
 /**
- * SkillSplash.h
+ * SkillApocalypse.h
  */
 
-class SkillSplash : public Skill
+class SkillApocalypse : public Skill
 {
 private:
 	int target;
@@ -43,7 +43,15 @@ private:
 public:
 	virtual void init(int target)
 	{
-		this->target = target;
+		if (target < 4)
+		{
+			this->target = 0;
+		}
+		else
+		{
+			this->target = 4;
+		};
+
 		time = Timer::Read();
 		stage = 0;
 	};
@@ -55,10 +63,15 @@ public:
 			stage++;
 			if (stage == 2)
 			{
-				int count = 50;
-				while (count--) battleView.emitParticle(target, 0, 0, BattleView::SPLASH);
-				int damage = RandomUniform(40, 60) + RandomUniform(5, 10) * battleView.getLevel(battleView.getTurn());
-				battleView.attack(target, AttackType::MAGIC, Element::WATER, damage);
+				int i, damage;
+				for (i=target; i<(target+4); i++)
+				{
+					if (battleView.canMove(i))
+					{
+						damage = RandomUniform(80, 100) + RandomUniform(4, 6) * battleView.getLevel(battleView.getTurn());
+						battleView.attack(i, AttackType::MAGIC, Element::DARKNESS, damage);
+					};
+				};
 			};
 			time = Timer::Read();
 		};
@@ -76,24 +89,24 @@ public:
 
 	virtual int getElement()
 	{
-		return Element::WATER;
+		return Element::DARKNESS;
 	};
 
 	virtual string getName()
 	{
-		return "Splash";
+		return "Apocalypse";
 	};
 
 	virtual string getDesc()
 	{
-		return "Deals water damage to the target.";
+		return "Strikes all enemies, dealing powerful DARKNESS damage.";
 	};
 
 	virtual int getManaUse()
 	{
-		return 10;
+		return 20;
 	};
 };
 
-SkillSplash skillSplashVal;
-Skill *skillSplash = &skillSplashVal;
+SkillApocalypse skillApocalypseVal;
+Skill *skillApocalypse = &skillApocalypseVal;

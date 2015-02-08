@@ -39,12 +39,19 @@
 
 #include "Element.h"
 #include <string>
+#include <math.h>
 
 using namespace std;
 
+class Character;
+
 class Skill
 {
-public:
+private:
+	bool isUseable(Character *chr);
+	void onUse();
+
+public:	
 	/**
  	 * \brief Returns true if this skill can be used against dead people.
 	 *
@@ -98,6 +105,22 @@ public:
 	 * Default = false
 	 */
 	virtual bool isMultiTarget();
+
+	/**
+	 * \brief Configure the learning of this skill.
+	 *
+	 * The arguments to this function are references to variables which will be used to decide whether
+	 * this skill was learnt. Set "countToLearn" to 0 if this skill is to be learnt immediately (this is
+	 * also the default).
+	 *
+	 * \param countVar Name of the game state variable which indicates how many times this skill was used.
+	 *                 Should start with "SKL".
+	 * \param countToLearn How many times this skill must be used to be learnt permanently.
+	 * \param itemID The item, which when equipped, allows the skill to be used before it is learnt.
+	 */
+	virtual void configLearning(string &countVar, int &countToLearn, int &itemID);
+	
+	friend class BattleView;
 };
 
 extern Skill *skillAttack;
@@ -107,5 +130,9 @@ extern Skill *skillFireSlash;
 extern Skill *skillManaFruit;
 extern Skill *skillSplash;
 extern Skill *skillPoison;
+extern Skill *skillAntidote;
+extern Skill *skillApocalypse;
+extern Skill *skillHealAll;
+extern Skill *skillBurn;
 
 #endif

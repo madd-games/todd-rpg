@@ -20,10 +20,12 @@ tileToSprite = {
 	8:	11,
 	9:	11,
 	10:	13,
-	11:	0,
+	11:	33,
 	12:	29,
 	13:	30,
 	14:	12,
+	15:	31,
+	16:	32,
 }
 
 spriteToTile = {}
@@ -50,6 +52,8 @@ allowedNames = ("bg", "hard", "overlay")
 nextFreeSymbol = 33
 tileSymbols = {}
 escape = "#."
+objects = []
+
 def getTileSymbol(tileID):
 	global nextFreeSymbol
 	if not tileSymbols.has_key(tileID):
@@ -93,9 +97,24 @@ def parseLayer(layer):
 		outdata = outdata[1:]
 	layers[name] = outdata
 
+def praseObjects(objectgroup):
+	for child in objectgroup:
+		if child.tag == "object":
+			kind = child.attrib["type"]
+			x = int(child.attrib["x"])/48
+			y = int(child.attrib["y"])/48
+			props = {}
+			for prop in child[0]:
+				props[prop.attrib["name"]] = prop.attrib["value"]
+
+			if kind == "Warp":
+				objects.append(".warp %d,%d:%s" % (x, y, props.get("target", "0")))
+
 for child in root:
 	if child.tag == "layer":
 		parseLayer(child)
+	elif child.tag == "objectgroup":
+		praseObjects(child)
 
 if len(layers) != 3:
 	print "Not all layers present! (bg, hard, overlay)"
@@ -106,6 +125,9 @@ f = open(sys.argv[2], "wb")
 for key, value in tileSymbols.items():
 	f.write(".tile %s%d\n" % (value, key))
 f.write("\n")
+
+f.write("\n".join(objects))
+f.write("\n\n")
 
 for key, value in layers.items():
 	#print "Writing layer %s..." % key

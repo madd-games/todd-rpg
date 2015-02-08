@@ -30,10 +30,23 @@
 */
 
 /**
- * SkillSplash.h
+ * SkillAntidote.h
  */
 
-class SkillSplash : public Skill
+int AntidotePartOff[10][2] = {
+	{12, 12},	
+	{15, 13},
+	{14, 16},
+	{20, 13},
+	{15, 17},
+	{18, 19},
+	{24, 24},
+	{29, 28},
+	{23, 24},
+	{24, 23}
+};
+
+class SkillAntidote : public Skill
 {
 private:
 	int target;
@@ -50,15 +63,16 @@ public:
 
 	virtual void act()
 	{
-		if ((Timer::Read()-time) >= 10)
+		if ((Timer::Read()-time) >= 50)
 		{
 			stage++;
 			if (stage == 2)
 			{
-				int count = 50;
-				while (count--) battleView.emitParticle(target, 0, 0, BattleView::SPLASH);
-				int damage = RandomUniform(40, 60) + RandomUniform(5, 10) * battleView.getLevel(battleView.getTurn());
-				battleView.attack(target, AttackType::MAGIC, Element::WATER, damage);
+				battleView.removeStatus(target, StatusEffect::POISON);
+			};
+			if (stage < 10)
+			{
+				battleView.emitParticle(target, AntidotePartOff[stage][0], AntidotePartOff[stage][1], BattleView::SPARK);
 			};
 			time = Timer::Read();
 		};
@@ -66,34 +80,34 @@ public:
 
 	virtual bool isActive()
 	{
-		return stage < 100;
+		return stage < 20;
 	};
 
 	virtual bool isOffensive()
 	{
-		return true;
+		return false;
 	};
 
 	virtual int getElement()
 	{
-		return Element::WATER;
+		return Element::LIGHT;
 	};
 
 	virtual string getName()
 	{
-		return "Splash";
+		return "Antidote";
 	};
 
 	virtual string getDesc()
 	{
-		return "Deals water damage to the target.";
+		return "Restores the target's HP using LIGHT-elemental Antidoteing.";
 	};
 
 	virtual int getManaUse()
 	{
-		return 10;
+		return 6;
 	};
 };
 
-SkillSplash skillSplashVal;
-Skill *skillSplash = &skillSplashVal;
+SkillAntidote skillAntidoteVal;
+Skill *skillAntidote = &skillAntidoteVal;

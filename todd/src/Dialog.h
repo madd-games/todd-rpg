@@ -134,5 +134,6 @@ extern DialogEntry dialBob_b_no[];
 extern DialogEntry dialBob_b_yes[];
 extern DialogEntry dialDemStoneWithoutKey[];
 extern DialogEntry dialDemStone[];
+extern DialogEntry dialShadowPriest[];
 
 #endif

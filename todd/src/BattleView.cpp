@@ -50,22 +50,25 @@
 #include <time.h>
 #include "Options.h"
 #include "PlotState.h"
+#include "GameState.h"
 
 using namespace std;
 
 BattleView battleView;
 
-#define	NUM_EXPENDABLE_ITEMS		3
+#define	NUM_EXPENDABLE_ITEMS		4
 int expendableItems[NUM_EXPENDABLE_ITEMS] = {
 	Item::POTION,
 	Item::MANA_FRUIT,
-	Item::BOTTLE_OF_POISON
+	Item::BOTTLE_OF_POISON,
+	Item::ANTIDOTE
 };
 
 Skill *itemSkills[NUM_EXPENDABLE_ITEMS] = {
 	skillPotion,
 	skillManaFruit,
-	skillPoison
+	skillPoison,
+	skillAntidote
 };
 
 void BattleView::init(Enemy *a, Enemy *b, Enemy *c, Enemy *d)
@@ -364,6 +367,7 @@ void BattleView::handleEvent(SDL_Event *ev)
 				if (mana < 0) mana = 0;
 				chr->setMP(mana);
 
+				skillSel->onUse();
 				skillSel->init(targetSel);
 				mode = Mode::SKILL;
 			};
@@ -393,6 +397,10 @@ void BattleView::handleEvent(SDL_Event *ev)
 				skillSel = skillset->skills[skillSelIndex];
 				Character *chr = GetChar(GetPartyMember(turn));
 				if (chr->getMP() < skillSel->getManaUse())
+				{
+					return;
+				};
+				if (!skillSel->isUseable(chr))
 				{
 					return;
 				};
@@ -586,6 +594,15 @@ void BattleView::render()
 		};
 	};
 
+	if (turn < 4)
+	{
+		ssBattleTurn->draw(348, 100 + 50 * turn, 0, false);
+	}
+	else
+	{
+		ssBattleTurn->draw(500, 100 + 50 * (turn-4), 0, false);
+	};
+
 	if (mode == Mode::MENU)
 	{
 		ssBattleMenu->draw(700, 154, 0, false);
@@ -675,20 +692,41 @@ void BattleView::render()
 			};
 
 			Skill *skill = skillset->skills[i];
-			ssElements->draw(686, plotY, skill->getElement(), false);
-			Text text(skill->getName(), red, green, blue, 255);
-			text.draw(710, plotY+2);
-
-			if (i == skillSelIndex)
+			if (skill->isUseable(GetChar(GetPartyMember(turn))))
 			{
-				Text desc(skill->getDesc(), 255, 255, 255, 255, fntText, 295);
-				desc.draw(362, 2);
-			};
+				ssElements->draw(686, plotY, skill->getElement(), false);
+				Text text(skill->getName(), red, green, blue, 255);
+				text.draw(710, plotY+2);
 
-			stringstream ss;
-			ss << skillset->skills[i]->getManaUse();
-			Text txtMana(ss.str(), red, green, blue, 255);
-			txtMana.draw(958, plotY+2, Text::RIGHT);
+				if (i == skillSelIndex)
+				{
+					stringstream ss;
+					string countVar;
+					int countToLearn, countSoFar, itemID;
+					skill->configLearning(countVar, countToLearn, itemID);
+					countSoFar = *((int*)GetGameData(countVar, sizeof(int)));
+
+					if (countSoFar >= countToLearn)
+					{
+						ss << "LEARNT";
+					}
+					else
+					{
+						ss << countSoFar << "/" << countToLearn << " TO LEARN";
+					};
+
+					Text learningText(ss.str(), 255, 255, 255, 255, fntText);
+					learningText.draw(362, 2);
+
+					Text desc(skill->getDesc(), 255, 255, 255, 255, fntText, 295);
+					desc.draw(362, 18);
+				};
+
+				stringstream ss;
+				ss << skillset->skills[i]->getManaUse();
+				Text txtMana(ss.str(), red, green, blue, 255);
+				txtMana.draw(958, plotY+2, Text::RIGHT);
+			};
 
 			plotY += 24;
 		};
@@ -1152,6 +1190,63 @@ void BattleView::inflictStatus(int target, int effect)
 	dmgDisplays.push_back(disp);
 };
 
+void BattleView::removeStatus(int target, int effect)
+{
+	if (target < 4)
+	{
+		string name = GetPartyMember(target);
+		if (name == "") return;
+
+		Character *chr = GetChar(name);
+		chr->getStatusEffectSet().set(effect, false);
+	}
+	else
+	{
+		Enemy *enemy = enemies[target-4];
+		if (enemy == NULL) return;
+		enemy->ses.set(effect, true);
+	};
+	StatusEffect *se = GetStatusEffect(effect);
+
+	DamageDisplay disp;
+	disp.element = se->getElement();
+	disp.value = string("--") + se->getName() + "--";
+	disp.red = 0;
+	disp.green = 255;
+	disp.blue = 0;
+	disp.start = Timer::Read();
+	if (target < 4)
+	{
+		disp.x = 396;
+		disp.y = 100+50*target;
+	}
+	else
+	{
+		disp.x = 548;
+		disp.y = 100+50*(target-4);
+	};
+
+	dmgDisplays.push_back(disp);
+};
+
+bool BattleView::hasStatusEffect(int entity, int effect)
+{
+	if (entity < 4)
+	{
+		string name = GetPartyMember(entity);
+		if (name == "") return false;
+
+		Character *chr = GetChar(name);
+		return chr->getStatusEffectSet().test(effect);
+	}
+	else
+	{
+		Enemy *enemy = enemies[entity-4];
+		if (enemy == NULL) return false;
+		return enemy->ses.test(effect);
+	};
+};
+
 int BattleView::getRandomAlly(bool allowDead)
 {
 	vector<int> chooseable;
@@ -1227,8 +1322,8 @@ void BattleView::emitParticle(int entity, int offX, int offY, int type)
 		part.ss = ssPoison;
 		part.timeStage = 250;
 		part.numStages = 5;
-		part.x += RandomUniform(0, 48);
-		part.y += RandomUniform(30, 60);
+		part.x += RandomUniform(-8, 48);
+		part.y += RandomUniform(20, 40);
 		part.vy = (float)RandomUniform(-4, -1) / 100.0;
 		break;
 	};

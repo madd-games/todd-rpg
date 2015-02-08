@@ -79,6 +79,8 @@ TileMapping tileMappings[] = {
 	{12, 29},			// Sand
 	{13, 30},			// Shadow sand (the sandy stuff in the shadow realm)
 	{14, 12},			// Water
+	{15, 31},			// Shadow temple bricks
+	{16, 32},			// Shadow temple door
 	// END
 	{0, 0}
 };

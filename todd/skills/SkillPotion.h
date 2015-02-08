@@ -85,7 +85,7 @@ public:
 
 	virtual bool isActive()
 	{
-		return stage < 10;
+		return stage < 20;
 	};
 
 	virtual bool isOffensive()

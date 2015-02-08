@@ -74,5 +74,7 @@ void SaveGame(int slot, string name);
  * \return A pointer to the game state segment buffer.
  */
 void *GetGameData(string name, size_t size);
+void RemoveGameData(string name);
+void PrintGameData();
 
 #endif

@@ -112,6 +112,11 @@ public:
 	void set(int effect, bool state);
 
 	/**
+	 * \brief Clear all status effects, positive and negative.
+	 */
+	void clear();
+
+	/**
 	 * \brief Apply all status effects to the entity.
 	 */
 	void onTurn(int entity);

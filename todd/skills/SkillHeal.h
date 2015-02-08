@@ -68,8 +68,7 @@ public:
 			stage++;
 			if (stage == 2)
 			{
-				CharStats stats = battleView.getStats(battleView.getTurn());
-				int heal = 4 * (10 + stats.INT + battleView.getLevel(battleView.getTurn()));
+				int heal = 100 + (10 * battleView.getLevel(battleView.getTurn()));
 				battleView.attack(target, AttackType::MAGIC, Element::LIGHT, -heal);
 			};
 			if (stage < 10)
@@ -82,7 +81,7 @@ public:
 
 	virtual bool isActive()
 	{
-		return stage < 10;
+		return stage < 20;
 	};
 
 	virtual bool isOffensive()

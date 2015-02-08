@@ -44,6 +44,8 @@
 #include "BattleView.h"
 #include "EnemyGoblin.h"
 #include "EnemyBandit.h"
+#include "EnemyShadowWarrior.h"
+#include "EnemyShadowPriest.h"
 #include "SaveView.h"
 #include "Character.h"
 #include "Options.h"
@@ -212,6 +214,7 @@ void CrystalHeal()
 			Character *chr = GetChar(name);
 			chr->setHP(chr->getMaxHP());
 			chr->setMP(chr->getMaxMP());
+			chr->getStatusEffectSet().clear();
 		};
 	};
 };
@@ -416,5 +419,24 @@ DialogEntry dialDemStone[] = {
 		{"Yes, let's go!", dialDemStone_goto},
 		{"No, not yet.", &dialEmpty}
 	}},
+	{NULL, NULL, NULL}
+};
+
+// SHADOW PRIEST
+void ShadowPriestBattle()
+{
+	MobState *state = (MobState*) GetGameData("MOBSHPRIEST", sizeof(MobState));
+	state->sceneID = -1;
+
+	StartBattle(new EnemyShadowPriest, new EnemyShadowWarrior, new EnemyShadowWarrior, new EnemyShadowWarrior);
+	battleView.setFlee(false);
+};
+
+DialogEntry dialShadowPriest[] = {
+	{"MOBSHPRIEST", "???", "Who are you?! How dare you try to enter the Shadow Temple?!"},
+	{"MOBCASPAR", "Caspar", "We have come to look for the Chief of Eastville, who we believe may be in this temple."},
+	{"MOBSHPRIEST", "???", "Ah... the prisoner. The one who wanted to tell the secret..."},
+	{"MOBTODD", "Todd", "What secret? And why did you take him as a prisoner? And who are you?!"},
+	{"MOBSHPRIEST", "Shadow Priest", "I am the Shadow Priest. Your Chief tried exposing our secret. Now that you know about it, you have to die.", ShadowPriestBattle},
 	{NULL, NULL, NULL}
 };

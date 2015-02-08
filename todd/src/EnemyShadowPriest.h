@@ -30,70 +30,23 @@
 */
 
 /**
- * SkillSplash.h
+ * EnemyShadowPriest.h
  */
 
-class SkillSplash : public Skill
+#ifndef ENEMY_SHADOW_PRIEST_H
+#define ENEMY_SHADOW_PRIEST_H
+
+#include "Enemy.h"
+
+class EnemyShadowPriest : public Enemy
 {
 private:
-	int target;
-	unsigned int time;
-	int stage;
+	int getAllyWithNoPoison();
 
 public:
-	virtual void init(int target)
-	{
-		this->target = target;
-		time = Timer::Read();
-		stage = 0;
-	};
-
-	virtual void act()
-	{
-		if ((Timer::Read()-time) >= 10)
-		{
-			stage++;
-			if (stage == 2)
-			{
-				int count = 50;
-				while (count--) battleView.emitParticle(target, 0, 0, BattleView::SPLASH);
-				int damage = RandomUniform(40, 60) + RandomUniform(5, 10) * battleView.getLevel(battleView.getTurn());
-				battleView.attack(target, AttackType::MAGIC, Element::WATER, damage);
-			};
-			time = Timer::Read();
-		};
-	};
-
-	virtual bool isActive()
-	{
-		return stage < 100;
-	};
-
-	virtual bool isOffensive()
-	{
-		return true;
-	};
-
-	virtual int getElement()
-	{
-		return Element::WATER;
-	};
-
-	virtual string getName()
-	{
-		return "Splash";
-	};
-
-	virtual string getDesc()
-	{
-		return "Deals water damage to the target.";
-	};
-
-	virtual int getManaUse()
-	{
-		return 10;
-	};
+	EnemyShadowPriest();
+	virtual Skill *plan();
+	virtual void dropItems(vector<int> &drops);
 };
 
-SkillSplash skillSplashVal;
-Skill *skillSplash = &skillSplashVal;
+#endif

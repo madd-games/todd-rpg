@@ -53,6 +53,7 @@ void InitSkillsets()
 	skillsetTodd.name = "Healing Magic";
 	skillsetTodd.skills.clear();
 	skillsetTodd.skills.push_back(skillHeal);
+	skillsetTodd.skills.push_back(skillHealAll);
 
 	// Caspar
 	skillsets["CHRCASPAR"] = &skillsetCaspar;
@@ -62,9 +63,10 @@ void InitSkillsets()
 
 	// Bob
 	skillsets["CHRBOB"] = &skillsetBob;
-	skillsetBob.name = "Water Magic";
+	skillsetBob.name = "Elements";
 	skillsetBob.skills.clear();
 	skillsetBob.skills.push_back(skillSplash);
+	skillsetBob.skills.push_back(skillBurn);
 };
 
 Skillset *GetSkillset(string charName)

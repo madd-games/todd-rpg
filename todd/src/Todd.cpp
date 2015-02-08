@@ -135,8 +135,42 @@ string GetResourcePath(string name)
 
 bool toddQuit = false;
 bool showCursor = true;
-int main()
+int main(int argc, char *argv[])
 {
+#ifdef TODD_DEBUG
+	if (argc > 1)
+	{
+		LoadGame(1);
+
+		string opt = argv[1];
+		if (opt == "list")
+		{
+			PrintGameData();
+		}
+		else if (opt == "remove")
+		{
+			if (argc != 3)
+			{
+				cerr << argv[0] << " remove <game-state-segment-name>" << endl;
+				return 1;
+			};
+
+			string name = argv[2];
+			RemoveGameData(name);
+			SaveGame(1, "DEBUG SAVE");
+			cout << "Removed" << endl;
+			return 0;
+		}
+		else
+		{
+			cerr << "unknown command" << endl;
+			return 1;
+		};
+
+		return 0;
+	};
+#endif
+
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
 		GameAbort(string("SDL_Init() failed: ") + SDL_GetError());
@@ -196,6 +230,7 @@ int main()
 	ssStatus = new SpriteSheet("status.png", 16, 16);
 	ssShadowWarrior = new SpriteSheet("shadow_warrior.png");
 	ssShadowRealmBackground = new SpriteSheet("shadow_realm.png", 960, 480);
+	ssBattleTurn = new SpriteSheet("battle_turn.png");
 
 	InitMobs();
 	InitItems();

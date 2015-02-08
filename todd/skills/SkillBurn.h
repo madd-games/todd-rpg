@@ -30,10 +30,10 @@
 */
 
 /**
- * SkillSplash.h
+ * SkillBurn.h
  */
 
-class SkillSplash : public Skill
+class SkillBurn : public Skill
 {
 private:
 	int target;
@@ -55,12 +55,13 @@ public:
 			stage++;
 			if (stage == 2)
 			{
-				int count = 50;
-				while (count--) battleView.emitParticle(target, 0, 0, BattleView::SPLASH);
 				int damage = RandomUniform(40, 60) + RandomUniform(5, 10) * battleView.getLevel(battleView.getTurn());
-				battleView.attack(target, AttackType::MAGIC, Element::WATER, damage);
+				battleView.attack(target, AttackType::MAGIC, Element::FIRE, damage);
 			};
 			time = Timer::Read();
+
+			int putX = RandomUniform(0, 48);
+			battleView.emitParticle(target, putX, 48, BattleView::FLAME);
 		};
 	};
 
@@ -76,24 +77,31 @@ public:
 
 	virtual int getElement()
 	{
-		return Element::WATER;
+		return Element::FIRE;
 	};
 
 	virtual string getName()
 	{
-		return "Splash";
+		return "Burn";
 	};
 
 	virtual string getDesc()
 	{
-		return "Deals water damage to the target.";
+		return "Deals fire damage to the target, with 20% chance of inflicting BURN.";
 	};
 
 	virtual int getManaUse()
 	{
 		return 10;
 	};
+
+	virtual void configLearning(string &countVar, int &countToLearn, int &itemID)
+	{
+		countVar = "SKLBURN";
+		countToLearn = 10;
+		itemID = Item::STEEL_DAGGER;
+	};
 };
 
-SkillSplash skillSplashVal;
-Skill *skillSplash = &skillSplashVal;
+SkillBurn skillBurnVal;
+Skill *skillBurn = &skillBurnVal;

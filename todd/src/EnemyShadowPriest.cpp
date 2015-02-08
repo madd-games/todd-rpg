@@ -30,96 +30,100 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * EnemyShadowPriest.cpp
  */
 
+#include "EnemyShadowPriest.h"
+#include "SpriteSheet.h"
+#include "Element.h"
 #include "Skill.h"
 #include "BattleView.h"
-#include "Timer.h"
+#include <stdlib.h>
+#include <time.h>
 #include "Item.h"
-#include "Character.h"
+#include <random>
+#include "Mob.h"
 #include "Todd.h"
-#include "StatusEffect.h"
-#include "GameState.h"
 
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-#include "SkillSplash.h"
-#include "SkillPoison.h"
-#include "SkillAntidote.h"
-#include "SkillApocalypse.h"
-#include "SkillHealAll.h"
-#include "SkillBurn.h"
+using namespace std;
 
-bool Skill::isUsableAgainstDead()
+EnemyShadowPriest::EnemyShadowPriest()
 {
-	return false;
+	spriteSheet = GetMobInfo("MOBSHPRIEST").mobSprite;
+	level = 15;
+	name = "Shadow Priest";
+
+	hp = maxhp = 1200;
+	element = Element::DARKNESS;
+
+	memset(&stats, 0, sizeof(CharStats));
+	stats.STR = 15;
+	stats.DEF = 20;
+	stats.MDEF = 5;
+	stats.INT = 10;
+
+	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
+	resist[Element::EARTH] = 30;
+	resist[Element::AIR] = 30;
+	resist[Element::WATER] = 30;
+	resist[Element::FIRE] = -20;
+	resist[Element::DARKNESS] = 200;
+	resist[Element::LIGHT] = -100;
 };
 
-void Skill::onUse()
+int EnemyShadowPriest::getAllyWithNoPoison()
 {
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-	(*((int*)GetGameData(var, sizeof(int))))++;	// "C/C++ is a simple language"
-};
-
-bool Skill::isUseable(Character *chr)
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-
-	if (countToLearn == 0)
-	{
-		return true;
-	};
-
-	int soFar = *((int*)GetGameData(var, sizeof(int)));
-	if (soFar >= countToLearn)
-	{
-		return true;
-	};
-
 	int i;
-	for (i=0; i<10; i++)
+	for (i=0; i<4; i++)
 	{
-		if (chr->getInventory()->get(i).id == itemID)
+		if (battleView.canMove(i))
 		{
-			return true;
+			if (!battleView.hasStatusEffect(i, StatusEffect::POISON))
+			{
+				return i;
+			};
 		};
 	};
 
-	return false;
+	return -1;
 };
 
-void Skill::init(int target)
+Skill *EnemyShadowPriest::plan()
 {
-	(void)target;
+	if (hp < 650)
+	{
+		if (Probably(50))
+		{
+			skillApocalypse->init(0);
+			return skillApocalypse;
+		}
+		else
+		{
+			skillFireSlash->init(battleView.getRandomAlly());
+			return skillFireSlash;
+		};
+	}
+	else
+	{
+		int allyWithNoPoison = getAllyWithNoPoison();
+		if (Probably(70) || (allyWithNoPoison == -1))
+		{
+			skillFireSlash->init(battleView.getRandomAlly());
+			return skillFireSlash;
+		}
+		else
+		{
+			skillPoison->init(allyWithNoPoison);
+			return skillFireSlash;
+		};
+	};
 };
 
-string Skill::getDesc()
+void EnemyShadowPriest::dropItems(vector<int> &drops)
 {
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
-};
-
-void Skill::configLearning(string &countVar, int &countToLearn, int &itemID)
-{
-	countVar = "SKLNULL";
-	countToLearn = 0;
+	drops.push_back(Item::STEEL_DAGGER);
+	if (Probably(10))
+	{
+		drops.push_back(Item::CHAIN_ARMOR);
+	};
 };

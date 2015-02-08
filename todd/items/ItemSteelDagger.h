@@ -30,70 +30,52 @@
 */
 
 /**
- * SkillSplash.h
+ * ItemSteelDagger.h
  */
 
-class SkillSplash : public Skill
+#include "Item.h"
+#include "Element.h"
+
+class ItemSteelDagger : public Item
 {
-private:
-	int target;
-	unsigned int time;
-	int stage;
-
 public:
-	virtual void init(int target)
+	ItemSteelDagger(int id) : Item(id)
 	{
-		this->target = target;
-		time = Timer::Read();
-		stage = 0;
 	};
 
-	virtual void act()
+	virtual int getCost()
 	{
-		if ((Timer::Read()-time) >= 10)
-		{
-			stage++;
-			if (stage == 2)
-			{
-				int count = 50;
-				while (count--) battleView.emitParticle(target, 0, 0, BattleView::SPLASH);
-				int damage = RandomUniform(40, 60) + RandomUniform(5, 10) * battleView.getLevel(battleView.getTurn());
-				battleView.attack(target, AttackType::MAGIC, Element::WATER, damage);
-			};
-			time = Timer::Read();
-		};
-	};
-
-	virtual bool isActive()
-	{
-		return stage < 100;
-	};
-
-	virtual bool isOffensive()
-	{
-		return true;
+		return 60;
 	};
 
 	virtual int getElement()
 	{
-		return Element::WATER;
+		return Element::FIRE;
 	};
 
 	virtual string getName()
 	{
-		return "Splash";
+		return "Steel Dagger";
 	};
 
 	virtual string getDesc()
 	{
-		return "Deals water damage to the target.";
+		return "A dagger made of steel, forged at high temperature. A magic spell is inscribed on it.";
 	};
 
-	virtual int getManaUse()
+	virtual bool isStackable()
 	{
-		return 10;
+		return false;
+	};
+
+	virtual int getType()
+	{
+		return Item::WEAPON;
+	};
+
+	virtual void getStat(CharStats &stats)
+	{
+		stats.STR = 4;
+		stats.INT = 2;
 	};
 };
-
-SkillSplash skillSplashVal;
-Skill *skillSplash = &skillSplashVal;

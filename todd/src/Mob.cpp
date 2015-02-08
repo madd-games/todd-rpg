@@ -115,7 +115,6 @@ map<string, int> mobElements;
 map<string, string> mobRealNames;
 const char *mobNames[] = {
 	"MOBTODD",
-	"MOBFEMINIST",
 	"MOBCASPAR",
 	"MOBMANFOREST1",
 	"MOBMANFOREST2",
@@ -147,7 +146,6 @@ void InitMobs()
 
 	// Sprites
 	mobSprites["MOBTODD"] =			new SpriteSheet("todd.png");
-	mobSprites["MOBFEMINIST"] =		new SpriteSheet("feminist.png");
 	mobSprites["MOBCASPAR"] =		new SpriteSheet("caspar.png");
 	mobSprites["MOBMANFOREST1"] =		new SpriteSheet("man.png");
 	mobSprites["MOBMANFOREST2"] =		mobSprites["MOBMANFOREST1"];
@@ -160,7 +158,6 @@ void InitMobs()
 
 	// Names
 	mobRealNames["MOBTODD"] =		"Todd";
-	mobRealNames["MOBFEMINIST"] =		"Feminist";
 	mobRealNames["MOBCASPAR"] =		"Caspar";
 	mobRealNames["MOBMANFOREST1"] =		"Man";
 	mobRealNames["MOBMANFOREST2"] =		"Man";
@@ -173,7 +170,6 @@ void InitMobs()
 
 	// Elements
 	mobElements["MOBTODD"] =		Element::LIGHT;
-	mobElements["MOBFEMINIST"] =		Element::FIRE;
 	mobElements["MOBCASPAR"] =		Element::FIRE;
 	mobElements["MOBMANFOREST1"] =		Element::AIR;
 	mobElements["MOBMANFOREST2"] =		Element::WATER;

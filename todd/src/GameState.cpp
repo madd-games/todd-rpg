@@ -225,6 +225,8 @@ void NewGame()
 	InitDoor(Scene::Eastville, 16, 9, Scene::Eastville_PotionShop, 11, 6, Mob::UP);
 	InitDoor(Scene::Eastville_House1, 11, 7, Scene::Eastville, 8, 10, Mob::DOWN);
 	InitDoor(Scene::Eastville_PotionShop, 11, 7, Scene::Eastville, 16, 10, Mob::DOWN);
+	InitDoor(Scene::ShadowRealm, 96, 15, Scene::ShadowTemple, 5, 3, Mob::DOWN);
+	InitDoor(Scene::ShadowTemple, 5, 2, Scene::ShadowRealm, 96, 16, Mob::DOWN);
 
 	// Shops
 	InitShop("SHOPEASTVPS", shopEastvillePotion);

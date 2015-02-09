@@ -59,6 +59,7 @@ void Scene::LoadScenes()
 	scenes[Eastville_House1] = new Scene("eastville_h1.scn");
 	scenes[Eastville_PotionShop] = new Scene("eastville_ps.scn");
 	scenes[ShadowRealm] = new Scene("shadow_realm.scn");
+	scenes[ShadowTemple] = new Scene("shadow_temple.scn");
 };
 
 Scene* Scene::GetSceneByID(int id)

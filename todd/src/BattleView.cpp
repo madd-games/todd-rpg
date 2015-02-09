@@ -646,17 +646,32 @@ void BattleView::render()
 	}
 	else if (mode == Mode::TARGET)
 	{
-		if (targetSel < 4)
+		if (skillSel->isMultiTarget())
 		{
 			int x = 340;
+			if (targetSel >= 4) x = 492;
 			if ((Timer::Read() % 1000) < 500) x += 2;
-			ssCursor->draw(x, 112+50*targetSel, 0, false);
+
+			int i;
+			for (i=0; i<4; i++)
+			{
+				ssCursor->draw(x, 112+50*i, 0, false);
+			};
 		}
 		else
 		{
-			int x = 492;
-			if ((Timer::Read() % 1000) < 500) x += 2;
-			ssCursor->draw(x, 112+50*(targetSel-4), 0, false);
+			if (targetSel < 4)
+			{
+				int x = 340;
+				if ((Timer::Read() % 1000) < 500) x += 2;
+				ssCursor->draw(x, 112+50*targetSel, 0, false);
+			}
+			else
+			{
+				int x = 492;
+				if ((Timer::Read() % 1000) < 500) x += 2;
+				ssCursor->draw(x, 112+50*(targetSel-4), 0, false);
+			};
 		};
 	}
 	else if (mode == Mode::SKILL)
@@ -908,6 +923,13 @@ void BattleView::schedTurn()
 
 	StatusEffectSet ses = getStatusEffectSet(turn);
 	ses.onTurn(turn);
+
+	// in case they got killed by poison or something
+	if (!canMove(turn))
+	{
+		schedTurn();
+		return;
+	};
 
 	if (turn < 4)
 	{

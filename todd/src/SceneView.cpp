@@ -81,6 +81,7 @@ TileMapping tileMappings[] = {
 	{14, 12},			// Water
 	{15, 31},			// Shadow temple bricks
 	{16, 32},			// Shadow temple door
+	{17, 34},			// Shadow temple floor
 	// END
 	{0, 0}
 };

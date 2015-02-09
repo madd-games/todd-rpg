@@ -26,6 +26,7 @@ tileToSprite = {
 	14:	12,
 	15:	31,
 	16:	32,
+	17:	34
 }
 
 spriteToTile = {}

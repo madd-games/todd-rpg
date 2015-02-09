@@ -62,6 +62,7 @@ public:
 		Eastville_House1 = 5,
 		Eastville_PotionShop = 6,
 		ShadowRealm = 7,
+		ShadowTemple = 8,
 	};
 
 	static void LoadScenes();

@@ -30,98 +30,56 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * EnemyVampire.cpp
  */
 
+#include "EnemyVampire.h"
+#include "SpriteSheet.h"
+#include "Element.h"
 #include "Skill.h"
 #include "BattleView.h"
-#include "Timer.h"
+#include <stdlib.h>
+#include <time.h>
 #include "Item.h"
-#include "Character.h"
+#include <random>
 #include "Todd.h"
-#include "StatusEffect.h"
-#include "GameState.h"
 
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-#include "SkillSplash.h"
-#include "SkillPoison.h"
-#include "SkillAntidote.h"
-#include "SkillApocalypse.h"
-#include "SkillHealAll.h"
-#include "SkillBurn.h"
-#include "SkillSuckBlood.h"
-#include "SkillShield.h"
+using namespace std;
 
-bool Skill::isUsableAgainstDead()
+EnemyVampire::EnemyVampire()
 {
-	return false;
+	spriteSheet = ssVampire;
+	level = 7;
+	name = "Vampire";
+
+	hp = maxhp = 120;
+	element = Element::DARKNESS;
+
+	memset(&stats, 0, sizeof(CharStats));
+	stats.STR = 0;
+	stats.DEF = 3;
+
+	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
+	resist[Element::DARKNESS] = 100;
+	resist[Element::LIGHT] = -100;
+	resist[Element::FIRE] = -50;
 };
 
-void Skill::onUse()
+Skill *EnemyVampire::plan()
 {
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-	(*((int*)GetGameData(var, sizeof(int))))++;	// "C/C++ is a simple language"
-};
-
-bool Skill::isUseable(Character *chr)
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-
-	if (countToLearn == 0)
+	if (Probably(40))
 	{
-		return true;
-	};
-
-	int soFar = *((int*)GetGameData(var, sizeof(int)));
-	if (soFar >= countToLearn)
+		skillAttack->init(battleView.getRandomAlly());
+		return skillAttack;
+	}
+	else
 	{
-		return true;
+		skillSuckBlood->init(battleView.getRandomAlly());
+		return skillSuckBlood;
 	};
-
-	int i;
-	for (i=0; i<10; i++)
-	{
-		if (chr->getInventory()->get(i).id == itemID)
-		{
-			return true;
-		};
-	};
-
-	return false;
 };
 
-void Skill::init(int target)
+void EnemyVampire::dropItems(vector<int> &drops)
 {
-	(void)target;
-};
-
-string Skill::getDesc()
-{
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
-};
-
-void Skill::configLearning(string &countVar, int &countToLearn, int &itemID)
-{
-	countVar = "SKLNULL";
-	countToLearn = 0;
+	// TODO
 };

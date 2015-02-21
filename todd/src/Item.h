@@ -70,6 +70,8 @@ public:
 		ANTIDOTE = 11,
 		HOLY_SWORD = 12,
 		STEEL_DAGGER = 13,
+		SHADOW_ARMOR = 14,
+		SHADOW_SHIELD = 15,
 	};
 
 	/**
@@ -142,7 +144,7 @@ public:
 
 	/**
 	 * Called when the item is being expended to a character. Return true if one instance of this item
-	 * is to be removed (i.e. somehing actually happened), false otherwise.
+	 * is to be removed (i.e. something actually happened), false otherwise.
 	 */
 	virtual bool expend(Character *chr);
 };

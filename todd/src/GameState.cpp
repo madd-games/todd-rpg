@@ -217,6 +217,9 @@ void NewGame()
 	InitChest(Scene::ShadowRealm, 66, 6, Item::POTION, 1);
 	InitChest(Scene::ShadowRealm, 86, 15, Item::ANTIDOTE, 5);
 	InitChest(Scene::ShadowRealm, 87, 15, Item::HOLY_SWORD, 1);
+	InitChest(Scene::ShadowTemple, 9, 4, Item::SHADOW_ARMOR, 1);
+	InitChest(Scene::ShadowTemple, 27, 3, Item::POTION, 5);
+	InitChest(Scene::ShadowTemple, 50, 15, Item::SHADOW_SHIELD, 1);
 
 	// Doors
 	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);

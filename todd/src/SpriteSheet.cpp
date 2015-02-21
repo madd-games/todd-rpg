@@ -65,6 +65,9 @@ SpriteSheet *ssStatus;
 SpriteSheet *ssShadowWarrior;
 SpriteSheet *ssShadowRealmBackground;
 SpriteSheet *ssBattleTurn;
+SpriteSheet *ssShadowTempleBackground;
+SpriteSheet *ssVampire;
+SpriteSheet *ssBlood;
 
 SpriteSheet::SpriteSheet(string name, int width, int height) : sprWidth(width), sprHeight(height)
 {

@@ -106,5 +106,8 @@ extern SpriteSheet *ssStatus;
 extern SpriteSheet *ssShadowWarrior;
 extern SpriteSheet *ssShadowRealmBackground;
 extern SpriteSheet *ssBattleTurn;
+extern SpriteSheet *ssShadowTempleBackground;
+extern SpriteSheet *ssVampire;
+extern SpriteSheet *ssBlood;
 
 #endif

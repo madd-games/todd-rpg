@@ -51,7 +51,10 @@ public:
 	enum
 	{
 		POISON = 0,
-		REGEN = 1,
+		BURN = 1,
+
+		REGEN = 16,
+		SHIELD = 17,
 
 		COUNT
 	};
@@ -80,6 +83,27 @@ public:
 	 * Default: do nothing.
 	 */
 	virtual void onTurn(int entity);
+
+	/**
+	 * \brief Called when a character with this status effect performs an attack.
+	 *
+	 * The arguments are references to data internally handled by BattleView::attack().
+	 * You can modify the values to affect the outcome. 'damage' already has resistances
+	 * etc. calculated.
+	 *
+	 * Default: do nothing.
+	 */
+	virtual void onDealDamage(int me, int &target, int &type, int &element, int &damage);
+
+	/**
+	 * \brief Called when a character with this status effet receives damage.
+	 *
+	 * Similarly to onDealDamage(), you can modify the data about this attack. onDealDamage()
+	 * was called before this function if the attacker had any status effects.
+	 *
+	 * Default: do nothing.
+	 */
+	virtual void onReceiveDamage(int attacker, int &target, int &type, int &element, int &damage);
 };
 
 /**
@@ -115,6 +139,11 @@ public:
 	 * \brief Clear all status effects, positive and negative.
 	 */
 	void clear();
+
+	/**
+	 * \brief Clear all positive status effects.
+	 */
+	void clearPositive();
 
 	/**
 	 * \brief Apply all status effects to the entity.

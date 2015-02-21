@@ -55,6 +55,8 @@
 #include "ItemAntidote.h"
 #include "ItemHolySword.h"
 #include "ItemSteelDagger.h"
+#include "ItemShadowArmor.h"
+#include "ItemShadowShield.h"
 
 using namespace std;
 
@@ -129,4 +131,6 @@ void InitItems()
 	new ItemAntidote(Item::ANTIDOTE);
 	new ItemHolySword(Item::HOLY_SWORD);
 	new ItemSteelDagger(Item::STEEL_DAGGER);
+	new ItemShadowArmor(Item::SHADOW_ARMOR);
+	new ItemShadowShield(Item::SHADOW_SHIELD);
 };

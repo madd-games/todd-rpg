@@ -57,6 +57,11 @@ public:
 			{
 				int damage = RandomUniform(40, 60) + RandomUniform(5, 10) * battleView.getLevel(battleView.getTurn());
 				battleView.attack(target, AttackType::MAGIC, Element::FIRE, damage);
+
+				if (Probably(20))
+				{
+					battleView.inflictStatus(target, StatusEffect::BURN);
+				};
 			};
 			time = Timer::Read();
 

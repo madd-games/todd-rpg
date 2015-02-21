@@ -30,98 +30,32 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * SEBurn.h
+ * The 'Burn' status effect.
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
-#include "Item.h"
-#include "Character.h"
-#include "Todd.h"
-#include "StatusEffect.h"
-#include "GameState.h"
-
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-#include "SkillSplash.h"
-#include "SkillPoison.h"
-#include "SkillAntidote.h"
-#include "SkillApocalypse.h"
-#include "SkillHealAll.h"
-#include "SkillBurn.h"
-#include "SkillSuckBlood.h"
-#include "SkillShield.h"
-
-bool Skill::isUsableAgainstDead()
+class SEBurn : public StatusEffect
 {
-	return false;
-};
-
-void Skill::onUse()
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-	(*((int*)GetGameData(var, sizeof(int))))++;	// "C/C++ is a simple language"
-};
-
-bool Skill::isUseable(Character *chr)
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-
-	if (countToLearn == 0)
+public:
+	virtual int getElement()
 	{
-		return true;
+		return Element::FIRE;
 	};
 
-	int soFar = *((int*)GetGameData(var, sizeof(int)));
-	if (soFar >= countToLearn)
+	virtual string getName()
 	{
-		return true;
+		return "Burn";
 	};
 
-	int i;
-	for (i=0; i<10; i++)
+	virtual bool isPositive()
 	{
-		if (chr->getInventory()->get(i).id == itemID)
-		{
-			return true;
-		};
+		return false;
 	};
 
-	return false;
-};
-
-void Skill::init(int target)
-{
-	(void)target;
-};
-
-string Skill::getDesc()
-{
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
-};
-
-void Skill::configLearning(string &countVar, int &countToLearn, int &itemID)
-{
-	countVar = "SKLNULL";
-	countToLearn = 0;
+	virtual void onTurn(int entity)
+	{
+		int hp, maxhp;
+		battleView.getHP(entity, hp, maxhp);
+		battleView.attack(entity, AttackType::PHYSICAL, Element::FIRE, maxhp * 0.15);
+	};
 };

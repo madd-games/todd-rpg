@@ -54,6 +54,7 @@ void InitSkillsets()
 	skillsetTodd.skills.clear();
 	skillsetTodd.skills.push_back(skillHeal);
 	skillsetTodd.skills.push_back(skillHealAll);
+	skillsetTodd.skills.push_back(skillShield);
 
 	// Caspar
 	skillsets["CHRCASPAR"] = &skillsetCaspar;

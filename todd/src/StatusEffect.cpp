@@ -41,6 +41,9 @@
 
 // Include status effect classes here.
 #include "SEPoison.h"
+#include "SEBurn.h"
+#include "SERegen.h"
+#include "SEShield.h"
 
 StatusEffect::~StatusEffect()
 {
@@ -49,6 +52,14 @@ StatusEffect::~StatusEffect()
 void StatusEffect::onTurn(int index)
 {
 	(void)index;
+};
+
+void StatusEffect::onDealDamage(int me, int &target, int &type, int &element, int &damage)
+{
+};
+
+void StatusEffect::onReceiveDamage(int attacker, int &target, int &type, int &element, int &damage)
+{
 };
 
 StatusEffectSet::StatusEffectSet() : bitset(0)
@@ -88,6 +99,22 @@ void StatusEffectSet::clear()
 	bitset = 0;
 };
 
+void StatusEffectSet::clearPositive()
+{
+	int i;
+	for (i=0; i<StatusEffect::COUNT; i++)
+	{
+		StatusEffect *se = GetStatusEffect(i);
+		if (se != NULL)
+		{
+			if (se->isPositive())
+			{
+				set(i, false);
+			};
+		};
+	};
+};
+
 void StatusEffectSet::onTurn(int entity)
 {
 	int i;
@@ -101,7 +128,10 @@ void StatusEffectSet::onTurn(int entity)
 	};
 };
 
-SEPoison sePoison;
+SEPoison	sePoison;
+SEBurn		seBurn;
+SERegen		seRegen;
+SEShield	seShield;
 
 StatusEffect *GetStatusEffect(int effect)
 {
@@ -109,6 +139,12 @@ StatusEffect *GetStatusEffect(int effect)
 	{
 	case StatusEffect::POISON:
 		return &sePoison;
+	case StatusEffect::BURN:
+		return &seBurn;
+	case StatusEffect::REGEN:
+		return &seRegen;
+	case StatusEffect::SHIELD:
+		return &seShield;
 	default:
 		return NULL;
 	};
@@ -121,7 +157,9 @@ void renderStatusEffectSet(int x, int y, StatusEffectSet ses)
 	{
 		if (ses.test(i))
 		{
-			ssStatus->draw(x+16*i, y, i, false);
+			int gridY = i / 16;
+			int gridX = i % 16;
+			ssStatus->draw(x+16*gridX, y+16*gridY, i, false);
 		};
 	};
 };

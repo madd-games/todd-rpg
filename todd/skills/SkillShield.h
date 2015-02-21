@@ -30,98 +30,74 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * SkillShield.h
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
-#include "Item.h"
-#include "Character.h"
-#include "Todd.h"
-#include "StatusEffect.h"
-#include "GameState.h"
-
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-#include "SkillSplash.h"
-#include "SkillPoison.h"
-#include "SkillAntidote.h"
-#include "SkillApocalypse.h"
-#include "SkillHealAll.h"
-#include "SkillBurn.h"
-#include "SkillSuckBlood.h"
-#include "SkillShield.h"
-
-bool Skill::isUsableAgainstDead()
+class SkillShield : public Skill
 {
-	return false;
-};
+private:
+	int target;
+	unsigned int time;
+	int stage;
 
-void Skill::onUse()
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-	(*((int*)GetGameData(var, sizeof(int))))++;	// "C/C++ is a simple language"
-};
-
-bool Skill::isUseable(Character *chr)
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-
-	if (countToLearn == 0)
+public:
+	virtual void init(int target)
 	{
-		return true;
+		this->target = target;
+		time = Timer::Read();
+		stage = 0;
 	};
 
-	int soFar = *((int*)GetGameData(var, sizeof(int)));
-	if (soFar >= countToLearn)
+	virtual void act()
 	{
-		return true;
-	};
-
-	int i;
-	for (i=0; i<10; i++)
-	{
-		if (chr->getInventory()->get(i).id == itemID)
+		if ((Timer::Read()-time) >= 50)
 		{
-			return true;
+			stage++;
+			if (stage == 2)
+			{
+				battleView.inflictStatus(target, StatusEffect::SHIELD);
+			};
+			time = Timer::Read();
 		};
 	};
 
-	return false;
+	virtual bool isActive()
+	{
+		return stage < 20;
+	};
+
+	virtual bool isOffensive()
+	{
+		return false;
+	};
+
+	virtual int getElement()
+	{
+		return Element::NEUTRAL;
+	};
+
+	virtual string getName()
+	{
+		return "Shield";
+	};
+
+	virtual string getDesc()
+	{
+		return "Inflicts the SHIELD status effect, causing 50% resistance to all physical attacks.";
+	};
+
+	virtual int getManaUse()
+	{
+		return 20;
+	};
+
+	virtual void configLearning(string &countVar, int &countToLearn, int &itemID)
+	{
+		countVar = "SKLSHIELD";
+		countToLearn = 12;
+		itemID = Item::SHADOW_SHIELD;
+	};
 };
 
-void Skill::init(int target)
-{
-	(void)target;
-};
-
-string Skill::getDesc()
-{
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
-};
-
-void Skill::configLearning(string &countVar, int &countToLearn, int &itemID)
-{
-	countVar = "SKLNULL";
-	countToLearn = 0;
-};
+SkillShield skillShieldVal;
+Skill *skillShield = &skillShieldVal;

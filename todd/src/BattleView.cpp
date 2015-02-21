@@ -521,6 +521,18 @@ void BattleView::render()
 	{
 		mode = Mode::VICTORY;
 		victoryTimer = Timer::Read();
+
+		int i;
+		for (i=0; i<4; i++)
+		{
+			string name = GetPartyMember(i);
+			if (name != "")
+			{
+				Character *chr = GetChar(name);
+				if (chr->getHP() == 0) chr->setHP(1);
+				chr->getStatusEffectSet().clearPositive();
+			};
+		};
 	};
 
 	// Render the background
@@ -854,8 +866,29 @@ void BattleView::render()
 		};
 
 		ssElements->draw(x, y, it->element, false);
-		Text text(it->value, it->red, it->green, it->blue, 255);
+		string val = it->value;
+		bool cross = false;
+		if (val[0] == '/')
+		{
+			val = val.substr(1);
+			cross = true;
+		};
+		Text text(val, it->red, it->green, it->blue, 255);
 		text.draw(x+24, y);
+
+		if (cross)
+		{
+			SDL_SetRenderDrawColor(sdlRender, 255, 0, 0, 255);
+			int rep = 3;
+			int plotY = y + 12 - 2;
+			int endX = x + 24 + text.getWidth();
+			while (rep--)
+			{
+				SDL_RenderDrawLine(sdlRender, x, plotY, endX, plotY);
+				plotY++;
+			};
+			SDL_SetRenderDrawColor(sdlRender, 255, 255, 255, 255);
+		};
 
 		if (offset >= 48)
 		{
@@ -972,6 +1005,8 @@ SpriteSheet *BattleView::getBackground(int sceneID)
 		return ssForestBackground;
 	case Scene::ShadowRealm:
 		return ssShadowRealmBackground;
+	case Scene::ShadowTemple:
+		return ssShadowTempleBackground;
 	default:
 		return NULL;
 	};
@@ -1059,7 +1094,7 @@ int BattleView::getTurn()
 	return turn;
 };
 
-void BattleView::attack(int target, int type, int element, int damage)
+int BattleView::attack(int target, int type, int element, int damage)
 {
 	CharStats ustats = getStats(turn);
 	CharStats tstats = getStats(target);
@@ -1078,6 +1113,26 @@ void BattleView::attack(int target, int type, int element, int damage)
 
 	damage -= (damage * resist[element] / 100);
 
+	int i;
+	StatusEffectSet uses = getStatusEffectSet(turn);
+	StatusEffectSet tses = getStatusEffectSet(target);
+	for (i=0; i<StatusEffect::COUNT; i++)
+	{
+		StatusEffect *se = GetStatusEffect(i);
+		if (se != NULL)
+		{
+			if (uses.test(i))
+			{
+				se->onDealDamage(turn, target, type, element, damage);
+			};
+
+			if (tses.test(i))
+			{
+				se->onReceiveDamage(turn, target, type, element, damage);
+			};
+		};
+	};
+
 	if (target < 4)
 	{
 		Character *chr = GetChar(GetPartyMember(target));
@@ -1087,7 +1142,11 @@ void BattleView::attack(int target, int type, int element, int damage)
 	{
 		Enemy *enemy = enemies[target-4];
 		enemy->hp -= damage;
-		if (enemy->hp < 0) enemy->hp = 0;
+		if (enemy->hp <= 0)
+		{
+			enemy->hp = 0;
+			enemy->ses.clear();
+		};
 		if (enemy->hp > enemy->maxhp) enemy->hp = enemy->maxhp;
 	};
 
@@ -1139,6 +1198,8 @@ void BattleView::attack(int target, int type, int element, int damage)
 		disp.y = 100+50*(target-4);
 	};
 	dmgDisplays.push_back(disp);
+
+	return damage;
 };
 
 void BattleView::restoreMana(int target, int mp)
@@ -1232,7 +1293,7 @@ void BattleView::removeStatus(int target, int effect)
 
 	DamageDisplay disp;
 	disp.element = se->getElement();
-	disp.value = string("--") + se->getName() + "--";
+	disp.value = string("/") + se->getName();
 	disp.red = 0;
 	disp.green = 255;
 	disp.blue = 0;
@@ -1287,7 +1348,7 @@ int BattleView::getRandomAlly(bool allowDead)
 	};
 
 	srand(time(NULL));
-	return chooseable[rand() % chooseable.size()];
+	return chooseable[RandomUniform(0, chooseable.size()-1)];
 };
 
 void BattleView::setFlee(bool flee)
@@ -1337,6 +1398,8 @@ void BattleView::emitParticle(int entity, int offX, int offY, int type)
 		part.ss = ssWaterDrop;
 		part.timeStage = 250;
 		part.numStages = 5;
+		part.x += 24;
+		part.y += 24;
 		part.vx = (float)RandomUniform(-10, 10) / 100.0;
 		part.vy = (float)RandomUniform(-10, 10) / 100.0;
 		break;
@@ -1347,6 +1410,28 @@ void BattleView::emitParticle(int entity, int offX, int offY, int type)
 		part.x += RandomUniform(-8, 48);
 		part.y += RandomUniform(20, 40);
 		part.vy = (float)RandomUniform(-4, -1) / 100.0;
+		break;
+	case BLOOD_EXPLODE:
+		part.ss = ssBlood;
+		part.timeStage = 150;
+		part.numStages = 5;
+		part.x += 24;
+		part.y += 24;
+		part.vx = (float)RandomUniform(-5, 5) / 100.0;
+		part.vy = (float)RandomUniform(-5, 5) / 100.0;
+		break;
+	case BLOOD_IMPLODE:
+		part.ss = ssBlood;
+		part.timeStage = 150;
+		part.numStages = 5;
+		part.x += 24;
+		part.y += 24;
+		part.vx = (float)RandomUniform(-5, 5) / 100.0;
+		part.vy = (float)RandomUniform(-5, 5) / 100.0;
+		part.x += part.vx * part.timeStage * part.numStages;
+		part.y += part.vy * part.timeStage * part.numStages;
+		part.vx = -part.vx;
+		part.vy = -part.vy;
 		break;
 	};
 

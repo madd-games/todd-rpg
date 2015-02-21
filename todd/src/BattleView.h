@@ -195,8 +195,10 @@ public:
 	 * \param type AttackType::PHYSICAL or AttackType::MAGIC.
 	 * \param element The element.
 	 * \param damage The normal damage (not accounting for STR, DEF, etc.)
+	 *
+	 * \return The actual damage deal, with all factors taken into account.
 	 */
-	void attack(int target, int type, int element, int damage);
+	int attack(int target, int type, int element, int damage);
 
 	/**
 	 * \brief Restore the target's mana.
@@ -249,6 +251,8 @@ public:
 		FLAME,
 		SPLASH,
 		POISON_BUBBLE,
+		BLOOD_EXPLODE,
+		BLOOD_IMPLODE,
 	};
 
 	/**

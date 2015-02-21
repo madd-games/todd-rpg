@@ -30,98 +30,52 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * ItemShadowArmor.h
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
 #include "Item.h"
-#include "Character.h"
-#include "Todd.h"
-#include "StatusEffect.h"
-#include "GameState.h"
+#include "Element.h"
 
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-#include "SkillSplash.h"
-#include "SkillPoison.h"
-#include "SkillAntidote.h"
-#include "SkillApocalypse.h"
-#include "SkillHealAll.h"
-#include "SkillBurn.h"
-#include "SkillSuckBlood.h"
-#include "SkillShield.h"
-
-bool Skill::isUsableAgainstDead()
+class ItemShadowArmor : public Item
 {
-	return false;
-};
-
-void Skill::onUse()
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-	(*((int*)GetGameData(var, sizeof(int))))++;	// "C/C++ is a simple language"
-};
-
-bool Skill::isUseable(Character *chr)
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-
-	if (countToLearn == 0)
+public:
+	ItemShadowArmor(int id) : Item(id)
 	{
-		return true;
 	};
 
-	int soFar = *((int*)GetGameData(var, sizeof(int)));
-	if (soFar >= countToLearn)
+	virtual int getCost()
 	{
-		return true;
+		return 4000;
 	};
 
-	int i;
-	for (i=0; i<10; i++)
+	virtual int getElement()
 	{
-		if (chr->getInventory()->get(i).id == itemID)
-		{
-			return true;
-		};
+		return Element::DARKNESS;
 	};
 
-	return false;
-};
+	virtual string getName()
+	{
+		return "Shadow Armor";
+	};
 
-void Skill::init(int target)
-{
-	(void)target;
-};
+	virtual string getDesc()
+	{
+		return "A type of armor forged by shadow priests.";
+	};
 
-string Skill::getDesc()
-{
-	return "";
-};
+	virtual bool isStackable()
+	{
+		return false;
+	};
 
-int Skill::getManaUse()
-{
-	return 0;
-};
+	virtual int getType()
+	{
+		return Item::ARMOR;
+	};
 
-bool Skill::isMultiTarget()
-{
-	return false;
-};
-
-void Skill::configLearning(string &countVar, int &countToLearn, int &itemID)
-{
-	countVar = "SKLNULL";
-	countToLearn = 0;
+	virtual void getStat(CharStats &stats)
+	{
+		stats.DEF = 1;
+		stats.MDEF = 6;
+	};
 };

@@ -30,98 +30,33 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * SEShield.h
+ * The 'Shield' status effect.
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
-#include "Item.h"
-#include "Character.h"
-#include "Todd.h"
-#include "StatusEffect.h"
-#include "GameState.h"
-
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-#include "SkillSplash.h"
-#include "SkillPoison.h"
-#include "SkillAntidote.h"
-#include "SkillApocalypse.h"
-#include "SkillHealAll.h"
-#include "SkillBurn.h"
-#include "SkillSuckBlood.h"
-#include "SkillShield.h"
-
-bool Skill::isUsableAgainstDead()
+class SEShield : public StatusEffect
 {
-	return false;
-};
+public:
+	virtual int getElement()
+	{
+		return Element::NEUTRAL;
+	};
 
-void Skill::onUse()
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-	(*((int*)GetGameData(var, sizeof(int))))++;	// "C/C++ is a simple language"
-};
+	virtual string getName()
+	{
+		return "Shield";
+	};
 
-bool Skill::isUseable(Character *chr)
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-
-	if (countToLearn == 0)
+	virtual bool isPositive()
 	{
 		return true;
 	};
 
-	int soFar = *((int*)GetGameData(var, sizeof(int)));
-	if (soFar >= countToLearn)
+	virtual void onReceiveDamage(int attacker, int &target, int &type, int &element, int &damage)
 	{
-		return true;
-	};
-
-	int i;
-	for (i=0; i<10; i++)
-	{
-		if (chr->getInventory()->get(i).id == itemID)
+		if (type == AttackType::PHYSICAL)
 		{
-			return true;
+			damage /= 2;
 		};
 	};
-
-	return false;
-};
-
-void Skill::init(int target)
-{
-	(void)target;
-};
-
-string Skill::getDesc()
-{
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
-};
-
-void Skill::configLearning(string &countVar, int &countToLearn, int &itemID)
-{
-	countVar = "SKLNULL";
-	countToLearn = 0;
 };

@@ -231,6 +231,9 @@ int main(int argc, char *argv[])
 	ssShadowWarrior = new SpriteSheet("shadow_warrior.png");
 	ssShadowRealmBackground = new SpriteSheet("shadow_realm.png", 960, 480);
 	ssBattleTurn = new SpriteSheet("battle_turn.png");
+	ssShadowTempleBackground = new SpriteSheet("shadow_temple.png", 960, 480);
+	ssVampire = new SpriteSheet("vampire.png");
+	ssBlood = new SpriteSheet("blood.png", 16, 16);
 
 	InitMobs();
 	InitItems();
@@ -299,5 +302,5 @@ int RandomUniform(int min, int max)
 
 bool Probably(int chance)
 {
-	return RandomUniform(0, chance) < chance;
+	return RandomUniform(0, 100) < chance;
 };

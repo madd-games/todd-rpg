@@ -134,5 +134,7 @@ extern Skill *skillAntidote;
 extern Skill *skillApocalypse;
 extern Skill *skillHealAll;
 extern Skill *skillBurn;
+extern Skill *skillSuckBlood;
+extern Skill *skillShield;
 
 #endif

@@ -30,98 +30,75 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * SkillSuckBlood.h
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
-#include "Item.h"
-#include "Character.h"
-#include "Todd.h"
-#include "StatusEffect.h"
-#include "GameState.h"
-
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-#include "SkillSplash.h"
-#include "SkillPoison.h"
-#include "SkillAntidote.h"
-#include "SkillApocalypse.h"
-#include "SkillHealAll.h"
-#include "SkillBurn.h"
-#include "SkillSuckBlood.h"
-#include "SkillShield.h"
-
-bool Skill::isUsableAgainstDead()
+class SkillSuckBlood : public Skill
 {
-	return false;
-};
+private:
+	int target;
+	unsigned int time;
+	int stage;
 
-void Skill::onUse()
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-	(*((int*)GetGameData(var, sizeof(int))))++;	// "C/C++ is a simple language"
-};
-
-bool Skill::isUseable(Character *chr)
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-
-	if (countToLearn == 0)
+public:
+	virtual void init(int target)
 	{
-		return true;
+		this->target = target;
+		time = Timer::Read();
+		stage = 0;
 	};
 
-	int soFar = *((int*)GetGameData(var, sizeof(int)));
-	if (soFar >= countToLearn)
+	virtual void act()
 	{
-		return true;
-	};
-
-	int i;
-	for (i=0; i<10; i++)
-	{
-		if (chr->getInventory()->get(i).id == itemID)
+		if ((Timer::Read()-time) >= 10)
 		{
-			return true;
+			stage++;
+			if (stage == 2)
+			{
+				int count = 50;
+				while (count--)
+				{
+					battleView.emitParticle(target, 0, 0, BattleView::BLOOD_EXPLODE);
+					battleView.emitParticle(battleView.getTurn(), 0, 0, BattleView::BLOOD_IMPLODE);
+				};
+				int damage = RandomUniform(10, 15);
+				int done = battleView.attack(target, AttackType::PHYSICAL, Element::NEUTRAL, damage);
+				battleView.attack(battleView.getTurn(), AttackType::DIRECT, Element::NEUTRAL, -done);
+			};
+			time = Timer::Read();
 		};
 	};
 
-	return false;
+	virtual bool isActive()
+	{
+		return stage < 100;
+	};
+
+	virtual bool isOffensive()
+	{
+		return true;
+	};
+
+	virtual int getElement()
+	{
+		return Element::NEUTRAL;
+	};
+
+	virtual string getName()
+	{
+		return "Suck Blood";
+	};
+
+	virtual string getDesc()
+	{
+		return "Drains some HP from the target.";
+	};
+
+	virtual int getManaUse()
+	{
+		return 8;
+	};
 };
 
-void Skill::init(int target)
-{
-	(void)target;
-};
-
-string Skill::getDesc()
-{
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
-};
-
-void Skill::configLearning(string &countVar, int &countToLearn, int &itemID)
-{
-	countVar = "SKLNULL";
-	countToLearn = 0;
-};
+SkillSuckBlood skillSuckBloodVal;
+Skill *skillSuckBlood = &skillSuckBloodVal;

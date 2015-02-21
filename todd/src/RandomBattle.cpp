@@ -38,18 +38,16 @@
 #include "Scene.h"
 #include "EnemyGoblin.h"
 #include "EnemyShadowWarrior.h"
+#include "EnemyVampire.h"
 #include <stdlib.h>
 #include <time.h>
 #include "Todd.h"
 
 bool GetRandomBattle(int sceneID, RandomBattle &bat)
 {
-	int per = RandomUniform(0, 100);
-	(void)per;
-
 	if (sceneID == Scene::Forest)
 	{
-		if (per < 10)
+		if (Probably(10))
 		{
 			bat.a = new EnemyGoblin;
 			bat.b = new EnemyGoblin;
@@ -57,7 +55,7 @@ bool GetRandomBattle(int sceneID, RandomBattle &bat)
 			bat.d = new EnemyGoblin;
 			return true;
 		}
-		else if (per < 20)
+		else if (Probably(20))
 		{
 			bat.a = new EnemyGoblin;
 			bat.b = new EnemyGoblin;
@@ -68,11 +66,46 @@ bool GetRandomBattle(int sceneID, RandomBattle &bat)
 	}
 	else if (sceneID == Scene::ShadowRealm)
 	{
-		if (per < 20)
+		if (Probably(20))
 		{
 			bat.a = new EnemyShadowWarrior;
-			bat.b = new EnemyGoblin;
+			bat.b = new EnemyVampire;
 			bat.c = new EnemyShadowWarrior;
+			bat.d = NULL;
+			return true;
+		}
+		else if (Probably(20))
+		{
+			bat.a = new EnemyVampire;
+			bat.b = new EnemyVampire;
+			bat.c = NULL;
+			bat.d = NULL;
+			return true;
+		};
+	}
+	else if (sceneID == Scene::ShadowTemple)
+	{
+		if (Probably(10))
+		{
+			bat.a = new EnemyShadowWarrior;
+			bat.b = new EnemyVampire;
+			bat.c = new EnemyShadowWarrior;
+			bat.d = new EnemyVampire;
+			return true;
+		}
+		else if (Probably(10))
+		{
+			bat.a = new EnemyVampire;
+			bat.b = new EnemyShadowWarrior;
+			bat.c = NULL;
+			bat.d = NULL;
+			return true;
+		}
+		else if (Probably(5))
+		{
+			bat.a = new EnemyShadowWarrior;
+			bat.b = NULL;
+			bat.c = NULL;
 			bat.d = NULL;
 			return true;
 		};

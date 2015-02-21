@@ -30,98 +30,20 @@
 */
 
 /**
- * Skill.cpp
- * A class for representing skills used in battles.
+ * EnemyVampire.h
  */
 
-#include "Skill.h"
-#include "BattleView.h"
-#include "Timer.h"
-#include "Item.h"
-#include "Character.h"
-#include "Todd.h"
-#include "StatusEffect.h"
-#include "GameState.h"
+#ifndef ENEMY_VAMPIRE_H
+#define ENEMY_VAMPIRE_H
 
-// Include skills here.
-#include "SkillAttack.h"
-#include "SkillHeal.h"
-#include "SkillPotion.h"
-#include "SkillFireSlash.h"
-#include "SkillManaFruit.h"
-#include "SkillSplash.h"
-#include "SkillPoison.h"
-#include "SkillAntidote.h"
-#include "SkillApocalypse.h"
-#include "SkillHealAll.h"
-#include "SkillBurn.h"
-#include "SkillSuckBlood.h"
-#include "SkillShield.h"
+#include "Enemy.h"
 
-bool Skill::isUsableAgainstDead()
+class EnemyVampire : public Enemy
 {
-	return false;
+public:
+	EnemyVampire();
+	virtual Skill *plan();
+	virtual void dropItems(vector<int> &drops);
 };
 
-void Skill::onUse()
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-	(*((int*)GetGameData(var, sizeof(int))))++;	// "C/C++ is a simple language"
-};
-
-bool Skill::isUseable(Character *chr)
-{
-	string var;
-	int countToLearn, itemID;
-	configLearning(var, countToLearn, itemID);
-
-	if (countToLearn == 0)
-	{
-		return true;
-	};
-
-	int soFar = *((int*)GetGameData(var, sizeof(int)));
-	if (soFar >= countToLearn)
-	{
-		return true;
-	};
-
-	int i;
-	for (i=0; i<10; i++)
-	{
-		if (chr->getInventory()->get(i).id == itemID)
-		{
-			return true;
-		};
-	};
-
-	return false;
-};
-
-void Skill::init(int target)
-{
-	(void)target;
-};
-
-string Skill::getDesc()
-{
-	return "";
-};
-
-int Skill::getManaUse()
-{
-	return 0;
-};
-
-bool Skill::isMultiTarget()
-{
-	return false;
-};
-
-void Skill::configLearning(string &countVar, int &countToLearn, int &itemID)
-{
-	countVar = "SKLNULL";
-	countToLearn = 0;
-};
+#endif

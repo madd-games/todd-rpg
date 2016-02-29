@@ -90,7 +90,7 @@ def parseLayer(layer):
 				spriteID = int(tile)
 				if spriteID != 0:
 					spriteID -= 1
-				tileID = spriteToTile[spriteID]
+				tileID = spriteToTile.get(spriteID, 0)
 				outdata += getTileSymbol(tileID)
 		outdata += "\n"
 

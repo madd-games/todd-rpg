@@ -887,7 +887,7 @@ void BattleView::render()
 				SDL_RenderDrawLine(sdlRender, x, plotY, endX, plotY);
 				plotY++;
 			};
-			SDL_SetRenderDrawColor(sdlRender, 255, 255, 255, 255);
+			SDL_SetRenderDrawColor(sdlRender, 0, 0, 0, 255);
 		};
 
 		if (offset >= 48)

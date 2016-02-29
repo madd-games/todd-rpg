@@ -30,65 +30,23 @@
 */
 
 /**
- * ItemAntidote.h
+ * EnemyShadowNecromancer.h
  */
 
-#include "Item.h"
-#include "Element.h"
+#ifndef ENEMY_SHADOW_NECROMANCER_H
+#define ENEMY_SHADOW_NECROMANCER_H
 
-class ItemAntidote : public Item
+#include "Enemy.h"
+
+class EnemyShadowNecromancer : public Enemy
 {
+private:
+	int getAllyWithNoBurn();
+
 public:
-	ItemAntidote(int id) : Item(id)
-	{
-	};
-
-	virtual int getCost()
-	{
-		return 150;
-	};
-
-	virtual int getElement()
-	{
-		return Element::NEUTRAL;
-	};
-
-	virtual string getName()
-	{
-		return "Antidote";
-	};
-
-	virtual string getDesc()
-	{
-		return "A remedy which removes the POISON status effect from the target.";
-	};
-
-	virtual bool isStackable()
-	{
-		return true;
-	};
-
-	virtual int getType()
-	{
-		return Item::EXPENDABLE;
-	};
-
-	virtual int getDamage()
-	{
-		return 0;
-	};
-
-	virtual bool expend(Character *chr)
-	{
-		StatusEffectSet &ses = chr->getStatusEffectSet();
-		if (ses.test(StatusEffect::POISON))
-		{
-			ses.set(StatusEffect::POISON, false);
-			return true;
-		}
-		else
-		{
-			return false;
-		};
-	};
+	EnemyShadowNecromancer();
+	virtual Skill *plan();
+	virtual void dropItems(vector<int> &drops);
 };
+
+#endif

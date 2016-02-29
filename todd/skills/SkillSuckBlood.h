@@ -61,7 +61,8 @@ public:
 					battleView.emitParticle(target, 0, 0, BattleView::BLOOD_EXPLODE);
 					battleView.emitParticle(battleView.getTurn(), 0, 0, BattleView::BLOOD_IMPLODE);
 				};
-				int damage = RandomUniform(10, 15);
+				int level = battleView.getLevel(battleView.getTurn());
+				int damage = RandomUniform(10+3*(level-7), 15+9*(level-7));
 				int done = battleView.attack(target, AttackType::PHYSICAL, Element::NEUTRAL, damage);
 				battleView.attack(battleView.getTurn(), AttackType::DIRECT, Element::NEUTRAL, -done);
 			};

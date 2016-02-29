@@ -30,65 +30,87 @@
 */
 
 /**
- * ItemAntidote.h
+ * EnemyShadowNecromancer.cpp
  */
 
-#include "Item.h"
+#include "EnemyShadowNecromancer.h"
+#include "SpriteSheet.h"
 #include "Element.h"
+#include "Skill.h"
+#include "BattleView.h"
+#include <stdlib.h>
+#include <time.h>
+#include "Item.h"
+#include <random>
+#include "Mob.h"
+#include "Todd.h"
 
-class ItemAntidote : public Item
+using namespace std;
+
+EnemyShadowNecromancer::EnemyShadowNecromancer()
 {
-public:
-	ItemAntidote(int id) : Item(id)
-	{
-	};
+	spriteSheet = GetMobInfo("MOBSHNECRO").mobSprite;
+	level = 20;
+	name = "Shadow Necromancer";
 
-	virtual int getCost()
-	{
-		return 150;
-	};
+	hp = maxhp = 8000;
+	element = Element::DARKNESS;
 
-	virtual int getElement()
-	{
-		return Element::NEUTRAL;
-	};
+	memset(&stats, 0, sizeof(CharStats));
+	stats.STR = 20;
+	stats.DEF = 20;
+	stats.MDEF = 25;
+	stats.INT = 40;
 
-	virtual string getName()
-	{
-		return "Antidote";
-	};
+	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
+	resist[Element::EARTH] = 40;
+	resist[Element::AIR] = 40;
+	resist[Element::WATER] = 40;
+	resist[Element::FIRE] = -30;
+	resist[Element::DARKNESS] = 200;
+	resist[Element::LIGHT] = -100;
+};
 
-	virtual string getDesc()
+int EnemyShadowNecromancer::getAllyWithNoBurn()
+{
+	int i;
+	for (i=0; i<4; i++)
 	{
-		return "A remedy which removes the POISON status effect from the target.";
-	};
-
-	virtual bool isStackable()
-	{
-		return true;
-	};
-
-	virtual int getType()
-	{
-		return Item::EXPENDABLE;
-	};
-
-	virtual int getDamage()
-	{
-		return 0;
-	};
-
-	virtual bool expend(Character *chr)
-	{
-		StatusEffectSet &ses = chr->getStatusEffectSet();
-		if (ses.test(StatusEffect::POISON))
+		if (battleView.canMove(i))
 		{
-			ses.set(StatusEffect::POISON, false);
-			return true;
+			if (!battleView.hasStatusEffect(i, StatusEffect::BURN))
+			{
+				return i;
+			};
+		};
+	};
+
+	return -1;
+};
+
+Skill *EnemyShadowNecromancer::plan()
+{
+	if ((hp < 4000) && Probably(70))
+	{
+		skillSuckBlood->init(battleView.getRandomAlly());
+		return skillSuckBlood;
+	}
+	else
+	{
+		int allyWithNoBurn = getAllyWithNoBurn();
+		if ((allyWithNoBurn != -1) && Probably(60))
+		{
+			skillBurn->init(allyWithNoBurn);
+			return skillBurn;
 		}
 		else
 		{
-			return false;
+			skillSplash->init(battleView.getRandomAlly());
+			return skillSplash;
 		};
 	};
+};
+
+void EnemyShadowNecromancer::dropItems(vector<int> &drops)
+{
 };

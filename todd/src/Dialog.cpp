@@ -46,6 +46,7 @@
 #include "EnemyBandit.h"
 #include "EnemyShadowWarrior.h"
 #include "EnemyShadowPriest.h"
+#include "EnemyShadowNecromancer.h"
 #include "SaveView.h"
 #include "Character.h"
 #include "Options.h"
@@ -440,3 +441,20 @@ DialogEntry dialShadowPriest[] = {
 	{"MOBSHPRIEST", "Shadow Priest", "I am the Shadow Priest. Your Chief tried exposing our secret. Now that you know about it, you have to die.", ShadowPriestBattle},
 	{NULL, NULL, NULL}
 };
+
+
+// SHADOW NECROMANCER
+void ShadowNecroBattle()
+{
+	MobState *state = (MobState*) GetGameData("MOBSHNECRO", sizeof(MobState));
+	state->sceneID = -1;
+
+	StartBattle(new EnemyShadowNecromancer);
+	battleView.setFlee(false);
+};
+
+DialogEntry dialShadowNecromancer[] = {
+	{"MOBSHNECRO", "Shadow Necromancer", "STOP!", ShadowNecroBattle},
+	{NULL, NULL, NULL}
+};
+

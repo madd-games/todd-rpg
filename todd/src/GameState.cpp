@@ -207,6 +207,12 @@ void NewGame()
 	state->y = 16;
 	state->sceneID = Scene::ShadowRealm;
 
+	// Shadow Necromancer (Shadow Temple)
+	state = (MobState*) GetGameData("MOBSHNECRO", sizeof(MobState));
+	state->x = 67;
+	state->y = 38;
+	state->sceneID = Scene::ShadowTemple;
+
 	// Chests
 	InitChest(Scene::Forest, 18, 2, Item::POTION, 5);
 	InitChest(Scene::Forest, 19, 4, Item::WOODEN_SHIELD, 1);

@@ -3,7 +3,7 @@
 
 	Todd RPG
 
-	Copyright (c) 2014, Madd Games.
+	Copyright (c) 2014-2016, Madd Games.
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
@@ -248,7 +248,7 @@ string GetPathToSaveSlot(int slot)
 	string path = env;
 	path += "\\madd.todd-saves";
 
-	BOOL create = CreateDirectory(path.c_str(), NULL);
+	BOOL create = CreateDirectoryA(path.c_str(), NULL);
 	if (!create)
 	{
 		if (GetLastError() != ERROR_ALREADY_EXISTS)

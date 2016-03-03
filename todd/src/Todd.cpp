@@ -3,7 +3,7 @@
 
 	Todd RPG
 
-	Copyright (c) 2014, Madd Games.
+	Copyright (c) 2014-2016, Madd Games.
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
@@ -91,7 +91,7 @@ void GameAbort_(string msg, string file, int line)
 void GameAbort__(string msg)
 {
 #ifdef _WIN32
-	MessageBox(NULL, msg.c_str(), "Abort", MB_OK | MB_ICONERROR);
+	MessageBoxA(NULL, msg.c_str(), "Abort", MB_OK | MB_ICONERROR);
 #else
 	cerr << "ABORT: " << msg << endl;
 #endif

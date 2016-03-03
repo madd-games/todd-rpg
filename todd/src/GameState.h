@@ -51,7 +51,7 @@ struct SaveHeader
 	uint8_t			magic[4];		/* "TODD" */
 	uint32_t		count;			/* number of state segments */
 	uint8_t			name[32];		/* assigned by the player */
-} __attribute__ ((packed));
+};
 
 string GetPathToSaveSlot(int slot);
 void NewGame();

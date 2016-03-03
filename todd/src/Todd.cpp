@@ -58,8 +58,13 @@
 
 using namespace std;
 
-#ifdef main
-#undef main
+/**
+ * Get rid of SDL_main in anything other than Visual Studio.
+ */
+#ifndef _MSC_VER
+#	ifdef main
+#		undef main
+#	endif
 #endif
 
 #ifdef _WIN32

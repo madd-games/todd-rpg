@@ -66,7 +66,7 @@ struct SegmentHeader
 {
 	uint32_t		size;
 	uint8_t			name[16];
-} __attribute__ ((packed));
+};
 
 struct GameStateSegment
 {

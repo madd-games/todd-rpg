@@ -305,6 +305,15 @@ Scene::Scene(string name)
 	};
 };
 
+void Scene::addWarp(int x, int y, int target)
+{
+	WarpPoint point;
+	point.x = x;
+	point.y = y;
+	point.targetScene = target;
+	warpPoints.push_back(point);
+};
+
 bool Scene::checkWarp(int relX, int relY)
 {
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));

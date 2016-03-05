@@ -67,7 +67,8 @@ public:
 
 	static void LoadScenes();
 	static Scene *GetSceneByID(int id);
-
+	void addWarp(int x, int y, int targetScene);
+	
 private:
 	struct Tile
 	{

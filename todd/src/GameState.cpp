@@ -101,6 +101,11 @@ void InitShop(string name, ItemStack *stack)
 	};
 };
 
+void InitWarp(int sceneID, int x, int y, int target)
+{
+	Scene::GetSceneByID(sceneID)->addWarp(x, y, target);
+};
+
 void NewGame()
 {
 	gameState.clear();
@@ -239,6 +244,10 @@ void NewGame()
 
 	// Shops
 	InitShop("SHOPEASTVPS", shopEastvillePotion);
+	
+	// Warps
+	InitWarp(Scene::Forest, 1, 1, -2);
+	InitWarp(Scene::Forest, 41, 4, -3);
 };
 
 string GetPathToSaveSlot(int slot)

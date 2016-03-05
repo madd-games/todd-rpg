@@ -69,6 +69,11 @@ public:
 			if (stage == 2)
 			{
 				battleView.removeStatus(target, StatusEffect::POISON);
+				if (battleView.getTurn() < 4)
+				{
+					Character *chr = GetChar(GetPartyMember(battleView.getTurn()));
+					chr->getInventory()->decrItem(Item::POTION);
+				};
 			};
 			if (stage < 10)
 			{

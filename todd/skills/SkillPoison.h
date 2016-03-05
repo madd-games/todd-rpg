@@ -57,6 +57,11 @@ public:
 			if (stage == 2)
 			{
 				battleView.inflictStatus(target, StatusEffect::POISON);
+				if (battleView.getTurn() < 4)
+				{
+					Character *chr = GetChar(GetPartyMember(battleView.getTurn()));
+					chr->getInventory()->decrItem(Item::ANTIDOTE);
+				};
 			};
 			time = Timer::Read();
 		};

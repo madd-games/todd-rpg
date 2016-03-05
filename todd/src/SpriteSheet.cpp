@@ -54,6 +54,7 @@ SpriteSheet *ssSkillMenu;
 SpriteSheet *ssSpark;
 SpriteSheet *ssOverworld;
 SpriteSheet *ssMapSpot;
+SpriteSheet *ssMapSel;
 SpriteSheet *ssGoblin;
 SpriteSheet *ssForestBackground;
 SpriteSheet *ssFlame;

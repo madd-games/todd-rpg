@@ -69,10 +69,10 @@ struct MapSpot
 
 vector<MapSpot> mapSpots;
 
-MapSpot mapSpot0 = {1, 187, 112, 0, 0, 0, 2, Scene::Castle, 10, 14, Mob::UP, "Castle"};
-MapSpot mapSpot1 = {2, 367, 280, 0, 0, 1, 0, Scene::Forest, 1, 2, Mob::DOWN, "Forest (West)"};
-MapSpot mapSpot2 = {3, 407, 280, 0, 4, 0, 0, Scene::Forest, 40, 4, Mob::LEFT, "Forest (East)"};
-MapSpot mapSpot3 = {4, 457, 274, 3, 0, 0, 0, Scene::Eastville, 1, 1, Mob::RIGHT, "Eastville"};
+MapSpot mapSpot0 = {1, 186, 151, 0, 0, 0, 2, Scene::Castle, 10, 14, Mob::UP, "Castle"};
+MapSpot mapSpot1 = {2, 208, 195, 0, 0, 1, 0, Scene::Forest, 1, 2, Mob::DOWN, "Forest (West)"};
+MapSpot mapSpot2 = {3, 264, 195, 0, 4, 0, 0, Scene::Forest, 40, 4, Mob::LEFT, "Forest (East)"};
+MapSpot mapSpot3 = {4, 287, 195, 3, 0, 0, 0, Scene::Eastville, 1, 1, Mob::RIGHT, "Eastville"};
 // Maps spot ID to index in mapSpots.
 map<int, int> mapSpotMap;
 
@@ -141,17 +141,17 @@ void OverworldView::render()
 	vector<MapSpot>::iterator it;
 	for (it=mapSpots.begin(); it!=mapSpots.end(); ++it)
 	{
-		ssMapSpot->draw(it->x-12, it->y-12, 0, false);
+		ssMapSpot->draw(it->x-4, it->y-4, 0, false);
 		if (it->id == currentSpot)
 		{
-			mobX = it->x-24;
-			mobY = it->y-24;
+			mobX = it->x-8;
+			mobY = it->y-8;
 			placeName = it->name;
 		};
 	};
 
-	GetMobInfo("MOBTODD").mobSprite->draw(mobX, mobY, 0, false);
-
+	ssMapSel->draw(mobX, mobY, 0, false);
+	
 	Text text(placeName, 0, 0, 0, 255, fntCaption);
 	text.draw(mobX+48, mobY+10);
 };

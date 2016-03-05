@@ -164,6 +164,7 @@ void BattleView::handleEvent(SDL_Event *ev)
 				{
 					if (canFlee)
 					{
+						cleanup();
 						int i;
 						for (i=0; i<4; i++)
 						{
@@ -500,6 +501,21 @@ void BattleView::handleEvent(SDL_Event *ev)
 	};
 };
 
+void BattleView::cleanup()
+{
+	int i;
+	for (i=0; i<4; i++)
+	{
+		string name = GetPartyMember(i);
+		if (name != "")
+		{
+			Character *chr = GetChar(name);
+			if (chr->getHP() == 0) chr->setHP(1);
+			chr->getStatusEffectSet().clearPositive();
+		};
+	};
+};
+
 void BattleView::render()
 {
 	// Check if this is victory.
@@ -522,17 +538,7 @@ void BattleView::render()
 		mode = Mode::VICTORY;
 		victoryTimer = Timer::Read();
 
-		int i;
-		for (i=0; i<4; i++)
-		{
-			string name = GetPartyMember(i);
-			if (name != "")
-			{
-				Character *chr = GetChar(name);
-				if (chr->getHP() == 0) chr->setHP(1);
-				chr->getStatusEffectSet().clearPositive();
-			};
-		};
+		cleanup();
 	};
 
 	// Render the background

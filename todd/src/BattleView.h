@@ -126,6 +126,7 @@ private:
 	Skill *skillSel;
 
 	void schedTurn();
+	void cleanup();
 	bool canFlee;
 	unsigned long victoryTimer;
 

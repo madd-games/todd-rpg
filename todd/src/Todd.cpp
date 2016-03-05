@@ -224,7 +224,8 @@ int main(int argc, char *argv[])
 	ssSkillMenu = new SpriteSheet("skillmenu.png", 600, 480);
 	ssSpark = new SpriteSheet("spark.png", 16, 16);
 	ssOverworld = new SpriteSheet("overworld.png", 960, 480);
-	ssMapSpot = new SpriteSheet("mapspot.png", 24, 24);
+	ssMapSpot = new SpriteSheet("mapspot.png", 8, 8);
+	ssMapSel = new SpriteSheet("mapsel.png", 16, 16);
 	ssGoblin = new SpriteSheet("goblin.png");
 	ssForestBackground = new SpriteSheet("forest.png", 960, 480);
 	ssFlame = new SpriteSheet("flame.png", 16, 16);

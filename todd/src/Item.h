@@ -72,6 +72,7 @@ public:
 		STEEL_DAGGER = 13,
 		SHADOW_ARMOR = 14,
 		SHADOW_SHIELD = 15,
+		SWEET_POTION = 16,
 	};
 
 	/**

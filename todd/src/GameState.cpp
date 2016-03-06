@@ -221,6 +221,7 @@ void NewGame()
 	// Chests
 	InitChest(Scene::Forest, 18, 2, Item::POTION, 5);
 	InitChest(Scene::Forest, 19, 4, Item::WOODEN_SHIELD, 1);
+	InitChest(Scene::Forest, 26, 17, Item::ANTIDOTE, 5);
 	InitChest(Scene::Eastville_House1, 23, 1, Item::MANA_FRUIT, 5);
 	InitChest(Scene::Eastville_House1, 24, 1, Item::CHAIN_ARMOR, 1);
 	InitChest(Scene::ShadowRealm, 34, 14, Item::BOTTLE_OF_POISON, 5);
@@ -231,6 +232,7 @@ void NewGame()
 	InitChest(Scene::ShadowTemple, 9, 4, Item::SHADOW_ARMOR, 1);
 	InitChest(Scene::ShadowTemple, 27, 3, Item::POTION, 5);
 	InitChest(Scene::ShadowTemple, 50, 15, Item::SHADOW_SHIELD, 1);
+	InitChest(Scene::DeepForest, 34, 25, Item::SWEET_POTION, 1);
 
 	// Doors
 	InitDoor(Scene::Castle_ToddRoom, 13, 0, Scene::Castle, 18, 7, Mob::DOWN);
@@ -249,6 +251,9 @@ void NewGame()
 	InitWarp(Scene::Castle, 10, 15, -1);
 	InitWarp(Scene::Forest, 1, 1, -2);
 	InitWarp(Scene::Forest, 41, 4, -3);
+	InitWarp(Scene::Forest, 25, 23, Scene::DeepForest);
+	InitWarp(Scene::Eastville, 0, 1, -4);
+	InitWarp(Scene::DeepForest, 25, 22, Scene::Forest);
 };
 
 string GetPathToSaveSlot(int slot)

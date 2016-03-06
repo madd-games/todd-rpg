@@ -57,6 +57,7 @@
 #include "SkillBurn.h"
 #include "SkillSuckBlood.h"
 #include "SkillShield.h"
+#include "SkillSweetPotion.h"
 
 bool Skill::isUsableAgainstDead()
 {

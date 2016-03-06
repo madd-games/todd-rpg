@@ -30,10 +30,10 @@
 */
 
 /**
- * SkillPotion.h
+ * SkillSweetPotion.h
  */
 
-int potionPartOff[10][2] = {
+int SweetPotionPartOff[10][2] = {
 	{12, 12},	
 	{15, 13},
 	{14, 16},
@@ -46,7 +46,7 @@ int potionPartOff[10][2] = {
 	{24, 23}
 };
 
-class SkillPotion : public Skill
+class SkillSweetPotion : public Skill
 {
 private:
 	int target;
@@ -68,16 +68,16 @@ public:
 			stage++;
 			if (stage == 2)
 			{
-				battleView.attack(target, AttackType::DIRECT, Element::NEUTRAL, -100);
+				battleView.inflictStatus(target, StatusEffect::REGEN);
 				if (battleView.getTurn() < 4)
 				{
 					Character *chr = GetChar(GetPartyMember(battleView.getTurn()));
-					chr->getInventory()->decrItem(Item::POTION);
+					chr->getInventory()->decrItem(Item::SWEET_POTION);
 				};
 			};
 			if (stage < 10)
 			{
-				battleView.emitParticle(target, potionPartOff[stage][0], potionPartOff[stage][1], BattleView::SPARK);
+				battleView.emitParticle(target, SweetPotionPartOff[stage][0], SweetPotionPartOff[stage][1], BattleView::SPARK);
 			};
 			time = Timer::Read();
 		};
@@ -95,14 +95,14 @@ public:
 
 	virtual int getElement()
 	{
-		return Element::NEUTRAL;
+		return Element::LIGHT;
 	};
 
 	virtual string getName()
 	{
-		return "Potion";
+		return "Sweet Potion";
 	};
 };
 
-SkillPotion skillPotionVal;
-Skill *skillPotion = &skillPotionVal;
+SkillSweetPotion skillSweetPotionVal;
+Skill *skillSweetPotion = &skillSweetPotionVal;

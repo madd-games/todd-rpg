@@ -136,5 +136,6 @@ extern Skill *skillHealAll;
 extern Skill *skillBurn;
 extern Skill *skillSuckBlood;
 extern Skill *skillShield;
+extern Skill *skillSweetPotion;
 
 #endif

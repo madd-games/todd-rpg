@@ -46,14 +46,15 @@
 bool GetRandomBattle(int sceneID, RandomBattle &bat)
 {
 	static int numSteps = 0;
-		if (numSteps < 10)
-		{
-			numSteps++;
-			return false;
-		};
+	if (numSteps < 10)
+	{
+		numSteps++;
+		return false;
+	};
+	
 	if (sceneID == Scene::Forest)
 	{
-		if (Probably(5))
+		if (Probably(10))
 		{
 			bat.a = new EnemyGoblin;
 			bat.b = new EnemyGoblin;
@@ -62,7 +63,7 @@ bool GetRandomBattle(int sceneID, RandomBattle &bat)
 			numSteps = 0;
 			return true;
 		}
-		else if (Probably(10))
+		else if (Probably(20))
 		{
 			bat.a = new EnemyGoblin;
 			bat.b = new EnemyGoblin;
@@ -104,7 +105,7 @@ bool GetRandomBattle(int sceneID, RandomBattle &bat)
 			numSteps = 0;
 			return true;
 		}
-		else if (Probably(5))
+		else if (Probably(7))
 		{
 			bat.a = new EnemyVampire;
 			bat.b = new EnemyShadowWarrior;
@@ -113,7 +114,7 @@ bool GetRandomBattle(int sceneID, RandomBattle &bat)
 			numSteps = 0;
 			return true;
 		}
-		else if (Probably(5))
+		else if (Probably(7))
 		{
 			bat.a = new EnemyShadowWarrior;
 			bat.b = NULL;

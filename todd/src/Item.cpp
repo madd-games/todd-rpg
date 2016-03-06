@@ -57,6 +57,7 @@
 #include "ItemSteelDagger.h"
 #include "ItemShadowArmor.h"
 #include "ItemShadowShield.h"
+#include "ItemSweetPotion.h"
 
 using namespace std;
 
@@ -133,4 +134,5 @@ void InitItems()
 	new ItemSteelDagger(Item::STEEL_DAGGER);
 	new ItemShadowArmor(Item::SHADOW_ARMOR);
 	new ItemShadowShield(Item::SHADOW_SHIELD);
+	new ItemSweetPotion(Item::SWEET_POTION);
 };

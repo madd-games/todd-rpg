@@ -56,19 +56,21 @@ using namespace std;
 
 BattleView battleView;
 
-#define	NUM_EXPENDABLE_ITEMS		4
+#define	NUM_EXPENDABLE_ITEMS		5
 int expendableItems[NUM_EXPENDABLE_ITEMS] = {
 	Item::POTION,
 	Item::MANA_FRUIT,
 	Item::BOTTLE_OF_POISON,
-	Item::ANTIDOTE
+	Item::ANTIDOTE,
+	Item::SWEET_POTION
 };
 
 Skill *itemSkills[NUM_EXPENDABLE_ITEMS] = {
 	skillPotion,
 	skillManaFruit,
 	skillPoison,
-	skillAntidote
+	skillAntidote,
+	skillSweetPotion
 };
 
 void BattleView::init(Enemy *a, Enemy *b, Enemy *c, Enemy *d)

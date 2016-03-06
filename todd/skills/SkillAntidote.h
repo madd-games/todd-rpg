@@ -72,7 +72,7 @@ public:
 				if (battleView.getTurn() < 4)
 				{
 					Character *chr = GetChar(GetPartyMember(battleView.getTurn()));
-					chr->getInventory()->decrItem(Item::POTION);
+					chr->getInventory()->decrItem(Item::ANTIDOTE);
 				};
 			};
 			if (stage < 10)

@@ -63,6 +63,7 @@ public:
 		Eastville_PotionShop = 6,
 		ShadowRealm = 7,
 		ShadowTemple = 8,
+		DeepForest = 9,
 	};
 
 	static void LoadScenes();

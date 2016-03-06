@@ -45,60 +45,72 @@
 
 bool GetRandomBattle(int sceneID, RandomBattle &bat)
 {
+	static int numSteps = 0;
+		if (numSteps < 10)
+		{
+			numSteps++;
+			return false;
+		};
 	if (sceneID == Scene::Forest)
 	{
-		if (Probably(10))
+		if (Probably(5))
 		{
 			bat.a = new EnemyGoblin;
 			bat.b = new EnemyGoblin;
 			bat.c = new EnemyGoblin;
 			bat.d = new EnemyGoblin;
+			numSteps = 0;
 			return true;
 		}
-		else if (Probably(20))
+		else if (Probably(10))
 		{
 			bat.a = new EnemyGoblin;
 			bat.b = new EnemyGoblin;
 			bat.c = new EnemyGoblin;
 			bat.d = NULL;
+			numSteps = 0;
 			return true;
 		};
 	}
 	else if (sceneID == Scene::ShadowRealm)
-	{
-		if (Probably(20))
-		{
-			bat.a = new EnemyShadowWarrior;
-			bat.b = new EnemyVampire;
-			bat.c = new EnemyShadowWarrior;
-			bat.d = NULL;
-			return true;
-		}
-		else if (Probably(20))
-		{
-			bat.a = new EnemyVampire;
-			bat.b = new EnemyVampire;
-			bat.c = NULL;
-			bat.d = NULL;
-			return true;
-		};
-	}
-	else if (sceneID == Scene::ShadowTemple)
 	{
 		if (Probably(10))
 		{
 			bat.a = new EnemyShadowWarrior;
 			bat.b = new EnemyVampire;
 			bat.c = new EnemyShadowWarrior;
-			bat.d = new EnemyVampire;
+			bat.d = NULL;
+			numSteps = 0;
 			return true;
 		}
 		else if (Probably(10))
 		{
 			bat.a = new EnemyVampire;
+			bat.b = new EnemyVampire;
+			bat.c = NULL;
+			bat.d = NULL;
+			numSteps = 0;
+			return true;
+		};
+	}
+	else if (sceneID == Scene::ShadowTemple)
+	{
+		if (Probably(5))
+		{
+			bat.a = new EnemyShadowWarrior;
+			bat.b = new EnemyVampire;
+			bat.c = new EnemyShadowWarrior;
+			bat.d = new EnemyVampire;
+			numSteps = 0;
+			return true;
+		}
+		else if (Probably(5))
+		{
+			bat.a = new EnemyVampire;
 			bat.b = new EnemyShadowWarrior;
 			bat.c = NULL;
 			bat.d = NULL;
+			numSteps = 0;
 			return true;
 		}
 		else if (Probably(5))
@@ -107,6 +119,7 @@ bool GetRandomBattle(int sceneID, RandomBattle &bat)
 			bat.b = NULL;
 			bat.c = NULL;
 			bat.d = NULL;
+			numSteps = 0;
 			return true;
 		};
 	};

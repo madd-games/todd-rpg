@@ -246,6 +246,7 @@ void NewGame()
 	InitShop("SHOPEASTVPS", shopEastvillePotion);
 	
 	// Warps
+	InitWarp(Scene::Castle, 10, 15, -1);
 	InitWarp(Scene::Forest, 1, 1, -2);
 	InitWarp(Scene::Forest, 41, 4, -3);
 };

@@ -1112,7 +1112,6 @@ int BattleView::attack(int target, int type, int element, int damage)
 	CharStats ustats = getStats(turn);
 	CharStats tstats = getStats(target);
 	int *resist = getResistances(target);
-	int strIncrease = 0;
 
 	if (type == AttackType::PHYSICAL)
 	{

@@ -240,6 +240,7 @@ int main(int argc, char *argv[])
 	ssShadowTempleBackground = new SpriteSheet("shadow_temple.png", 960, 480);
 	ssVampire = new SpriteSheet("vampire.png");
 	ssBlood = new SpriteSheet("blood.png", 16, 16);
+	ssWizard = new SpriteSheet("wizard.png");
 
 	InitMobs();
 	InitItems();

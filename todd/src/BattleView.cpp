@@ -1338,6 +1338,26 @@ bool BattleView::hasStatusEffect(int entity, int effect)
 	};
 };
 
+int BattleView::getRandomEnemy(bool allowDead)
+{
+	vector<int> chooseable;
+	int i;
+	for (i=0; i<4; i++)
+	{
+		Enemy *enemy = enemies[i];
+		if (enemy != NULL)
+		{
+			if ((enemy->hp != 0) || (allowDead))
+			{
+				chooseable.push_back(i);
+			};
+		};
+	};
+
+	srand(time(NULL));
+	return chooseable[RandomUniform(0, chooseable.size()-1)]+4;
+};
+
 int BattleView::getRandomAlly(bool allowDead)
 {
 	vector<int> chooseable;

@@ -238,6 +238,13 @@ public:
 	int getRandomAlly(bool allowDead = false);
 
 	/**
+	 * \brief Get a random enemy.
+	 * \param allowDead If true, dead enemies may be returned (default = false).
+	 * \return The enemy entity number (4-7).
+	 */
+	int getRandomEnemy(bool allowDead = false);
+	
+	/**
 	 * \brief Change whether it is possible to flee from this battle.
 	 * \param flee If true, the player may choose to flee.
 	 */

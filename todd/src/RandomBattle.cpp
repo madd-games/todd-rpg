@@ -39,6 +39,7 @@
 #include "EnemyGoblin.h"
 #include "EnemyShadowWarrior.h"
 #include "EnemyVampire.h"
+#include "EnemyWizard.h"
 #include <stdlib.h>
 #include <time.h>
 #include "Todd.h"
@@ -119,6 +120,18 @@ bool GetRandomBattle(int sceneID, RandomBattle &bat)
 			bat.a = new EnemyShadowWarrior;
 			bat.b = NULL;
 			bat.c = NULL;
+			bat.d = NULL;
+			numSteps = 0;
+			return true;
+		};
+	}
+	else if (sceneID == Scene::DeepForest)
+	{
+		if (Probably(5))
+		{
+			bat.a = new EnemyWizard;
+			bat.b = new EnemyWizard;
+			bat.c = new EnemyWizard;
 			bat.d = NULL;
 			numSteps = 0;
 			return true;

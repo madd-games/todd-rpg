@@ -110,5 +110,6 @@ extern SpriteSheet *ssBattleTurn;
 extern SpriteSheet *ssShadowTempleBackground;
 extern SpriteSheet *ssVampire;
 extern SpriteSheet *ssBlood;
+extern SpriteSheet *ssWizard;
 
 #endif

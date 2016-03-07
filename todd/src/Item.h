@@ -74,6 +74,17 @@ public:
 		SHADOW_SHIELD = 15,
 		SWEET_POTION = 16,
 	};
+	/**
+	 * \brief Weapon types
+	 */
+	enum
+	{
+		// NONE already defined as 0 in this case so is not needed.
+		SWORD = 1,
+		DAGGER,
+
+		NUM_WEAPON_TYPES = 32
+	};
 
 	/**
 	 * \brief Item types.
@@ -116,6 +127,11 @@ public:
 	 * Return true if this item is stackable.
 	 */
 	virtual bool isStackable() = 0;
+
+	/**
+	 * Returns what weapon type the weapon belongs to.
+	 */
+	virtual int getWeaponType();
 
 	/**
 	 * Returns the type of item (default = Item::PLOT).

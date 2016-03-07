@@ -68,6 +68,11 @@ Item::Item(int id) : id(id)
 	RegisterItem(id, this);
 };
 
+int Item::getWeaponType()
+{
+	return Item::NONE;
+};
+
 int Item::getType()
 {
 	return Item::PLOT;

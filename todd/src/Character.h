@@ -56,6 +56,7 @@ struct CharState
 	int level;
 	CharStats stats;
 	StatusEffectSet ses;
+	int numTypeUses[Item::NUM_WEAPON_TYPES];
 };
 
 struct CharInfo
@@ -103,6 +104,10 @@ public:
 	void setLevel(int level);
 
 	int getElement();
+
+	void trainWeapon();
+
+	int getWeaponLevel();
 
 	CharStats *getStats();
 	int *getResistances();

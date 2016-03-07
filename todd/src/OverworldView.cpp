@@ -70,7 +70,7 @@ struct MapSpot
 vector<MapSpot> mapSpots;
 
 MapSpot mapSpot0 = {1, 186, 151, 0, 0, 0, 2, Scene::Castle, 10, 14, Mob::UP, "Castle"};
-MapSpot mapSpot1 = {2, 208, 195, 0, 0, 1, 0, Scene::Forest, 1, 2, Mob::DOWN, "Forest (West)"};
+MapSpot mapSpot1 = {2, 186, 195, 0, 0, 1, 0, Scene::Forest, 1, 2, Mob::DOWN, "Forest (West)"};
 MapSpot mapSpot2 = {3, 264, 195, 0, 4, 0, 0, Scene::Forest, 40, 4, Mob::LEFT, "Forest (East)"};
 MapSpot mapSpot3 = {4, 287, 195, 3, 0, 0, 0, Scene::Eastville, 1, 1, Mob::RIGHT, "Eastville"};
 // Maps spot ID to index in mapSpots.

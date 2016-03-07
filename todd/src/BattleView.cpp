@@ -1027,6 +1027,7 @@ CharStats BattleView::getStats(int entity)
 		Character *chr = GetChar(GetPartyMember(entity));
 		CharStats stats = *chr->getStats();
 		Container *cont = chr->getInventory();
+		int numLevel = chr->getWeaponLevel();
 
 		int i;
 		for (i=0; i<7; i++)
@@ -1041,6 +1042,10 @@ CharStats BattleView::getStats(int entity)
 				item->getStat(tst);
 
 				stats.STR += tst.STR;
+				if (i == 0)
+				{
+					stats.STR += tst.STR * numLevel / 4;
+				};
 				stats.INT += tst.INT;
 				stats.DEF += tst.DEF;
 				stats.MDEF += tst.MDEF;
@@ -1107,6 +1112,7 @@ int BattleView::attack(int target, int type, int element, int damage)
 	CharStats ustats = getStats(turn);
 	CharStats tstats = getStats(target);
 	int *resist = getResistances(target);
+	int strIncrease = 0;
 
 	if (type == AttackType::PHYSICAL)
 	{
@@ -1173,6 +1179,13 @@ int BattleView::attack(int target, int type, int element, int damage)
 				chr->train(xp);
 			};
 		};
+
+		Character *chr = GetChar(GetPartyMember(turn));
+		if (type == AttackType::PHYSICAL)
+		{
+			chr->trainWeapon();
+		};
+		
 	};
 
 	DamageDisplay disp;

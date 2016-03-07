@@ -130,6 +130,35 @@ void Character::setLevel(int level)
 	state->level = level;
 };
 
+void Character::trainWeapon()
+{
+	// find out what weapon type te player is using
+	Container *inv = getInventory();
+	ItemStack weaponStack = inv->get(0);
+	Item *wep = GetItem(weaponStack.id);
+	int wepType = wep->getWeaponType();
+	
+	// Increasing number of weapon uses
+	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
+	int &count = state->numTypeUses[wepType];
+	if (count < 500)
+	{
+		count++;
+	};
+};
+
+int Character::getWeaponLevel()
+{
+	// find out what weapon type the player is using
+	Container *inv = getInventory();
+	ItemStack weaponStack = inv->get(0);
+	Item *wep = GetItem(weaponStack.id);
+	int wepType = wep->getWeaponType();
+
+	CharState *state = (CharState*)GetGameData(name, sizeof(CharState));
+	return state->numTypeUses[wepType] / 50;
+};
+
 int Character::getElement()
 {
 	MobInfo info = GetMobInfo(charInfo->mob);

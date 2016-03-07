@@ -67,7 +67,10 @@ public:
 	{
 		return false;
 	};
-
+	virtual int getWeaponType()
+	{
+		return Item::SWORD;
+	};
 	virtual int getType()
 	{
 		return Item::WEAPON;

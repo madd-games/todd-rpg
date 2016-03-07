@@ -72,7 +72,10 @@ public:
 	{
 		return Item::WEAPON;
 	};
-
+	virtual int getWeaponType()
+	{
+		return Item::DAGGER;
+	};
 	virtual void getStat(CharStats &stats)
 	{
 		stats.STR = 4;

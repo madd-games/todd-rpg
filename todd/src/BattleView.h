@@ -139,6 +139,9 @@ private:
 
 	// Returns the status effect set for the specified entity.
 	StatusEffectSet getStatusEffectSet(int entity);
+	
+	// Battle-temporary stats for each entity.
+	CharStats battleStats[8];
 
 public:
 	bool canMove(int entity);
@@ -275,6 +278,18 @@ public:
 	 * \param type Type of particle (see above enum).
 	 */
 	void emitParticle(int entity, int offX, int offY, int type);
+	
+	/**
+	 * \brief Inflict a stat change.
+	 *
+	 * Changes the specified stat by the given amount, for the given entity, for the duration of
+	 * the battle. Stat changes stack up.
+	 *
+	 * \param entity The entity (0-3 = allies, 4-7 = enemies).
+	 * \param stat Which stat (STAT_*, e.g. STAT_STR).
+	 * \param diff The difference to apply.
+	 */
+	void inflictStatChange(int entity, int stat, int diff);
 };
 
 extern BattleView battleView;

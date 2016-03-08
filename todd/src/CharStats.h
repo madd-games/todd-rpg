@@ -37,6 +37,20 @@
 #ifndef CHAR_STATS_H
 #define CHAR_STATS_H
 
+/**
+ * The indices into a character stat array, the effect of casting the CharStats
+ * structure into an array.
+ */
+enum
+{
+	STAT_STR,
+	STAT_INT,
+	STAT_DEF,
+	STAT_MDEF,
+	STAT_ACC,
+	STAT_AGI,
+};
+
 struct CharStats
 {
 	/**

@@ -94,6 +94,8 @@ void BattleView::init(Enemy *a, Enemy *b, Enemy *c, Enemy *d)
 	if (b != NULL) b->dropItems(loots);
 	if (c != NULL) c->dropItems(loots);
 	if (d != NULL) d->dropItems(loots);
+	
+	memset(battleStats, 0, 8*sizeof(CharStats));
 };
 
 void BattleView::handleEvent(SDL_Event *ev)
@@ -1022,10 +1024,11 @@ SpriteSheet *BattleView::getBackground(int sceneID)
 
 CharStats BattleView::getStats(int entity)
 {
+	CharStats stats;
 	if (entity < 4)
 	{
 		Character *chr = GetChar(GetPartyMember(entity));
-		CharStats stats = *chr->getStats();
+		stats = *chr->getStats();
 		Container *cont = chr->getInventory();
 		int numLevel = chr->getWeaponLevel();
 
@@ -1049,15 +1052,24 @@ CharStats BattleView::getStats(int entity)
 				stats.INT += tst.INT;
 				stats.DEF += tst.DEF;
 				stats.MDEF += tst.MDEF;
+				stats.ACC += tst.ACC;
+				stats.AGI += tst.AGI;
 			};
 		};
-
-		return stats;
 	}
 	else
 	{
-		return enemies[entity-4]->stats;
+		stats = enemies[entity-4]->stats;
 	};
+	
+	stats.STR += battleStats[entity].STR;
+	stats.INT += battleStats[entity].INT;
+	stats.DEF += battleStats[entity].DEF;
+	stats.MDEF += battleStats[entity].MDEF;
+	stats.ACC += battleStats[entity].ACC;
+	stats.AGI += battleStats[entity].AGI;
+	
+	return stats;
 };
 
 int* BattleView::getResistances(int entity)
@@ -1138,6 +1150,7 @@ int BattleView::attack(int target, int type, int element, int damage)
 			dmgDisplays.push_back(disp);
 			return 0;
 		};
+		
 		damage += damage * ustats.STR / 100;
 		damage -= damage * tstats.DEF / 100;
 	}
@@ -1499,6 +1512,49 @@ void BattleView::emitParticle(int entity, int offX, int offY, int type)
 	};
 
 	particles.push_back(part);
+};
+
+void BattleView::inflictStatChange(int entity, int stat, int diff)
+{
+	static const char* statNames[] = {"STR", "INT", "DEF", "MDEF", "ACC", "AGI"};
+	int *statArray = (int*) &battleStats[entity];
+	statArray[stat] += diff;
+	
+	DamageDisplay disp;
+	disp.element = Element::NEUTRAL;
+	
+	stringstream ss;
+	ss << statNames[stat];
+	if (diff >= 0) ss << "+";
+	ss << diff;
+	
+	disp.value = ss.str();
+	
+	if (diff < 0)
+	{
+		disp.red = 255;
+		disp.green = 64;
+		disp.blue = 0;
+	}
+	else
+	{
+		disp.red = 0;
+		disp.green = 255;
+		disp.blue = 64;
+	};
+	
+	disp.start = Timer::Read();
+	if (entity < 4)
+	{
+		disp.x = 396;
+		disp.y = 100 + 50 * entity;
+	}
+	else
+	{
+		disp.x = 548;
+		disp.y = 100 + 50 * (entity - 4);
+	};
+	dmgDisplays.push_back(disp);
 };
 
 void StartBattle(Enemy *a, Enemy *b, Enemy *c, Enemy *d)

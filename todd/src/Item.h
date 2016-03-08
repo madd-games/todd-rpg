@@ -81,7 +81,7 @@ public:
 	{
 		// NONE already defined as 0 in this case so is not needed.
 		SWORD = 1,
-		DAGGER,
+		DAGGER = 2,
 
 		NUM_WEAPON_TYPES = 32
 	};

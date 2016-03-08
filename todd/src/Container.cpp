@@ -213,6 +213,8 @@ void Container::drawInfoPanel(int leftX, Item *item)
 		drawY += drawItemStatInfo(leftX, "INT", stats.INT, drawY);
 		drawY += drawItemStatInfo(leftX, "DEF", stats.DEF, drawY);
 		drawY += drawItemStatInfo(leftX, "MDEF", stats.MDEF, drawY);
+		drawY += drawItemStatInfo(leftX, "ACC", stats.ACC, drawY);
+		drawY += drawItemStatInfo(leftX, "AGI", stats.AGI, drawY);
 	};
 };
 

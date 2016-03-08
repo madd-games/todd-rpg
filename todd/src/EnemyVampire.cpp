@@ -58,6 +58,8 @@ EnemyVampire::EnemyVampire()
 	memset(&stats, 0, sizeof(CharStats));
 	stats.STR = 0;
 	stats.DEF = 3;
+	stats.ACC = 50;
+	stats.AGI = 50;
 
 	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
 	resist[Element::DARKNESS] = 100;

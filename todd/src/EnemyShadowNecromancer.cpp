@@ -61,6 +61,8 @@ EnemyShadowNecromancer::EnemyShadowNecromancer()
 	stats.DEF = 20;
 	stats.MDEF = 25;
 	stats.INT = 40;
+	stats.ACC = 40;
+	stats.AGI = 50;
 
 	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
 	resist[Element::EARTH] = 40;

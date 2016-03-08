@@ -57,6 +57,8 @@ EnemyGoblin::EnemyGoblin()
 	memset(&stats, 0, sizeof(CharStats));
 	stats.STR = 0;
 	stats.DEF = -1;
+	stats.ACC = 40;
+	stats.AGI = 5;
 
 	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
 	resist[Element::EARTH] = 10;

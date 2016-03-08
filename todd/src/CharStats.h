@@ -60,6 +60,17 @@ struct CharStats
 	 * Magic Defence (in %).
 	 */
 	int MDEF;
+
+	/**
+	 * Accuracy of attacks (hit chance in %)
+	 */
+	 int ACC;
+
+	 /**
+	  * Agility (chance of dodging an attack %)
+	  */
+	 int AGI;
+
 };
 
 #endif

@@ -60,6 +60,8 @@ EnemyWizard::EnemyWizard()
 	stats.DEF = 8;
 	stats.INT = 5;
 	stats.MDEF = 8;
+	stats.ACC = 20;
+	stats.AGI = 50;
 
 	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
 	resist[Element::EARTH] = 80;

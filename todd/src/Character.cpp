@@ -238,8 +238,8 @@ void SetPartyMember(int index, string name)
 CharInfo charInfoTodd = {
 	"MOBTODD",
 	{5, 5, 5, 5, 20, -20, 0, 0},
-	{3, 1, 1, 1},
-	{2, 5, 0, 2},
+	{3, 1, 1, 1, 0, 0},
+	{2, 5, 0, 2, 60, 5},
 };
 Character charTodd("CHRTODD", &charInfoTodd, "INVTODD");
 
@@ -247,8 +247,8 @@ Character charTodd("CHRTODD", &charInfoTodd, "INVTODD");
 CharInfo charInfoCaspar = {
 	"MOBCASPAR",
 	{20, -30, 3, 3, 0, 0, 0, 0},
-	{2, 2, 2, 2},
-	{5, 2, 2, 0},
+	{2, 2, 2, 2, 0, 0},
+	{5, 2, 2, 0, 80, 10},
 };
 Character charCaspar("CHRCASPAR", &charInfoCaspar, "INVCASPAR");
 
@@ -256,7 +256,7 @@ Character charCaspar("CHRCASPAR", &charInfoCaspar, "INVCASPAR");
 CharInfo charInfoBob = {
 	"MOBBOB",
 	{90, 70, 0, -50, 0, 0, 0, 0},
-	{2, 2, 2, 2},
-	{1, 7, -1, 10},
+	{2, 2, 2, 2, 0, 0},
+	{1, 7, -1, 10, 60, 10},
 };
 Character charBob("CHRBOB", &charInfoBob, "INVBOB");

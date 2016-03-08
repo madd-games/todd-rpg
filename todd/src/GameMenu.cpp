@@ -401,24 +401,28 @@ void GameMenu::drawPartyMember(int index, int x, int y, int page)
 				if (stack.id != 0)
 				{
 					Item *item = GetItem(stack.id);
-					CharStats addstats = {0, 0, 0, 0};
+					CharStats addstats = {0, 0, 0, 0, 0, 0};
 					item->getStat(addstats);
 
 					rstats.STR += addstats.STR;
 					rstats.DEF += addstats.DEF;
 					rstats.INT += addstats.INT;
 					rstats.MDEF += addstats.MDEF;
+					rstats.ACC += addstats.ACC;
+					rstats.AGI += addstats.AGI;
 				};
 			};
 
-			StatLabel labels[4] = {
+			StatLabel labels[6] = {
 				{"STR", x+100, y+12, &stats->STR, &rstats.STR},
 				{"INT", x+300, y+12, &stats->INT, &rstats.INT},
 				{"DEF", x+100, y+32, &stats->DEF, &rstats.DEF},
-				{"MDEF", x+300, y+32, &stats->MDEF, &rstats.MDEF}
+				{"MDEF", x+300, y+32, &stats->MDEF, &rstats.MDEF},
+				{"ACC", x+100, y+52, &stats->ACC, &rstats.ACC},
+				{"AGI", x+300, y+52, &stats->AGI, &rstats.AGI}
 			};
 
-			for (i=0; i<4; i++)
+			for (i=0; i<6; i++)
 			{
 				Text ltxt(labels[i].label, 255, 255, 255, 255);
 				ltxt.draw(labels[i].x, labels[i].y);

@@ -1112,9 +1112,32 @@ int BattleView::attack(int target, int type, int element, int damage)
 	CharStats ustats = getStats(turn);
 	CharStats tstats = getStats(target);
 	int *resist = getResistances(target);
-
+	int hitChance = ustats.ACC * (100 - tstats.AGI) / 100;
+	
 	if (type == AttackType::PHYSICAL)
 	{
+		if (!Probably(hitChance))
+		{
+			DamageDisplay disp;
+			disp.element = Element::NEUTRAL;
+			disp.value = "MISS";
+			disp.red = 255;
+			disp.green = 64;
+			disp.blue = 0;
+			disp.start = Timer::Read();
+			if (target < 4)
+			{
+				disp.x = 396;
+				disp.y = 100 + 50 * target;
+			}
+			else
+			{
+				disp.x = 548;
+				disp.y = 100 + 50 * (target - 4);
+			};
+			dmgDisplays.push_back(disp);
+			return 0;
+		};
 		damage += damage * ustats.STR / 100;
 		damage -= damage * tstats.DEF / 100;
 	}

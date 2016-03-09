@@ -61,8 +61,8 @@ EnemyShadowPriest::EnemyShadowPriest()
 	stats.DEF = 20;
 	stats.MDEF = 5;
 	stats.INT = 10;
-	stats.ACC = 50;
-	stats.AGI = 20;
+	stats.ACC = 70;
+	stats.AGI = 10;
 
 	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
 	resist[Element::EARTH] = 30;

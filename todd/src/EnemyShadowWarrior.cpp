@@ -63,6 +63,7 @@ EnemyShadowWarrior::EnemyShadowWarrior()
 	stats.DEF = 10;
 	stats.MDEF = 20;
 	stats.ACC = 80;
+	stats.AGI = 5;
 
 	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
 	resist[Element::EARTH] = 30;

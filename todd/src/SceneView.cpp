@@ -46,10 +46,17 @@
 #include "BattleView.h"
 #include "Timer.h"
 #include "Options.h"
+#include "Character.h"
 
 #ifdef TODD_DEBUG
 #include "DebugOptionsView.h"
 #endif
+
+/**
+ * The magic boundary - the player must be at least this many pixels from the border.
+ * If they're not, the camera moves to make them.
+ */
+#define	MAGIC_BOUND			(48*5)
 
 using namespace std;
 
@@ -296,8 +303,9 @@ void SceneView::handleEvent(SDL_Event *ev)
 	};
 };
 
+extern map<string, SpriteSheet*> mobSprites;
 void SceneView::render()
-{
+{	
 	if (enableRandomBattles)
 	{
 		if (battleTimer != 0)
@@ -357,8 +365,25 @@ void SceneView::render()
 	};
 
 	UpdateMobs();
+
+	// Adjust the camera so we can see the player's character.
+	state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
+	int realX = state->x*48+state->offX;
+	int realY = state->y*48+state->offY;
+
+	if (realX < (cameraX+MAGIC_BOUND)) cameraX = realX - MAGIC_BOUND;
+	if (realX > (cameraX+(SCREEN_WIDTH*48)-MAGIC_BOUND)) cameraX = realX - (SCREEN_WIDTH*48) + MAGIC_BOUND;
+	if (realY < (cameraY+MAGIC_BOUND)) cameraY = realY - MAGIC_BOUND;
+	if (realY > (cameraY+(SCREEN_HEIGHT*48)-MAGIC_BOUND)) cameraY = realY - (SCREEN_HEIGHT*48) + MAGIC_BOUND;
+
+	if (cameraX < 0) cameraX = 0;
+	if (cameraX > (48*(sceneView.width()-SCREEN_WIDTH))) cameraX = 48*(sceneView.width()-SCREEN_WIDTH);
+	if (cameraY < 0) cameraY = 0;
+	if (cameraY > (48*(sceneView.height()-SCREEN_HEIGHT))) cameraY = (48*(sceneView.height()-SCREEN_HEIGHT));
+	
 	renderLayer(scene->bgLayer);
 	renderLayer(scene->hardLayer);
+	
 	RenderMobs();
 	renderLayer(scene->ovLayer);
 

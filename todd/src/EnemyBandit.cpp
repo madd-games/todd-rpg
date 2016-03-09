@@ -56,6 +56,7 @@ EnemyBandit::EnemyBandit() : numPotions(5), numFireSlash(3)
 	stats.STR = 15;
 	stats.DEF = 10;
 	stats.ACC = 80;
+	stats.AGI = 10;
 
 	memset(resist, 0, sizeof(int)*Element::NUM_ELEMENTS);
 	resist[Element::FIRE] = -5;

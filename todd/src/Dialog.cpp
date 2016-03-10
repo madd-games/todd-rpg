@@ -144,12 +144,29 @@ void Dialog::render()
 	ssDialog->draw(0, y, element, false);
 
 	int red=0, green=0, blue=0;
-	if ((element == Element::WATER) || (element == Element::DARKNESS)
-		|| (element == Element::NEUTRAL) || (element == Element::EARTH))
+	if (element == Element::WATER)
 	{
-		red = 255;
+		red = 0;
+		green = 200; // Should show up in a blueish background, change ton suit needs
+		blue = 0;
+	}
+	else if (element == Element::DARKNESS)
+	{
+		red = 200; // Red should be easy to see on a dark background
+		green = 0;
+		blue = 0;
+	}
+	else if (element == Element::NEUTRAL)
+	{
+		red = 255; // Black should be fine for neutral
 		green = 255;
 		blue = 255;
+	}
+	else // Earth
+	{
+		red = 0; // Directly opposite to orange/yellow. Should be easily seen
+		green = 0;
+		blue = 200; 
 	};
 	Text cap(currentEntry->caption, red, green, blue, 255, fntCaption);
 	cap.draw(191, y+14);

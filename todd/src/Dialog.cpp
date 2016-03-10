@@ -132,7 +132,11 @@ void Dialog::render()
 	MobInfo info;
 	info.mobSprite = NULL;
 	int y = (SCREEN_HEIGHT*48)-200;
-	if (currentEntry->speaker != NULL)
+	if (currentEntry->element != 0)
+	{
+		element = currentEntry->element;
+	}
+	else if (currentEntry->speaker != NULL)
 	{
 		info = GetMobInfo(currentEntry->speaker);
 		element = info.element;
@@ -147,26 +151,50 @@ void Dialog::render()
 	if (element == Element::WATER)
 	{
 		red = 0;
-		green = 200; // Should show up in a blueish background, change ton suit needs
+		green = 200;
 		blue = 0;
 	}
 	else if (element == Element::DARKNESS)
 	{
-		red = 200; // Red should be easy to see on a dark background
-		green = 0;
+		red = 200;
+		green = 50;
 		blue = 0;
 	}
 	else if (element == Element::NEUTRAL)
 	{
-		red = 255; // Black should be fine for neutral
+		red = 255;
 		green = 255;
 		blue = 255;
 	}
-	else // Earth
+	else if (element == Element::EARTH)
 	{
-		red = 0; // Directly opposite to orange/yellow. Should be easily seen
+		red = 255;
+		green = 255;
+		blue = 255; 
+	}
+	else if (element == Element::FIRE)
+	{
+		red = 50;
+		green = 255;
+		blue = 0;
+	}
+	else if (element == Element::AIR)
+	{
+		red = 255;
+		green = 255;
+		blue = 255;
+	}
+	else if (element == Element::LIGHT)
+	{
+		red = 0;
 		green = 0;
-		blue = 200; 
+		blue = 0;
+	}
+	else if (element == Element::DIVINE)
+	{
+		red = 0;
+		green = 0;
+		blue = 0;
 	};
 	Text cap(currentEntry->caption, red, green, blue, 255, fntCaption);
 	cap.draw(191, y+14);

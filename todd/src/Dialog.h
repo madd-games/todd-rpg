@@ -100,6 +100,12 @@ struct DialogEntry
 	 * command queue before X can be pressed to dismiss the message.
 	 */
 	const char *mobwait;
+
+	/**
+	 * Element override. If nonzero, this element will be used instead of the normal
+	 * element when talking.
+	 */
+	int element;
 };
 
 class Dialog : public GUI

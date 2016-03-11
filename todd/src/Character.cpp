@@ -119,12 +119,12 @@ void Character::train(int xp)
 		setMP(getMP(), getMaxMP()*1.2);
 		
 		CharState *state = (CharState*)GetGameData(name, sizeof(CharState));
-		state->stats.STR += charInfo.levelUpStats.STR;
-		state->stats.INT += charInfo.levelUpStats.INT;
-		state->stats.DEF += charInfo.levelUpStats.DEF;
-		state->stats.MDEF += charInfo.levelUpStats.MDEF;
-		state->stats.ACC += charInfo.levelUpStats.ACC;
-		state->stats.AGI += charInfo.levelUpStats.AGI;
+		state->stats.STR += charInfo->levelUpStats.STR;
+		state->stats.INT += charInfo->levelUpStats.INT;
+		state->stats.DEF += charInfo->levelUpStats.DEF;
+		state->stats.MDEF += charInfo->levelUpStats.MDEF;
+		state->stats.ACC += charInfo->levelUpStats.ACC;
+		state->stats.AGI += charInfo->levelUpStats.AGI;
 	};
 };
 

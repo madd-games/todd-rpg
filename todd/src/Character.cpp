@@ -47,8 +47,6 @@ map<string, Character*> charMap;
 Character::Character(string name, CharInfo *info, string invName) : name(name), charInfo(info), inv(invName, 46)
 {
 	charMap[name] = this;
-	CharState *state = (CharState*) GetGameData(name, sizeof(CharState));
-	memcpy(&state->stats, &info->stats, sizeof(CharStats));
 };
 
 int Character::getHP()
@@ -173,6 +171,11 @@ int Character::getElement()
 {
 	MobInfo info = GetMobInfo(charInfo->mob);
 	return info.element;
+};
+void Character::init()
+{
+	CharState *state = (CharState*)GetGameData(name, sizeof(CharState));
+	memcpy(&state->stats, &charInfo->stats, sizeof(CharStats));
 };
 
 CharStats *Character::getStats()

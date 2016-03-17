@@ -118,6 +118,8 @@ void NewGame()
 	charTodd->setLevel(1);
 	ItemStack stackBasicSword = {2, 1};
 	charTodd->getInventory()->set(0, stackBasicSword);
+	GetChar("CHRTODD")->init();
+	
 
 	Character *charCaspar = GetChar("CHRCASPAR");
 	charCaspar->setHP(120, 120);
@@ -125,6 +127,7 @@ void NewGame()
 	charCaspar->setXP(0, 100);
 	charCaspar->setLevel(1);
 	charCaspar->getInventory()->set(0, stackBasicSword);
+	GetChar("CHRCASPAR")->init();
 
 	Character *charBob = GetChar("CHRBOB");
 	charBob->setHP(700, 700);
@@ -137,6 +140,7 @@ void NewGame()
 	charBob->getInventory()->set(10, stackSpiritKey);
 	charBob->getInventory()->set(0, stackSilverDagger);
 	charBob->getInventory()->set(11, stackPotion);
+	GetChar("CHRBOB")->init();
 
 	MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
 	state->x = 10;

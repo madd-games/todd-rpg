@@ -105,6 +105,8 @@ public:
 
 	int getElement();
 
+	void init();
+
 	void trainWeapon();
 
 	int getWeaponLevel();

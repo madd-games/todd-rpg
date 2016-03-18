@@ -60,7 +60,7 @@ using namespace std;
  */
 unsigned long autoMobTimer;
 
-void MobState::beginMove(int orient, bool force)
+bool MobState::beginMove(int orient, bool force)
 {
 	if (steps != 0) return;
 
@@ -73,28 +73,28 @@ void MobState::beginMove(int orient, bool force)
 
 	if (orient == Mob::LEFT)
 	{
-		if (!sceneView.canWalk(x-1, y) && !force) return;
+		if (!sceneView.canWalk(x-1, y) && !force) return false;
 		x--;
 		offX = 48;
 		motX = -WALK_SPEED;
 	}
 	else if (orient == Mob::RIGHT)
 	{
-		if (!sceneView.canWalk(x+1, y) && !force) return;
+		if (!sceneView.canWalk(x+1, y) && !force) return false;
 		x++;
 		offX = -48;
 		motX = WALK_SPEED;
 	}
 	else if (orient == Mob::DOWN)
 	{
-		if (!sceneView.canWalk(x, y+1) && !force) return;
+		if (!sceneView.canWalk(x, y+1) && !force) return false;
 		y++;
 		offY = -48;
 		motY = WALK_SPEED;
 	}
 	else
 	{
-		if (!sceneView.canWalk(x, y-1) && !force) return;
+		if (!sceneView.canWalk(x, y-1) && !force) return false;
 		y--;
 		offY = 48;
 		motY = -WALK_SPEED;
@@ -102,6 +102,7 @@ void MobState::beginMove(int orient, bool force)
 
 	steps = WALK_STEPS;
 	stepTimer = Timer::Read();
+	return true;
 };
 
 map<string, SpriteSheet*> mobSprites;

@@ -47,7 +47,7 @@
 bool GetRandomBattle(int sceneID, RandomBattle &bat)
 {
 	static int numSteps = 0;
-	if (numSteps < 10)
+	if (numSteps < 25)
 	{
 		numSteps++;
 		return false;

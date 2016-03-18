@@ -253,7 +253,7 @@ void SceneView::handleEvent(SDL_Event *ev)
 		}
 		else if (ev->key.keysym.sym == options.confirmKey)
 		{
-			if (keyLeft || keyRight || keyUp || keyDown) return;
+			if (keyLeft || keyRight || keyUp || keyDown || (battleTimer != 0)) return;
 
 			int relX=0, relY=0, opposite=0;
 			MobState *state = (MobState*) GetGameData("MOBTODD", sizeof(MobState));
@@ -360,28 +360,33 @@ void SceneView::render()
 		bool move = keyLeft || keyRight || keyUp || keyDown;
 		if (move)
 		{
-			if (GetRandomBattle(sceneID, randomBattle) && enableRandomBattles)
-			{
-				battleTimer = Timer::Read();
-				return;
-			};
-
+			bool haveMoved = false;
 			if (keyLeft)
 			{
-				state->beginMove(Mob::LEFT, ghostWalk);
+				haveMoved = state->beginMove(Mob::LEFT, ghostWalk);
 			}
 			else if (keyRight)
 			{
-				state->beginMove(Mob::RIGHT, ghostWalk);
+				haveMoved = state->beginMove(Mob::RIGHT, ghostWalk);
 			}
 			else if (keyUp)
 			{
-				state->beginMove(Mob::UP, ghostWalk);
+				haveMoved = state->beginMove(Mob::UP, ghostWalk);
 			}
 			else
 			{
-				state->beginMove(Mob::DOWN, ghostWalk);
+				haveMoved = state->beginMove(Mob::DOWN, ghostWalk);
 			};
+			
+			if (haveMoved)
+			{
+				if (GetRandomBattle(sceneID, randomBattle) && enableRandomBattles)
+				{
+					battleTimer = Timer::Read();
+					return;
+				};	
+			};
+			
 		};
 	};
 

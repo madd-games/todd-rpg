@@ -102,7 +102,7 @@ struct MobState
 	 * \param force If true, the mob will walk even into walls If false, and there is a wall in the way,
 	 *              the mob will only turn around.
 	 */
-	void beginMove(int orient, bool force = false);
+	bool beginMove(int orient, bool force = false);
 };
 
 struct MobInfo

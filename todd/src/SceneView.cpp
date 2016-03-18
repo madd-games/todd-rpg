@@ -360,15 +360,10 @@ void SceneView::render()
 		bool move = keyLeft || keyRight || keyUp || keyDown;
 		if (move)
 		{
-			stepCount++;
-			if (stepCount >= 15)
+			if (GetRandomBattle(sceneID, randomBattle) && enableRandomBattles)
 			{
-				if (GetRandomBattle(sceneID, randomBattle) && enableRandomBattles)
-				{
-					stepCount = 0;
-					battleTimer = Timer::Read();
-					return;
-				};
+				battleTimer = Timer::Read();
+				return;
 			};
 
 			if (keyLeft)

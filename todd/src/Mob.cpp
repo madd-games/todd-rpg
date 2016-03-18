@@ -62,7 +62,7 @@ unsigned long autoMobTimer;
 
 bool MobState::beginMove(int orient, bool force)
 {
-	if (steps != 0) return;
+	if (steps != 0) return false;
 
 	this->orient = orient;
 

@@ -141,7 +141,7 @@ void OverworldView::render()
 	vector<MapSpot>::iterator it;
 	for (it=mapSpots.begin(); it!=mapSpots.end(); ++it)
 	{
-		ssMapSpot->draw(it->x-4, it->y-4, 0, false);
+		//ssMapSpot->draw(it->x-4, it->y-4, 0, false);
 		if (it->id == currentSpot)
 		{
 			mobX = it->x-8;

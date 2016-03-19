@@ -178,6 +178,10 @@ TileMapping tileMappings[] = {
 	{98, 83},
 	{99, 84},
 	
+	// 2-part tree
+	{100, 42},
+	{101, 58},
+	
 	// END
 	{0, 0}
 };

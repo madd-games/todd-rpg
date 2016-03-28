@@ -193,10 +193,29 @@ SceneView::SceneView() : keyLeft(false), keyRight(false), keyUp(false), keyDown(
 
 void SceneView::renderLayer(Scene::Tile *layer)
 {
-	int x, y;
-	for (x=0; x<scene->width; x++)
+	int xlower = cameraX/48;
+	if (xlower < 0) xlower = 0;
+	
+	int ylower = cameraY/48;
+	if (ylower < 0) ylower = 0;
+	
+	int xupper = xlower + 21;
+	int yupper = ylower + 11;
+	
+	if (xupper >= scene->width)
 	{
-		for (y=0; y<scene->height; y++)
+		xupper = scene->width - 1;
+	};
+	
+	if (yupper >= scene->height)
+	{
+		yupper = scene->height - 1;
+	};
+	
+	int x, y;
+	for (x=xlower; x<=xupper; x++)
+	{
+		for (y=ylower; y<yupper; y++)
 		{
 			Scene::Tile tile = layer[y * scene->width + x];
 			TileMapping *scan = tileMappings;
